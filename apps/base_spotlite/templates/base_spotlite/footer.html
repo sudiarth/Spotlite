@@ -1,9 +1,45 @@
-<footer class="pt-4 my-md-5 pt-md-5 border-top">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md">
-                PLAYER
-            </div>
+<audio controls src="{{ MEDIA_URL }}/audio/Alan_Walker_Faded.mp3" id="audiotrack" preload="auto" itemprop="audio"></audio>
+<div id="fader"></div>
+<footer class="fixed-bottom">
+    <div id="audioplayer" itemprop="track" itemscope itemtype="http://schema.org/MusicRecording" class="current-track pl-5 pr-5">
+
+        <div class="current-track__actions">
+
+            <a class="ion-ios-skipbackward"></a>
+
+            <span id="playback"><a class="ion-ios-play play"></a></span>
+
+            <a class="ion-ios-skipforward"></a>
+
+            <a class="ion-shuffle"></a>
+
         </div>
+
+        <div class="current-track__progress">
+
+            <div id="time" class="current-track__progress__start">0:01</div>
+
+            <div class="current-track__progress__finish">3:07</div>
+
+        </div>
+
+        <div class="current-track__options">
+
+            <span class="controls">
+
+                <a href="#" class="control volume">
+
+                    <i class="ion-volume-high"></i>
+
+                    <div id="song-volume"></div>
+
+                </a>
+
+            </span>
+
+            <a href="#" class="lyrics">Lyrics</a>
+
+        </div>
+
     </div>
 </footer>
