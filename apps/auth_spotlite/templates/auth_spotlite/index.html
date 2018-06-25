@@ -1,1 +1,79 @@
-<h1>Auth</h1>
+{% extends 'facebook/base.html' %} 
+
+{% block body %}
+{% if 'user_id' in request.session %}
+    {% include 'facebook/navbar.html' %}
+{% else %}
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+        <div class="w3-display-topleft w3-padding-large w3-xlarge">
+            Facebook
+            <div>
+                <ul class="navbar-nav mr-auto w3-small pl-1">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            Get started
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'facebook:login' %}">Login</a>
+                            <a class="dropdown-item" href="{% url 'facebook:register' %}">Register</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if 'user_id' in request.session %}
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-2 sidebar">
+            <img src="{{request.session.profilepic}}" width="150" height="200" alt="profile picture">
+            <ul>
+                <li><a href="{% url 'facebook:followers' %}">Followers</a></li>
+                <li><a href="{% url 'facebook:following' %}">Following</a></li>
+                <li><a href="{% url 'facebook:simple_upload' %}">Photos</a></li>
+                <li><a href="{% url 'facebook:settings' %}">Settings</a></li>
+                <li><a href="{% url 'facebook:logout' %}">Logout</a></li>
+            </ul>
+        </div>
+        <div class="col-8 main">
+            <h1>Hello {{request.session.fullname}}, welcome back.</h1>
+            <form method='POST' action='{% url "facebook:create_post" %}'>
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea name="html_post" placeholder="Why don't you share something...?" cols="50" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-sm">Post</button>
+                </div>
+            </form>
+            <hr>
+            {% for post in posts %}
+            <div class="post">
+                <p><b>{{post.content}}</b></p>
+                <p>Posted by {{post.user.fullname}} on {{post.created_at}}</p>
+                <a href="{% url 'facebook:delete_post' post_id=post.id %}" class="btn btn-sm btn-danger">DELETE</a>
+                    <div class="p-4">
+                    <form method="POST" action="{% url 'facebook:create_comment' post_id=post.id %}">
+                        {% csrf_token %}
+                        <input type="text" class="input" name="html_comment_content" placeholder="Post a comment...">
+                        <button type="submit" class="btn btn-sm">Comment</button>
+                    </form>
+                    {% for comment in comments %}
+                    {% if post.id == comment.post.id %}
+                    <div class='my-3 comment'>
+                        <p><b>{{comment.content}}</b></p>
+                        <p>Posted by {{comment.post.user.fullname}} on {{comment.created_at}}</p>
+                        <a href="{% url 'facebook:delete_comment' comment_id=comment.id %}" class="btn btn-sm btn-danger">DELETE</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
