@@ -19,13 +19,13 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
-                        <i class="fa fa-user-circle"></i> Name
+                        <i class="fa fa-user-circle"></i> {{request.session.firstname}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Profile</a>
-                        <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item" href="{% url 'app_spotlite:profile' %}">Profile</a>
+                        <a class="dropdown-item" href="{% url 'app_spotlite:settings' %}">Settings</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Signout</a>
+                        <a class="dropdown-item" href="{% url 'auth_spotlite:logout'%}">Sign out</a>
                     </div>
                 </li>
                 <li class="nav-item">
