@@ -74,4 +74,5 @@ def start_session(request, user):
     request.session['email'] = user.email
     request.session['firstname'] = user.firstname
     request.session['surname'] = user.surname
+    request.session['profilepic'] = user.profilepic
 
