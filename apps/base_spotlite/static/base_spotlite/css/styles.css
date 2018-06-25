@@ -2,3 +2,11 @@
     padding: 25px;
     margin-top: 25vh;
 }
+
+.profile-picture {
+    border-radius: 100%;
+}
+
+hr {
+    border-color: white;
+}

@@ -65,13 +65,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'Spotlite.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -122,5 +122,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3131bec6a26d28a3b5b81b82d9587177db6f61e9
 MEDIA_URL = '/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'apps/app_spotlite/media')
