@@ -2,19 +2,21 @@
 <div class="w3-display-container w3-animate-opacity w3-text-white" style="background-image: url('{{img_url}}');
 min-height: 100%;background-position: center;background-size: cover;">
     <div class="row justify-content-center">
-        <div class="col-4 reg-table">
+        <div class="col-3 reg-table">
             
             <form method='POST' action='{% url "auth_spotlite:authenticate" action="register" %}'>
                 {% csrf_token %}
-                <div class="row">    
+                <div class="row justify-content-center">    
                     <h1>Spotlite</h1>
                 </div>
                 <div class="form-group row">
                     <input type="email" class="form-control col-12" name="html_email" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="form-control col-6" name="html_firstname" placeholder="First name">
-                    <input type="text" class="form-control col-6" name="html_surname" placeholder="Surname">
+                    <input type="text" class="form-control col-12" name="html_firstname" placeholder="First name">
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="form-control col-12" name="html_surname" placeholder="Surname">
                 </div>
                 <div class="form-group row">
                     <input type="password" class="form-control col-12" name="html_password" placeholder="Password">
@@ -23,10 +25,10 @@ min-height: 100%;background-position: center;background-size: cover;">
                     <input type="password" class="form-control col-12" name="html_confirm" placeholder="Confirm password">
                 </div>
                 <div class="form-group row ">    
-                <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-success col-12">Register</button>
                 </div>
-                <div class="form-group row ">
-                <p>Already have an account? <a href="{% url 'auth_spotlite:index' %}">Sign in.</a></p>
+                <div class="form-group row justify-content-center ">
+                    <p>Already have an account? <a href="{% url 'auth_spotlite:index' %}">Sign in.</a></p>
                 </div>
             </form>
         </div>

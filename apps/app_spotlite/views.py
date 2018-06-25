@@ -48,5 +48,5 @@ def update_password(request):
     if request.POST['html_password'] == request.POST['html_confirm'] and len(request.POST['html_password']) > 0:
         user.password = request.POST['html_password']
         user.save()
-    return redirect('app_spotlite:settings')
+    return redirect('app_spotlite:settings') 
     
