@@ -1,0 +1,27 @@
+{% extends 'auth_spotlite/base.html' %} {% block body %}
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <form method='POST' action='{% url "auth_spotlite:authenticate" action="register" %}'>
+                <div class="container">
+                <div class="form-group row">
+                    <input type="email" class="form-control col-12" name="html_email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="form-control col-6" name="html_firstname" placeholder="First name">
+                    <input type="text" class="form-control col-6" name="html_surname" placeholder="Surname">
+                </div>
+                <div class="form-group row">
+                    <input type="password" class="form-control col-12" name="html_password" placeholder="Password">
+                </div>
+                <div class="form-group row">
+                    <input type="password" class="form-control col-12" name="html_confirm" placeholder="Confirm password">
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+    {% endblock %}
