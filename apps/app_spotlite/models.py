@@ -1,14 +1,5 @@
 from django.db import models
-
-
-class User(models.Model):
-   email = models.CharField(max_length=64, unique=True)
-   firstname = models.CharField(max_length=32)
-   surname = models.CharField(max_length=32)
-   password = models.CharField(max_length=32)
-
-   created_at = models.DateTimeField(auto_now_add=True)
-   updated_at = models.DateTimeField(auto_now=True)
+from apps.auth_spotlite.models import User
 
 class Follow(models.Model):
    following = models.ForeignKey(User, related_name='following_by', on_delete=models.CASCADE)
@@ -68,7 +59,7 @@ class Editor(models.Model):
 class PlaylistItem(models.Model):
    song = models.ForeignKey(Song, related_name='playlist_of', on_delete=models.CASCADE)
    playlist = models.ForeignKey(Playlist, related_name='playlist_items', on_delete=models.CASCADE)
-   user = models.ForeignKey(User, related_name='playlists', on_delete=models.CASCADE)
+   user = models.ForeignKey(User, related_name='user_playlists_item', on_delete=models.CASCADE)
 
    created_at = models.DateTimeField(auto_now_add=True)
    updated_at = models.DateTimeField(auto_now=True)
