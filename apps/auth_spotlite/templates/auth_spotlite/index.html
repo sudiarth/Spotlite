@@ -1,13 +1,14 @@
 {% extends 'auth_spotlite/base.html' %} 
+{% load static %}
 
 {% block body %}
 {% if 'user_id' in request.session %}
     {% include 'base_spotlite/navbar.html' %}
 {% else %}
-
-<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+<div class="w3-display-container w3-animate-opacity w3-text-white" style="background-image: url('{{img_url}}');
+min-height: 100%;background-position: center;background-size: cover;">
     {% if 'user_id' in request.session %}
-
+    
     {% else %}
         {% include 'auth_spotlite/login.html' %}
     {% endif %}
