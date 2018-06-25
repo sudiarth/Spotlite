@@ -10,7 +10,7 @@ function readURL(input) {
 
         reader.readAsDataURL(input.files[0]);
     } else {
-         $('#preview').attr('src', '/static/base_facebro/img/profile-blank.jpg');
+         $('#preview').attr('src', '/static/base_spotlite/img/profile-blank.jpg');
     }
 }
   $("#file_photo").change(function() {
