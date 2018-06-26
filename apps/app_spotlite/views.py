@@ -196,12 +196,7 @@ def update_settings(request):
     request.session['email'] = user.email
     request.session['firstname'] = user.firstname
     request.session['surname'] = user.surname
-    return redirect('app_spotlite:settings')
-    
-def update_password(request):
-    user = um.User.objects.get(id=request.session['user_id'])
     if request.POST['html_password'] == request.POST['html_confirm'] and len(request.POST['html_password']) > 0:
         user.password = request.POST['html_password']
-        user.save()
-    return redirect('app_spotlite:settings') 
+    return redirect('app_spotlite:settings')
     

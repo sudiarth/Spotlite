@@ -1,62 +1,5 @@
-{% extends 'base_spotlite/index.html' %}
-
-{% block body %} 
+{% extends 'base_spotlite/index.html' %} {% block body %}
 <div class="container mt-5 pt-4">
-    <div class="row justify-content-center bg-primary">
-        <form method="POST" action="{% url 'app_spotlite:update_settings' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <div class="row">
-                    <h1>Settings</h1>
-                </div>
-                <div class="row">
-                    <label>E-mail:</label>
-                </div>
-                <div class="row">
-                    <input type="text" value="{{request.session.email}}" name="html_email"> 
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label>First name:</label>
-                </div>
-                <div class="row">
-                    <input type="text" value="{{request.session.firstname}}" name="html_firstname"> 
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <label>Surname:</label>
-                </div>
-                <div class="row">
-                    <input type="text" value="{{request.session.surname}}"name="html_surname"> 
-                </div>
-            </div>
-            <div class="row mt-3 mb-4">
-                <button type="submit" class="btn btn-success">Update personal information</button>
-            </div>
-        </form>
-        </div>
-
-    <div class="row">
-        <form method="POST" action="{% url 'app_spotlite:update_password' %}">
-            <div class="form-group">
-                {% csrf_token %}
-                <div class="row">
-                    <label>Change Password:</label>
-                </div>
-                <div class="row mb-2">
-                    <input type="password" placeholder="Password" name="html_password">
-                </div>
-                <div class="row">
-                    <input type="password" placeholder="Confirm password" name="html_confirm">
-                </div>
-                <div class="row mt-3 mb-4">
-                    <button type="submit" class="btn btn-success">Update password</button>
-                </div>
-            </div>
-        </form>
-    </div>
 
     <div class="row">
         <form method="POST" action="{% url 'app_spotlite:picture_upload' %}" enctype="multipart/form-data">
@@ -76,7 +19,78 @@
     </div>
 
     <div class="row">
-        <p><b>UPGRADE TO PREMIUM.</b></p>
+        <p>
+            <b>UPGRADE TO PREMIUM.</b>
+        </p>
     </div>
 </div>
-{% endblock %}
+
+<div class="container">
+    <h1>Edit Profile</h1>
+    <hr>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3">
+            <div class="text-center">
+                <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                <h6>Upload a different photo...</h6>
+
+                <input type="file" class="form-control">
+            </div>
+        </div>
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+            <div class="alert alert-info alert-dismissable">
+                <a class="panel-close close" data-dismiss="alert">×</a>
+                <i class="fa fa-coffee"></i>
+                This is an
+                <strong>.alert</strong>. Use this to show important messages to the user.
+            </div>
+            <h3>Personal info</h3>
+
+            <form class="form-horizontal" role="form" method="POST" action="{% url 'app_spotlite:update_settings' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">First name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" name="html_firstname" value="Jane">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Last name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" name="html_lastname" value="Bishop">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Email:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" name="html_email" value="janesemail@gmail.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Password:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" type="password" name="html_password" value="11111122333">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Confirm password:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" type="password" name="html_confirm" value="11111122333">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="button" class="btn btn-primary" value="Save Changes">
+                        <span></span>
+                        <input type="reset" class="btn btn-default" value="Cancel">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr> {% endblock %}

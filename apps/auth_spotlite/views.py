@@ -58,7 +58,7 @@ def authenticate(request, action):
                         user.firstname = firstname
                         user.surname = surname
                         user.password = hashed_password
-                        user.profilepic = ""
+                        user.profilepic = "/profile_blank.jpg"
                         user.save()
                         start_session(request, user)
                         return redirect('app_spotlite:index')

@@ -13,7 +13,6 @@ urlpatterns = [
     path('picture_upload', views.picture_upload, name='picture_upload'),
 
     path('update_settings', views.update_settings, name='update_settings'),
-    path('update_password', views.update_password, name='update_password'),
 
     path('', views.index, name='index'),
 
