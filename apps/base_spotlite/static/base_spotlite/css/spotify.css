@@ -277,7 +277,7 @@ body a:hover {
   border: 0px;
 }
 .current-track__actions {
-  width: 10%;
+  width: 20%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -295,7 +295,7 @@ body a:hover {
   font-size: 45px;
 }
 .current-track__progress {
-  width: 60%;
+  width: 50%;
   padding: 0 30px;
   color: #aaaaaa;
   font-size: 11px;
@@ -335,7 +335,7 @@ body a:hover {
   display: block;
 }
 .current-track__options {
-  width: 25%;
+  width: 30%;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -522,7 +522,7 @@ body a:hover {
 }
 .artist__header .artist__info__actions button {
   margin-right: 10px;
-  height: 27px;
+  height: 36px;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
