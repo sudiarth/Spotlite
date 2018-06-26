@@ -18,12 +18,13 @@
     <title>Spotlite</title>
 </head>
 
-<body>
-    {% include 'base_spotlite/navbar.html' %} {% block body %} {% endblock %} {% include 'base_spotlite/footer.html' %}
+<body id="content">
+    {% include 'base_spotlite/navbar.html' %} {% block body %} {% endblock %} {% include 'base_spotlite/player.html' %}
 
     <script src="{% static 'base_spotlite/js/jquery-3.2.1.min.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/amplitudejs@3.2/dist/amplitude.js" type="text/javascript"></script>
+    <script src="{% static 'base_spotlite/js/jquery.history.js' %}"></script>
     <script src="{% static 'base_spotlite/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'base_spotlite/js/amplitude.js' %}"></script>
     <script src="{% static 'base_spotlite/js/spotify.js' %}"></script>
     <script src="{% static 'base_spotlite/js/playlist.js' %}"></script>
     <script src="{% static 'base_spotlite/js/scripts.js' %}"></script>

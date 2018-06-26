@@ -293,7 +293,7 @@ body {
     font-size: 36px;
   }
   .current-track__progress {
-    width: 70%;
+    width: 10%;
     padding: 0 30px;
     color: #aaaaaa;
     font-size: 11px;
@@ -399,35 +399,35 @@ body {
   }
   @media (max-width: 1400px) {
     .current-track__actions {
-      width: 10%;
+      width: 20%;
     }
     .current-track__progress {
-      width: 50%;
+      width: 60%;
     }
     .current-track__options {
-      width: 40%;
+      width: 20%;
     }
   }
   @media (max-width: 980px) {
     .current-track__actions {
-      width: 10%;
+      width: 20%;
     }
     .current-track__progress {
-      width: 40%;
+      width: 60%;
     }
     .current-track__options {
-      width: 50%;
+      width: 20%;
     }
   }
   @media (max-width: 768px) {
     .current-track__actions {
-      width: 25%;
+      width: 20%;
     }
     .current-track__progress {
-      width: 75%;
+      width: 60%;
     }
     .current-track__options {
-      width: 100%;
+      width: 20%;
     }
   }
   @media (max-width: 480px) {

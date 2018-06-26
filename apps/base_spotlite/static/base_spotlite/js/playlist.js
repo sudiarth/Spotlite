@@ -25,7 +25,7 @@ Amplitude.init({
     ],
     "playlists": {
         "spotlite": [
-            0, 1, 2, 3
+            0, 1, 2
         ]
     }
 });
