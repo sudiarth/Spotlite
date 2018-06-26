@@ -11,7 +11,10 @@ import random
 
 def index(request):
     if 'user_id' in request.session:
-        return render(request, 'app_spotlite/index.html')
+        context = {
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8]
+        }        
+        return render(request, 'app_spotlite/index.html', context)
     else:
         imagenr = random.randint(1,8)
         image = '/static/base_spotlite/img/bg{}.jpg'.format(imagenr)
@@ -19,6 +22,21 @@ def index(request):
             'img_url' : image
         }
         return render(request, 'auth_spotlite/index.html', context)
+
+
+def add_as_friend(request, following_id):
+    if 'user_id' in request.session:
+        check = m.Follow.objects.filter(follower = request.session['user_id'])
+        if len(check) == 0:
+            follow = m.Follow()
+            follow.follower_id = request.session['user_id']
+            follow.following_id = following_id
+            follow.save()
+        
+        # return redirect(request.META['HTTP_REFERER'])
+        return redirect('app_spotlite:profile')
+
+    return redirect('auth_spotlite:login')
 
 
 def play_history(request):
@@ -60,7 +78,7 @@ def add_song_to_history(request, song_id):
         # return redirect(request.META['HTTP_REFERER'])
         return redirect('app_spotlite:song', song_id=song_id)
     
-    return redirect('app_spotlite:index')
+    return redirect('auth_spotlite:login')
 
 
 def add_to_playlist_step1(request, song_id):
@@ -71,7 +89,7 @@ def add_to_playlist_step1(request, song_id):
         }
         return render(request, 'app_spotlite/playlists.html', context)
 
-    return redirect('app_spotlite:index')
+    return redirect('auth_spotlite:login')
 
 
 def add_to_playlist_step2(request, song_id, playlist_id):
@@ -85,7 +103,7 @@ def add_to_playlist_step2(request, song_id, playlist_id):
         
         return redirect('app_spotlite:my_playlists')
 
-    return redirect('app_spotlite:index')
+    return redirect('auth_spotlite:login')
 
 
 def playlists_editor(request):
@@ -138,7 +156,7 @@ def items_in_playlist(request, playlist_id):
         }
         return render(request, 'app_spotlite/playlist-items.html', context = context)
 
-    return redirect('app_spotlite:index')
+    return redirect('auth_spotlite:login')
 
 
 def delete_item_in_playlist(request, item_id):

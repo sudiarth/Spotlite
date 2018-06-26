@@ -32,6 +32,9 @@ urlpatterns = [
     path('play-history', views.play_history, name='play_history'),
 
 
+    path('user/<int:following_id>/follow', views.add_as_friend, name='add_as_friend'),
+    
+
     path('', views.index, name='index'),    
 ]
 
