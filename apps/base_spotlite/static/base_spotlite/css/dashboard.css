@@ -23,6 +23,22 @@ body {
     margin-top: 5px;
     width: 100%;
   }
+
+  .amplitude-repeat.amplitude-repeat-song.amplitude-repeat-off {
+    color: #333;
+  }
+
+  .amplitude-repeat.amplitude-repeat-song.amplitude-repeat-on {
+    color:#999;
+  }
+
+  .amplitude-shuffle.amplitude-shuffle-off {
+    color: #333;
+  }
+
+  .amplitude-shuffle.amplitude-shuffle-on {
+    color:#999;
+  }
   
   /*
    * Sidebar
