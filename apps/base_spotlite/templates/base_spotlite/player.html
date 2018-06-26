@@ -1,0 +1,43 @@
+<footer class="fixed-bottom">
+    <div id="player" class="current-track pl-5 pr-5">
+
+        <div class="current-track__actions">
+
+            <a class="btn fa fa-step-backward amplitude-prev" amplitude-playlist="spotlite"></a>
+            <a class="btn fa fa-play button amplitude-play-pause amplitude-paused" amplitude-playlist-main-play-pause="true" amplitude-playlist="spotlite"></a>
+            <a class="btn fa fa-step-forward amplitude-next" amplitude-playlist="spotlite"></a>
+            <a class="btn fa fa-random amplitude-shuffle" amplitude-playlist="spotlite"></a>
+            <a class="btn fa fa-retweet amplitude-repeat amplitude-repeat-song"></a>
+
+        </div>
+
+        <div class="current-track__progress">
+
+            <div class="current-track__progress__start">
+                <span class="amplitude-current-time" amplitude-main-current-time="true"></span>
+            </div>
+
+            <div class="current-track__progress__bar">
+                <progress id="song-played-progress" class="amplitude-song-played-progress" amplitude-main-song-played-progress="true"></progress>
+            </div>
+
+            <div class="current-track__progress__finish">
+                <span class="amplitude-duration-time" amplitude-main-duration-time="true"></span>
+            </div>
+                
+        </div>
+
+        <div class="current-track__options">
+
+            <span class="controls">
+
+                <input type="range" class="amplitude-volume-slider"/>
+
+            </span>
+
+            <a href="#" class="lyrics">Lyrics</a>
+
+        </div>
+
+    </div>
+</footer>

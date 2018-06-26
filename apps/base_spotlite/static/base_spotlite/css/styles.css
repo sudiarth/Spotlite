@@ -1,4 +1,19 @@
 .reg-table {
     padding: 25px;
-    margin-top: 25vh;
+    margin-top: 25vh; 
 }
+.reg-table input {
+    border: none;
+    background: rgba(255,255,255,.8);
+    border-radius: 25px;
+
+}
+.reg-table button {border-radius: 25px;}
+.reg-table a {color: lightgreen;}
+.reg-table a:hover {
+    text-decoration: none;
+    font-weight: bolder;
+}
+.profile-picture {border-radius: 100%;}
+hr {border-color: white;}
+

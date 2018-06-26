@@ -1,25 +1,3 @@
-// Sliders
-
-var slider = document.getElementById('song-progress');
-
-noUiSlider.create(slider, {
-	start: [ 20 ],
-	range: {
-		'min': [   0 ],
-		'max': [ 100 ]
-	}
-});
-
-var slider = document.getElementById('song-volume');
-
-noUiSlider.create(slider, {
-	start: [ 90 ],
-	range: {
-		'min': [   0 ],
-		'max': [ 100 ]
-	}
-});
-
 
 // Tooltips
 
@@ -49,10 +27,6 @@ $(window).on("resize load", function(){
   
 });
     
-
-
-  
-
 // Collapse Toggles
 
 $(".navigation__list__header").on( "click" , function() {

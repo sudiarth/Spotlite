@@ -1,9 +1,20 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'app_spotlite'
 
 urlpatterns = [
+    path('profile', views.profile, name='profile'),
+    path('settings', views.settings, name='settings'),
+    path('spotify', views.spotify, name='spotify'),
+
+    path('picture_upload', views.picture_upload, name='picture_upload'),
+
+    path('update_settings', views.update_settings, name='update_settings'),
+    path('update_password', views.update_password, name='update_password'),
+
     path('', views.index, name='index'),
 
     path('playlists-editor', views.playlists_editor, name='playlists_editor'),
@@ -18,5 +29,8 @@ urlpatterns = [
     path('playlist/items/<int:item_id>/delete', views.delete_item_in_playlist, name='delete_item_in_playlist'),
 
     path('song/<int:song_id>/add-to-playlist', views.add_to_playlist_step1, name='add_to_playlist_step1'),
-    path('song/<int:song_id>/add-to-playlist/<int:playlist_id>', views.add_to_playlist_step2, name='add_to_playlist_step2'),    
+    path('song/<int:song_id>/add-to-playlist/<int:playlist_id>', views.add_to_playlist_step2, name='add_to_playlist_step2'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
