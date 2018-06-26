@@ -274,6 +274,7 @@ body a:hover {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  border: 0px;
 }
 .current-track__actions {
   width: 5%;
