@@ -15,8 +15,6 @@ urlpatterns = [
     path('update_settings', views.update_settings, name='update_settings'),
     path('update_password', views.update_password, name='update_password'),
 
-    path('', views.index, name='index'),
-
     path('playlists-editor', views.playlists_editor, name='playlists_editor'),
     path('playlists', views.my_playlists, name='my_playlists'),
     path('playlist/<int:playlist_id>/like', views.like_playlist, name='like_playlist'),
@@ -30,6 +28,13 @@ urlpatterns = [
 
     path('song/<int:song_id>/add-to-playlist', views.add_to_playlist_step1, name='add_to_playlist_step1'),
     path('song/<int:song_id>/add-to-playlist/<int:playlist_id>', views.add_to_playlist_step2, name='add_to_playlist_step2'),
+    path('song/<int:song_id>', views.song, name='song'),
+    path('songs', views.songs, name='songs'),
+    path('song/<int:song_id>/add-to-history', views.add_song_to_history, name='add_song_to_history'),
+    path('play-history', views.play_history, name='play_history'),
+
+
+    path('', views.index, name='index'),    
 ]
 
 if settings.DEBUG:

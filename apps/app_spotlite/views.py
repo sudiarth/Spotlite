@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from . import models as m
-from pprint import pprint
 # from django.db.models import Q
 
 from django.conf import settings
@@ -9,6 +8,59 @@ from django.core.files.storage import FileSystemStorage
 from apps.auth_spotlite import models as um
 import random
 
+
+def index(request):
+    if 'user_id' in request.session:
+        return render(request, 'app_spotlite/index.html')
+    else:
+        imagenr = random.randint(1,8)
+        image = '/static/base_spotlite/img/bg{}.jpg'.format(imagenr)
+        context = {
+            'img_url' : image
+        }
+        return render(request, 'auth_spotlite/index.html', context)
+
+
+def play_history(request):
+    context = {
+        'histories' : m.History.objects.filter(user_id=request.session['user_id']).order_by('-created_at')
+    }
+    return render(request, 'app_spotlite/play_history.html', context)
+
+
+def songs(request):
+    context = {
+        'songs' : m.Song.objects.all().order_by('-updated_at')
+    }
+    return render(request, 'app_spotlite/songs.html', context)
+
+
+def song(request, song_id):
+    context = {
+        'song' : m.Song.objects.get(id=song_id)
+    }
+    return render(request, 'app_spotlite/song.html', context)
+
+
+def add_song_to_history(request, song_id):
+    if 'user_id' in request.session:
+
+        history = m.History()
+        history.user_id = request.session['user_id']
+        history.song_id = song_id    
+        
+        check = m.History.objects.filter(user_id=request.session['user_id']).order_by('-created_at')[:1]
+
+        if len(check) > 0:
+            if check[0].song_id != song_id:
+                history.save()
+        else:
+            history.save()
+
+        # return redirect(request.META['HTTP_REFERER'])
+        return redirect('app_spotlite:song', song_id=song_id)
+    
+    return redirect('app_spotlite:index')
 
 
 def add_to_playlist_step1(request, song_id):
@@ -103,9 +155,6 @@ def user_playlists(request, user_id):
     return render(request, 'app_spotlite/playlists.html', context = context)
 
 
-# def playlists_by_user(request, user_id):
-#     return m.Playlist.objects.filter(user_id=user_id).order_by('-created_at')
-
 def like_playlist(request, playlist_id):
     if len(m.Editor.objects.filter(user_id=request.session['user_id'], playlist_id=playlist_id)) == 0:
         editor = m.Editor()
@@ -151,17 +200,6 @@ def edit_playlist(request, playlist_id):
     return render(request, 'app_spotlite/playlist-edit.html', context = context)
 
 
-def index(request):
-    if 'user_id' in request.session:
-        return render(request, 'app_spotlite/index.html')
-    else:
-        imagenr = random.randint(1,8)
-        image = '/static/base_spotlite/img/bg{}.jpg'.format(imagenr)
-        context = {
-            'img_url' : image
-        }
-        return render(request, 'auth_spotlite/index.html', context)
-
 def spotify(request):
     return render(request, 'app_spotlite/spotify.html')
 
@@ -197,7 +235,8 @@ def update_settings(request):
     request.session['firstname'] = user.firstname
     request.session['surname'] = user.surname
     return redirect('app_spotlite:settings')
-    
+
+
 def update_password(request):
     user = um.User.objects.get(id=request.session['user_id'])
     if request.POST['html_password'] == request.POST['html_confirm'] and len(request.POST['html_password']) > 0:

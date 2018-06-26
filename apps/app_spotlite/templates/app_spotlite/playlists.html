@@ -4,19 +4,19 @@
 <div class="container mt-5">
 
     {% if can_add %}
-    <div class="row text-white">
+    <div class="row">
         <h2 class="mb-4">Add Playlist:</h2>
 
-            <div class="row form-control border-success ml-1">
-                <form action="{% url 'app_spotlite:playlists_editor' %}" method="POST" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <div class="form-group">
-                      <label for="name">Title</label>
-                      <input type="text" class="form-control" name="html_title" id="name" placeholder="Title">
-                  </div>
-                  <button type="submit" class="btn btn-primary">Add</button>
-              </form>            
-            </div>
+        <div class="row form-control border-success ml-1">
+            <form action="{% url 'app_spotlite:playlists_editor' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Title</label>
+                    <input type="text" class="form-control" name="html_title" id="name" placeholder="Title">
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>            
+        </div>
     </div>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -24,7 +24,7 @@
     {% endif %}
 
     <div class="row">
-        <div class="col-xs-12 text-white">   
+        <div class="col-xs-12">   
             {% if can_add %}
                 
             {% elif song_id %}
