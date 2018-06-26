@@ -1,0 +1,79 @@
+{% extends 'base_spotlite/index.html' %}
+
+{% block body %} 
+<div class="container justify-content-center">
+    <div class="col-6">
+
+        <form method="POST" action="{% url 'app_spotlite:update_settings' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="row">
+                    <h1>Settings</h1>
+                </div>
+                <div class="row">
+                    <label>E-mail:</label>
+                </div>
+                <div class="row">
+                    <input type="text" value="{{request.session.email}}" name="html_email"> 
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label>First name:</label>
+                </div>
+                <div class="row">
+                    <input type="text" value="{{request.session.firstname}}" name="html_firstname"> 
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label>Surname:</label>
+                </div>
+                <div class="row">
+                    <input type="text" value="{{request.session.surname}}"name="html_surname"> 
+                </div>
+            </div>
+            <div class="row mt-3 mb-4">
+                <button type="submit">Update personal information</button>
+            </div>
+        </form>
+
+        <form method="POST" action="{% url 'app_spotlite:picture_upload' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="row">
+                    <label>Profile picture:</label>
+                </div>
+                <div class="row">
+                    <input type="file" name="myfile" class="file-upload">
+                </div>
+                <div class="row mt-3 mb-4">
+                    <button type="submit">Upload image</button>
+                </div>
+            </div>
+        </form>
+
+        <form method="POST" action="{% url 'app_spotlite:update_password' %}">
+            <div class="form-group">
+                {% csrf_token %}
+                <div class="row">
+                    <label>Change Password:</label>
+                </div>
+                <div class="row mb-2">
+                    <input type="password" placeholder="Password" name="html_password">
+                </div>
+                <div class="row">
+                    <input type="password" placeholder="Confirm password" name="html_confirm">
+                </div>
+                <div class="row mt-3 mb-4">
+                    <button type="submit">Update password</button>
+                </div>
+            </div>
+        </form>
+
+        <div>
+            <p><b>UPGRADE TO PREMIUM.</b></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
