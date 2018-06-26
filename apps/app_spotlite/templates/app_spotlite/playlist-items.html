@@ -1,0 +1,48 @@
+{% extends 'base_spotlite/index.html' %} {% block body %}
+
+<p>&nbsp;</p><p>&nbsp;</p>
+<div class="container mt-5 text-white">
+    <div class="col-12">            
+        <h1><u>{{ playlist.title }}</u></h1>
+        <b><a class="text-white" href="{% url 'app_spotlite:my_playlists' %}">&laquo; back to playlist</a></b>
+            <p>&nbsp;</p>
+
+            <table class="data-table table table-striped table-bordered col-12" width="100%">
+                <thead>
+                    <tr>
+                        <th style="width: 500px;">Song Title</th>
+                        <th width="300">Added at</th>
+                        <th width="140">Action</th>
+                    </tr>
+                </thead>
+                <tbody>                    
+
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.song.title }}</td>
+                        <td width="150">{{ item.created_at }}</td>
+                        <td><a href="{% url 'app_spotlite:delete_item_in_playlist' item_id=item.id %}">remove</a></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+            <p>&nbsp;</p><p>&nbsp;</p>
+            
+            <h3><u>User in this Playlist</u></h3>
+            <div class="row" style="font-weight: bold;">
+                <div class="col col-8">Name</div>
+                <div class="col col-4">Joined at</div>
+            </div>
+            <hr />            
+            {% for editor in editors %}
+                <div class="row">                    
+                    <div class="col col-8">{{ editor.user.firstname }} {{ editor.user.surname }}</div>
+                    <div class="col col-4">{{ editor.user.created_at }}</div>
+                </div>
+                <hr />
+            {% endfor %}            
+    </div>
+</div>
+{% endblock %}

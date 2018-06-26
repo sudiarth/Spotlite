@@ -1,12 +1,27 @@
 body {
     font-size: .875rem;
     color: #333;
+    margin: 60px 0;
+  }
+
+  .navbar {
+    background: #333;
   }
   
   .feather {
     width: 16px;
     height: 16px;
     vertical-align: text-bottom;
+  }
+
+  #player {
+    padding: 0px;
+    border-top:1px solid #000;
+  }
+
+  .amplitude-song-played-progress {
+    margin-top: 5px;
+    width: 100%;
   }
   
   /*

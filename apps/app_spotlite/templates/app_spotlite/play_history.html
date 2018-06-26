@@ -1,0 +1,32 @@
+{% extends 'base_spotlite/index.html' %} {% block body %}
+
+<p>&nbsp;</p>
+<div class="container mt-5 text-white">
+
+    <div class="row">
+        <div class="col-xs-12">   
+            <h1>Play History</h1>
+            <p>&nbsp;</p>
+
+            <table class="data-tableXXX table table-striped table-bordered col-12" width="100%">
+                <thead>
+                    <tr>
+                        <th style="width: 500px;">Title</th>
+                        <th width="300">Played at</th>
+                    </tr>
+                </thead>
+                <tbody>                    
+
+                    {% for history in histories %}
+                    <tr>
+                        <td><a href="{% url 'app_spotlite:song' song_id=history.song.id %}"><h5 class="card-title">{{ history.song.title }}</h5></a></td>
+                        <td>{{ history.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
