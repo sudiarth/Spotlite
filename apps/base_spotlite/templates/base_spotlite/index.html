@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="{% static 'base_spotlite/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'base_spotlite/css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'base_spotlite/css/ionicons.min.css' %}">
-    <link rel="stylesheet" href="{% static 'base_spotlite/css/spotify.css' %}">
     <link rel="stylesheet" href="{% static 'base_spotlite/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'base_spotlite/css/spotify.css' %}">
     <link rel="stylesheet" href="{% static 'base_spotlite/css/styles.css' %}">
     <title>Spotlite</title>
 </head>
@@ -24,7 +24,7 @@
     <div id="content">
         {% block body %}{% endblock %}
     </div>
-    {% include 'base_spotlite/player.html' %}
+    {% include 'base_spotlite/spotify.player.html' %}
     <script src="{% static 'base_spotlite/js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static 'base_spotlite/js/jquery.history.js' %}"></script>
     <script src="{% static 'base_spotlite/js/bootstrap.min.js' %}"></script>

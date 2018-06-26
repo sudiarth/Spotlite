@@ -1,0 +1,27 @@
+{% extends 'base_spotlite/index.html' %} {% block body %}
+
+<p>&nbsp;</p><p>&nbsp;</p>
+<div class="container mt-5">
+
+    <h2><u>{{ song.title }}</u></h2>
+    <a href="{% url 'app_spotlite:add_song_to_history' song_id=song.id %}">Play now</a>
+    <p>&nbsp;</p>
+    <div class="row">
+        <div class="col-2">Create at</div>
+        <div class="col-1">:</div>
+        <div class="col-8">{{ song.created_at }}</div>
+
+        <div class="col-2">Update at</div>
+        <div class="col-1">:</div>
+        <div class="col-8">{{ song.updated_at }}</div>
+
+        <div class="col-2">Album</div>
+        <div class="col-1">:</div>
+        <div class="col-8">{{ song.album }}</div>
+
+        <div class="col-2">Lirik</div>
+        <div class="col-1">:</div>
+        <div class="col-8">{{ song.lirik }}</div>
+    </div>
+</div>
+{% endblock %}
