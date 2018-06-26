@@ -60,6 +60,29 @@ def song(request, song_id):
     return render(request, 'app_spotlite/song.html', context)
 
 
+def like_a_song(request, song_id):
+    if 'user_id' in request.session:
+        check = m.Like.objects.filter(user_id=request.session['user_id'], song_id=song_id)
+        if len(check) == 0:
+            like = m.Like()
+            like.user_id = request.session['user_id']
+            like.song_id = song_id
+            like.save()
+
+        return redirect('app_spotlite:index')
+
+    return redirect('app_spotlite:profile')
+
+
+def unlike_a_song(request, song_id):
+    if 'user_id' in request.session:
+        like = m.Like.objects.get(user_id=request.session['user_id'], song_id=song_id)
+        like.delete()
+
+        return redirect('app_spotlite:index')
+
+    return redirect('app_spotlite:profile')
+
 def add_song_to_history(request, song_id):
     if 'user_id' in request.session:
 

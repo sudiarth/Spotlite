@@ -162,7 +162,7 @@
         
       <section class="playlist">
   
-        <a href="#">
+        <a href="{% url 'app_spotlite:playlists_editor' %}">
   
           <i class="ion-ios-plus-outline"></i>
   
@@ -225,7 +225,7 @@
                   Play
                 </button>
                 
-                <button class="button-light">Follow</button>
+                <a href="{% url 'app_spotlite:like_a_song' song_id=1 %}" class="button-light">Like</a>
                 
                 <button class="button-light more">
                   <i class="ion-ios-more"></i>
