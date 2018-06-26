@@ -29,7 +29,15 @@ urlpatterns = [
     path('songs', views.songs, name='songs'),
     path('song/<int:song_id>/add-to-history', views.add_song_to_history, name='add_song_to_history'),
     path('play-history', views.play_history, name='play_history'),
+    path('live-friend-feed', views.live_friend_feed, name='live_friend_feed'),
 
+<<<<<<< HEAD
+=======
+
+    path('user/<int:following_id>/follow', views.add_as_friend, name='add_as_friend'),
+    
+
+>>>>>>> 2bd0bca4ff1fcc75e334ae8927d2ab2d2e559273
     path('', views.index, name='index'),    
 ]
 
