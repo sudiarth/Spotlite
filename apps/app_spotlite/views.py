@@ -221,10 +221,6 @@ def edit_playlist(request, playlist_id):
 
     return render(request, 'app_spotlite/playlist-edit.html', context = context)
 
-
-def spotify(request):
-    return render(request, 'app_spotlite/spotify.html')
-
 def profile(request):
     return render(request, 'app_spotlite/profile.html')
 
