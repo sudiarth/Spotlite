@@ -1326,57 +1326,18 @@
     
       <div class="social">
       
-        <div class="friends">
-        
-          <a href="#" class="friend">
-          
-            <i class="ion-android-person"></i>
-            
-            Sam Smith
-            
-          </a>
-          
-          <a href="#" class="friend">
-          
-            <i class="ion-android-person"></i>
-            
-            Tarah Forsyth
-            
-          </a>
-          
-          <a href="#" class="friend">
-          
-            <i class="ion-android-person"></i>
-            
-            Ricahrd Tomkins
-            
-          </a>
-          
-          <a href="#" class="friend">
-          
-            <i class="ion-android-person"></i>
-            
-            Tony Russo
-            
-          </a>
-          
-          <a href="#" class="friend">
-          
-            <i class="ion-android-person"></i>
-            
-            Alyssa Marist
-            
-          </a>
-          
-          <a href="#" class="friend">
-          
-            <i class="ion-android-person"></i>
-            
-            Ron Samson
-            
-          </a>
-          
-        </div>
+          <div class="friends">
+              {% for history in histories %}
+                  <a href="{% url 'app_spotlite:song' song_id=history.song_id %}" class="friend">
+                  
+                    <i class="ion-android-person"></i>
+                    
+                    <p>{{ history.user.firstname }}</p>
+                    <small>playing <b>{{ history.song.title }}</b></small>
+                    
+                  </a>
+              {% endfor %} 
+          </div>        
         
         <button class="button-light">Find Friends</button>
         

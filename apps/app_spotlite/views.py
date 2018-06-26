@@ -11,7 +11,10 @@ import random
 
 def index(request):
     if 'user_id' in request.session:
-        return render(request, 'app_spotlite/index.html')
+        context = {
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8]
+        }        
+        return render(request, 'app_spotlite/index.html', context)
     else:
         imagenr = random.randint(1,8)
         image = '/static/base_spotlite/img/bg{}.jpg'.format(imagenr)
@@ -34,13 +37,6 @@ def add_as_friend(request, following_id):
         return redirect('app_spotlite:profile')
 
     return redirect('auth_spotlite:login')
-
-
-def live_friend_feed(request):
-    context = {
-        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:10]
-    }
-    return render(request, 'app_spotlite/live_friend_feed.html', context)
 
 
 def play_history(request):
