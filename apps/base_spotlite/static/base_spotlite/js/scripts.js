@@ -47,5 +47,11 @@ $(document).ready ( function(){
             History.pushState('', $(this).text(), $(this).attr('href'));
         });
 
+        $('a.signout').click(function(evt) {
+            evt.preventDefault();
+            History.pushState('', '', $(this).attr('href'));
+            window.location.replace('/auth/logout');
+        });
+
     });
 });
