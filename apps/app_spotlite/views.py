@@ -15,8 +15,8 @@ def index(request):
         }
         return render(request, 'auth_spotlite/index.html', context)
 
-def dashboard(request):
-    return render(request, 'app_spotlite/dashboard.html')
+def spotify(request):
+    return render(request, 'app_spotlite/spotify.html')
 
 def profile(request):
     return render(request, 'app_spotlite/profile.html')
