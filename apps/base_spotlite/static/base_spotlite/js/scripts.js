@@ -54,4 +54,7 @@ $(document).ready ( function(){
         });
 
     });
+
+    $('.dropdown-toggle').dropdown();
+    $('.data-table').DataTable();
 });
