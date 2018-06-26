@@ -2,9 +2,18 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from apps.auth_spotlite import models as m
+import random
 
 def index(request):
-    return render(request, 'app_spotlite/index.html')
+    if 'user_id' in request.session:
+        return render(request, 'app_spotlite/index.html')
+    else:
+        imagenr = random.randint(1,8)
+        image = '/static/base_spotlite/img/bg{}.jpg'.format(imagenr)
+        context = {
+            'img_url' : image
+        }
+        return render(request, 'auth_spotlite/index.html', context)
 
 def dashboard(request):
     return render(request, 'app_spotlite/dashboard.html')
