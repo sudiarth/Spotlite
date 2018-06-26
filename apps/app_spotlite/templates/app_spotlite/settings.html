@@ -1,9 +1,8 @@
 {% extends 'base_spotlite/index.html' %}
 
 {% block body %} 
-<div class="container justify-content-center">
-    <div class="col-6">
-
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center bg-primary">
         <form method="POST" action="{% url 'app_spotlite:update_settings' %}">
             {% csrf_token %}
             <div class="form-group">
@@ -34,25 +33,12 @@
                 </div>
             </div>
             <div class="row mt-3 mb-4">
-                <button type="submit">Update personal information</button>
+                <button type="submit" class="btn btn-success">Update personal information</button>
             </div>
         </form>
+        </div>
 
-        <form method="POST" action="{% url 'app_spotlite:picture_upload' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group">
-                <div class="row">
-                    <label>Profile picture:</label>
-                </div>
-                <div class="row">
-                    <input type="file" name="myfile" class="file-upload">
-                </div>
-                <div class="row mt-3 mb-4">
-                    <button type="submit">Upload image</button>
-                </div>
-            </div>
-        </form>
-
+    <div class="row">
         <form method="POST" action="{% url 'app_spotlite:update_password' %}">
             <div class="form-group">
                 {% csrf_token %}
@@ -66,14 +52,31 @@
                     <input type="password" placeholder="Confirm password" name="html_confirm">
                 </div>
                 <div class="row mt-3 mb-4">
-                    <button type="submit">Update password</button>
+                    <button type="submit" class="btn btn-success">Update password</button>
                 </div>
             </div>
         </form>
+    </div>
 
-        <div>
-            <p><b>UPGRADE TO PREMIUM.</b></p>
-        </div>
+    <div class="row">
+        <form method="POST" action="{% url 'app_spotlite:picture_upload' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="row">
+                    <label>Profile picture:</label>
+                </div>
+                <div class="row">
+                    <input type="file" name="myfile" class="file-upload">
+                </div>
+                <div class="row mt-3 mb-4">
+                    <button type="submit" class="btn btn-success">Upload image</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <p><b>UPGRADE TO PREMIUM.</b></p>
     </div>
 </div>
 {% endblock %}
