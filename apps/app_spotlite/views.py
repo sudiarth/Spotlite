@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
 from django.contrib import messages
 from . import models as m
-import apps.auth_spotlite.models as mu
 from pprint import pprint
 # from django.db.models import Q
 
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from apps.auth_spotlite import models as um
+import random
 
-def index(request):
-    return render(request, 'app_spotlite/index.html')
+
 
 def add_to_playlist_step1(request, song_id):
     if 'user_id' in request.session:
@@ -97,7 +98,7 @@ def user_playlists(request, user_id):
 
     context = {
         'editors': m.Editor.objects.filter(user_id=user_id),
-        'user': mu.User.objects.get(id=user_id),
+        'user': um.User.objects.get(id=user_id),
     }    
     return render(request, 'app_spotlite/playlists.html', context = context)
 
@@ -148,11 +149,7 @@ def edit_playlist(request, playlist_id):
     } 
 
     return render(request, 'app_spotlite/playlist-edit.html', context = context)
-=======
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
-from apps.auth_spotlite import models as um
-import random
+
 
 def index(request):
     if 'user_id' in request.session:
@@ -207,5 +204,4 @@ def update_password(request):
         user.password = request.POST['html_password']
         user.save()
     return redirect('app_spotlite:settings') 
->>>>>>> 4193770db675d23eefc78a5df996e64c873e39c0
     
