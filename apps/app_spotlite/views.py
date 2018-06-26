@@ -6,8 +6,9 @@ from . import models as m
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from apps.auth_spotlite import models as um
-import random
+import random, bcrypt, re
 
+EMAIL_REGEX = re.compile(r'^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$')
 
 def index(request):
     if 'user_id' in request.session:
@@ -227,20 +228,48 @@ def picture_upload(request):
         user.save()
 
         request.session['profilepic'] = user.profilepic
-        return redirect('app_spotlite:profile')
-    return render(request, 'app_spotlite/profile.html')
+        return redirect('app_spotlite:settings')
+    return render(request, 'app_spotlite/settings.html')
 
 def update_settings(request):
-    user = um.User.objects.get(id=request.session['user_id'])
-    user.email = request.POST['html_email']
-    user.firstname = request.POST['html_firstname']
-    user.surname = request.POST['html_surname']
-    user.save()
-    request.session['user_id'] = user.id
-    request.session['email'] = user.email
-    request.session['firstname'] = user.firstname
-    request.session['surname'] = user.surname
-    if request.POST['html_password'] == request.POST['html_confirm'] and len(request.POST['html_password']) > 0:
-        user.password = request.POST['html_password']
+    if request.method == 'POST':
+        try:
+            errors = []
+            user = um.User.objects.get(id=request.session['user_id'])
+            
+            email = request.POST['html_email']
+            firstname = request.POST['html_firstname']
+            surname = request.POST['html_surname']
+            
+            if len(email) == 0 or len(firstname) == 0 or len(surname) == 0:
+                errors.append("Fields cannot be blank.")
+            if not EMAIL_REGEX.match(email):
+                errors.append("Invalid e-mail.")    
+            
+            if request.POST['html_password'] == request.POST['html_confirm'] and len(request.POST['html_password']) > 0:
+                password = request.POST['html_password']
+                if password != request.POST['html_confirm']:
+                    errors.append("Passwords do not match.")
+                if len(password) < 6:
+                    errors.append("Password must be longer than 6 characters.")
+                hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+                user.password = hashed_password
+            else:
+                pass
+
+
+            if len(errors) == 0:
+                user.email = request.POST['html_email']
+                user.firstname = request.POST['html_firstname']
+                user.surname = request.POST['html_surname']
+
+                request.session['user_id'] = user.id
+                request.session['email'] = user.email
+                request.session['firstname'] = user.firstname
+                request.session['surname'] = user.surname
+                user.save()
+        except:
+            raise
+            print(errors)
     return redirect('app_spotlite:settings')
     
