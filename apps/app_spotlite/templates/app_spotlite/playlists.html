@@ -1,0 +1,83 @@
+{% extends 'base_spotlite/index.html' %} {% block body %}
+<div class="container mt-5">
+
+    {% if can_add %}
+    <div class="row text-white">
+        <h2 class="mb-4">Add Playlist:</h2>
+
+            <div class="row form-control border-success ml-1">
+                <form action="{% url 'app_spotlite:playlists_editor' %}" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <label for="name">Title</label>
+                      <input type="text" class="form-control" name="html_title" id="name" placeholder="Title">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Add</button>
+              </form>            
+            </div>
+    </div>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+    {% endif %}
+
+    <div class="row">
+        <div class="col-xs-12 text-white">   
+            {% if can_add %}
+                
+            {% elif song_id %}
+                <h1>Choose a Playlist:</h1>
+            {% elif user %}
+                <h1>{{ user.firstname }}'s Playlists</h1>
+            {% else %}
+                <h1>Playlists</h1>
+            {% endif %}
+            <p>&nbsp;</p>
+
+            <table class="data-table table table-striped table-bordered col-12" width="100%">
+                <thead>
+                    <tr>
+                        <th style="width: 500px;">Title</th>
+                        <th width="300">Created</th>
+                        <th width="140">Action</th>
+                    </tr>
+                </thead>
+                <tbody>                    
+
+                    {% for editor in editors %}
+                    <tr>
+                        <td>
+                                {% if song_id %}
+                                    <a href="{% url 'app_spotlite:add_to_playlist_step2' song_id=song_id playlist_id=editor.playlist_id %}"><h5 class="card-title">{{ editor.playlist.title }}</h5></a>
+                                {% else %}
+                                    <a href="{% url 'app_spotlite:items_in_playlist' playlist_id=editor.playlist_id %}"><h5 class="card-title">{{ editor.playlist.title }}</h5></a>
+                                {% endif %}                                     
+                        </td>
+                        <td>{{ editor.playlist.created_at }}</td>
+                        <td>
+                                {% if user %}
+                                <a href="{% url 'app_spotlite:like_playlist' playlist_id=editor.playlist_id %}">like it</a>
+
+                                {% else %}
+                                <a href="{% url 'app_spotlite:edit_playlist' playlist_id=editor.playlist_id %}">edit</a>
+                                | 
+                                <a href="{% url 'app_spotlite:delete_playlist' playlist_id=editor.playlist_id %}">delete</a>                            
+                                {% endif %}                                    
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <p>&nbsp;</p>
+    {% if can_add %}
+    {% elif user %}
+       <p><a class="btn btn-sm btn-primary" href="{% url 'app_spotlite:my_playlists' %}">back to my playlist</a></p>
+    {% else %}
+        <p><a class="btn btn-sm btn-primary" href="{% url 'app_spotlite:playlists_editor' %}">add more playlist</a></p>
+    {% endif %}
+</div>
+{% endblock %}

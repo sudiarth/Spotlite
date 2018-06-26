@@ -32,6 +32,14 @@
     <script src="{% static 'base_spotlite/js/spotify.js' %}"></script>
     <script src="{% static 'base_spotlite/js/playlist.js' %}"></script>
     <script src="{% static 'base_spotlite/js/scripts.js' %}"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.data-table').DataTable();
+        });    
+    </script>    
 </body>
 
 </html>
