@@ -101,7 +101,7 @@ def add_to_playlist_step2(request, song_id, playlist_id):
             playlist_item.user_id = request.session['user_id']
             playlist_item.save()
         
-        return redirect('app_spotlite:my_playlists')
+        return redirect('app_spotlite:profile')
 
     return redirect('auth_spotlite:login')
 
@@ -134,21 +134,8 @@ def playlists_editor(request):
     return redirect('auth_spotlite:index')
 
 
-def my_playlists(request):
-
-    if 'user_id' in request.session:
-        context = {
-            'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'user': False
-        }
-        return render(request, 'app_spotlite/playlists.html', context = context)
-
-    return redirect('auth_spotlite:index')
-
-
 def items_in_playlist(request, playlist_id):
     if 'user_id' in request.session:
-
         context = {
             'items': m.PlaylistItem.objects.filter(playlist_id=playlist_id),
             'playlist': m.Playlist.objects.get(id=playlist_id),
@@ -165,7 +152,6 @@ def delete_item_in_playlist(request, item_id):
     return redirect(request.META['HTTP_REFERER'])
 
 def user_playlists(request, user_id):
-
     context = {
         'editors': m.Editor.objects.filter(user_id=user_id),
         'user': um.User.objects.get(id=user_id),
@@ -203,7 +189,7 @@ def edit_playlist(request, playlist_id):
         if request.POST['destination'] != '':
             return redirect(request.POST['destination'])
         else:
-            return redirect('app_spotlite:my_playlists')
+            return redirect('app_spotlite:profile')
 
     if 'HTTP_REFERER' in request.META:
         referer = request.META['HTTP_REFERER']
@@ -218,7 +204,13 @@ def edit_playlist(request, playlist_id):
     return render(request, 'app_spotlite/playlist-edit.html', context = context)
 
 def profile(request):
-    return render(request, 'app_spotlite/profile.html')
+    if 'user_id' in request.session:
+        context = {
+            'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+            'user': m.User.objects.filter(id=request.session['user_id']),
+        }
+        return render(request, 'app_spotlite/profile.html', context)
+    return redirect('auth_spotlite:index')
 
 def settings(request):
     return render(request, 'app_spotlite/settings.html')
