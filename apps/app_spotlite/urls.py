@@ -30,6 +30,8 @@ urlpatterns = [
     path('song/<int:song_id>/add-to-history', views.add_song_to_history, name='add_song_to_history'),
     path('play-history', views.play_history, name='play_history'),
 
+    path('artist/<int:artist_id>', views.artist, name='artist'),
+    path('<int:user_id>/profile', views.profile, name='profile'),   
 
     path('user/<int:following_id>/follow', views.add_as_friend, name='add_as_friend'),
     

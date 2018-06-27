@@ -204,14 +204,19 @@ def edit_playlist(request, playlist_id):
 
     return render(request, 'app_spotlite/playlist-edit.html', context = context)
 
-def profile(request):
+def profile(request, user_id):
     if 'user_id' in request.session:
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'user': m.User.objects.filter(id=request.session['user_id']),
+            'user': m.User.objects.get(id=user_id),
         }
+        print(context)
         return render(request, 'app_spotlite/profile.html', context)
     return redirect('auth_spotlite:index')
+
+
+def artist(request, artist_id):
+    return render(request, 'app_spotlite/artist.html')
 
 def settings(request):
     return render(request, 'app_spotlite/settings.html')
@@ -243,15 +248,19 @@ def update_settings(request):
             
             if len(email) == 0 or len(firstname) == 0 or len(surname) == 0:
                 errors.append("Fields cannot be blank.")
+                messages.error(request, "Fields cannot be blank.")
             if not EMAIL_REGEX.match(email):
                 errors.append("Invalid e-mail.")    
+                messages.error(request, "Invalid e-mail.")
             
             if request.POST['html_password'] == request.POST['html_confirm'] and len(request.POST['html_password']) > 0:
                 password = request.POST['html_password']
                 if password != request.POST['html_confirm']:
                     errors.append("Passwords do not match.")
+                    messages.error(request, "Passwords do not match.")
                 if len(password) < 6:
                     errors.append("Password must be longer than 6 characters.")
+                    messages.error(request, "Password must be longer than 6 characters.")
                 hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
                 user.password = hashed_password
             else:
