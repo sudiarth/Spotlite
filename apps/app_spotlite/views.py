@@ -8,6 +8,8 @@ from django.core.files.storage import FileSystemStorage
 from apps.auth_spotlite import models as um
 import random, bcrypt, re
 
+from apps.app_spotlite import lastfm_utilities as lastfm_utils
+
 EMAIL_REGEX = re.compile(r'^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$')
 
 def index(request):
@@ -301,6 +303,18 @@ def post_search(request):
     return redirect('app_spotlite:search', search_keyword=search_keyword)
 
 def search(request, search_keyword):
+    context = {
+        'songs': m.Song.objects.filter(title__contains=search_keyword),
+        'albums': m.Album.objects.filter(title__contains=search_keyword),
+        'artists': m.Artist.objects.filter(name__contains=search_keyword),
+    }
+    return render(request, 'app_spotlite/search.html', context)
+
+def presearch(request, search_keyword):
+    lastfm_utils.search_artist('artist', 'artist', search_keyword)
+    lastfm_utils.search_album('album', 'album', search_keyword)
+    lastfm_utils.search_song('track', 'track', search_keyword)
+
     context = {
         'songs': m.Song.objects.filter(title__contains=search_keyword),
         'albums': m.Album.objects.filter(title__contains=search_keyword),

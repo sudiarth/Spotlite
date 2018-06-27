@@ -1,5 +1,5 @@
 {% extends "base_spotlite/index.html" %} {% block body %}
-<section class="content" style="margin-top: 60px;">
+<section class="content" style="margin-top: 60px; height: 100%">
 
    <!-- should moved outside, put it on the base -->
    <div class="content__left">
@@ -114,7 +114,7 @@
                         <div class="media-card__image" style="background-image: url({{album.cover}});">
                            <i class="ion-ios-play"></i>
                         </div>
-                        <a class="media-card__footer">{{ album.title }}</a>
+                        <a class="media-card__footer" style="color: white; text-align: center">{{ album.title }}</a>
                      </div>
                      {% endfor %}
                   </div>
@@ -128,7 +128,7 @@
                            <div class="media-card__image" style="background-image: url({{artist.photo}});">
                               <i class="ion-ios-play"></i>
                            </div>
-                           <a class="media-card__footer">{{ artist.cover }}</a>
+                           <a class="media-card__footer" style="color: white; text-align: center">{{ artist.name }}</a>
                         </div>
                         {% empty %}
                            <p style="color: white">No artist found</p>
