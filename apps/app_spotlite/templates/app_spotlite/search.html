@@ -116,6 +116,8 @@
                         </div>
                         <a class="media-card__footer" style="color: white; text-align: center">{{ album.title }}</a>
                      </div>
+                        {% empty %}
+                           <p style="color: white">No album found</p>
                      {% endfor %}
                   </div>
                </div>
@@ -141,30 +143,20 @@
    </div>
 
    <div class="content__right">
-
       <div class="social">
-
          <div class="friends">
             {% for history in histories %}
             <a href="{% url 'app_spotlite:song' song_id=history.song_id %}" class="friend">
-
                <i class="ion-android-person"></i>
-
                <p>{{ history.user.firstname }}</p>
                <small>playing
                   <b>{{ history.song.title }}</b>
                </small>
-
             </a>
             {% endfor %}
          </div>
-
          <button class="button-light">Find Friends</button>
-
       </div>
-
    </div>
-
 </section>
-
 {% endblock %}
