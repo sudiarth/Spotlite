@@ -9,7 +9,7 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('settings', views.settings, name='settings'),
 
-    path('picture_upload', views.picture_upload, name='picture_upload'),
+    path('picture_upload/<str:image_purpose>', views.picture_upload, name='picture_upload'),
 
     path('update_settings', views.update_settings, name='update_settings'),
 
@@ -34,7 +34,8 @@ urlpatterns = [
     path('<int:user_id>/profile', views.profile, name='profile'),   
 
     path('user/<int:following_id>/follow', views.add_as_friend, name='add_as_friend'),
-    
+
+    path('change_membership', views.change_membership, name='change_membership'),
 
     path('', views.index, name='index'),    
 ]

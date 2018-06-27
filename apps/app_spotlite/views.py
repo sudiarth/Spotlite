@@ -210,7 +210,6 @@ def profile(request, user_id):
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
             'user': m.User.objects.get(id=user_id),
         }
-        print(context)
         return render(request, 'app_spotlite/profile.html', context)
     return redirect('auth_spotlite:index')
 
@@ -219,9 +218,10 @@ def artist(request, artist_id):
     return render(request, 'app_spotlite/artist.html')
 
 def settings(request):
+
     return render(request, 'app_spotlite/settings.html')
 
-def picture_upload(request):
+def picture_upload(request, image_purpose):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
@@ -229,7 +229,11 @@ def picture_upload(request):
         uploaded_file_url = fs.url(filename)
 
         user = um.User.objects.get(id=request.session['user_id'])
-        user.profilepic = uploaded_file_url
+        
+        if image_purpose == "profilepic":
+            user.profilepic = uploaded_file_url
+        if image_purpose == "profilebackground":
+            user.profilebackground = uploaded_file_url
         user.save()
 
         request.session['profilepic'] = user.profilepic
@@ -280,5 +284,15 @@ def update_settings(request):
         except:
             raise
             print(errors)
+    return redirect('app_spotlite:settings')
+
+def change_membership(request):
+    user = m.User.objects.get(id=request.session['user_id'])
+    if user.premium == 0:
+        user.premium = 1
+    else:
+        user.premium = 0
+    request.session['premium'] = user.premium
+    user.save()
     return redirect('app_spotlite:settings')
     

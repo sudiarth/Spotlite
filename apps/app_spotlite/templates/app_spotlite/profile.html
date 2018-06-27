@@ -202,7 +202,7 @@
     
       <div class="artist is-verified">
       
-        <div class="artist__header">
+        <div class="artist__header" style="background-image: url('{{user.profilebackground}}');">
         
           <div class="artist__info mb-5">
           
@@ -214,13 +214,19 @@
             
             <div class="artist__info__meta">
             
-              <div class="artist__info__type">user</div>
+              <div class="artist__info__type text-white">
+                {% if user.premium == 0 %}
+                <b>USER</b>
+                {% else %}
+                <b>PREMIUM USER</b>
+                {% endif %}
+              </div>
               
               <div class="artist__info__name">{{user.firstname}} {{user.surname}}</div>
               
               <div class="artist__info__actions">
                 
-                <button class="button-light">Follow</button>
+                <button class="button-dark">Follow</button>
                 
               </div>
               
