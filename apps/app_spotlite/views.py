@@ -217,7 +217,13 @@ def profile(request, user_id):
 
 
 def artist(request, artist_id):
-    return render(request, 'app_spotlite/artist.html')
+    imagenr = random.randint(1,6)
+    image = '/static/base_spotlite/img/artist{}.jpg'.format(imagenr)
+    context = {
+        'artist' : m.Artist.objects.get(id=artist_id),
+        'img_url' : image
+    }
+    return render(request, 'app_spotlite/profile-artist.html', context)
 
 def settings(request):
 
