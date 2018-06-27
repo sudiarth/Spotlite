@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from . import models as m
-# from django.db.models import Q
+from django.db.models import Q
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -307,6 +307,7 @@ def search(request, search_keyword):
         'songs': m.Song.objects.filter(title__contains=search_keyword),
         'albums': m.Album.objects.filter(title__contains=search_keyword),
         'artists': m.Artist.objects.filter(name__contains=search_keyword),
+        'users': um.User.objects.filter(Q(firstname__contains=search_keyword) | Q(surname__contains=search_keyword))
     }
     return render(request, 'app_spotlite/search.html', context)
 

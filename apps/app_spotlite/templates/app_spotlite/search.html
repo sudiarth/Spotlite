@@ -58,6 +58,9 @@
                   <li role="presentation">
                      <a href="#search_artist" aria-controls="search_artist" role="tab" data-toggle="tab">Artist</a>
                   </li>
+                  <li role="presentation">
+                     <a href="#search_user" aria-controls="search_user" role="tab" data-toggle="tab">People</a>
+                  </li>
                </ul>
             </div>
 
@@ -137,6 +140,23 @@
                         {% endfor %}
                   </div>
                </div>
+
+               <!-- People Search Result -->
+               <div role="tabpanel" class="tab-pane" id="search_user">
+                  <div class="media-cards">
+                        {% for user in users %}
+                        <div class="media-card">
+                           <div class="media-card__image" style="background-image: url({{user.profilepic}});">
+                              <i class="ion-ios-play"></i>
+                           </div>
+<a class="media-card__footer" style="color: white; text-align: center" href="{% url 'app_spotlite:profile' user_id=user.id %}">{{ user.firstname }}</a>
+                        </div>
+                        {% empty %}
+                           <p style="color: white">Nothing</p>
+                        {% endfor %}
+                  </div>
+               </div>
+
             </div>
          </div>
       </div>
