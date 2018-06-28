@@ -19,8 +19,10 @@ def index(request):
             'albums': m.Album.objects.all()[:24],
             'artists': m.Artist.objects.all()[:24],            
             'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
-            'editors': m.Editor.objects.filter(user_id=request.session['user_id'])
-        }        
+            'editors' : m.Editor.objects.filter(user_id=request.session['user_id']),
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+        }
+        print(context['friends'])
         return render(request, 'app_spotlite/index.html', context)
     else:
         imagenr = random.randint(1,8)
@@ -33,12 +35,10 @@ def index(request):
 
 def add_as_friend(request, following_id):
     if 'user_id' in request.session:
-        check = m.Follow.objects.filter(follower = request.session['user_id'])
-        if len(check) == 0:
-            follow = m.Follow()
-            follow.follower_id = request.session['user_id']
-            follow.following_id = following_id
-            follow.save()
+        follow = m.Follow()
+        follow.follower_id = request.session['user_id']
+        follow.following_id = following_id
+        follow.save()
         
         # return redirect(request.META['HTTP_REFERER'])
         return redirect('app_spotlite:profile', following_id)
@@ -77,7 +77,7 @@ def songs(request):
 
 def song(request, song_id):
     like = False
-    like_check = m.Like.objects.filter(song_id=song_id)
+    like_check = m.Like.objects.filter(song_id=song_id, user_id=request.session['user_id'])
     if len(like_check) > 0:
         like = True
 
@@ -180,7 +180,9 @@ def playlists_editor(request):
 
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'can_add': True
+            'user_editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+            'can_add': True,
+            'user': False
         }
         return render(request, 'app_spotlite/playlists.html', context = context)
 
@@ -189,12 +191,19 @@ def playlists_editor(request):
 
 def items_in_playlist(request, playlist_id):
     if 'user_id' in request.session:
+
+        can_remove = False
+        check_can_remove = m.Editor.objects.filter(playlist_id=playlist_id, user_id=request.session['user_id'])
+        if len(check_can_remove) > 0:
+            can_remove = True
+
         context = {
             # 'songs': m.Song.objects.filter(playlist_of__playlist_id=playlist_id),
             'items': m.PlaylistItem.objects.filter(playlist_id=playlist_id),
             'playlist': m.Playlist.objects.get(id=playlist_id),
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'editor_users': m.Editor.objects.filter(playlist_id=playlist_id)
+            'editor_users': m.Editor.objects.filter(playlist_id=playlist_id),
+            'can_remove': can_remove
         }
         return render(request, 'app_spotlite/playlist-items.html', context = context)
 
@@ -208,7 +217,8 @@ def delete_item_in_playlist(request, item_id):
 
 def user_playlists(request, user_id):
     context = {
-        'editors': m.Editor.objects.filter(user_id=user_id),
+        'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+        'user_editors': m.Editor.objects.filter(user_id=user_id),
         'user': um.User.objects.get(id=user_id),
     }    
     return render(request, 'app_spotlite/playlists.html', context = context)
@@ -263,6 +273,7 @@ def profile(request, user_id):
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
             'user': m.User.objects.get(id=user_id),
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
         }
         return render(request, 'app_spotlite/profile.html', context)
     return redirect('auth_spotlite:index')
@@ -273,13 +284,16 @@ def artist(request, artist_id):
     image = '/static/base_spotlite/img/artist{}.jpg'.format(imagenr)
     context = {
         'artist' : m.Artist.objects.get(id=artist_id),
-        'img_url' : image
+        'img_url' : image,
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
     }
     return render(request, 'app_spotlite/profile-artist.html', context)
 
 def settings(request):
-
-    return render(request, 'app_spotlite/settings.html')
+    context = {
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']),    
+        }
+    return render(request, 'app_spotlite/settings.html', context)
 
 def picture_upload(request, target):
     try:
@@ -370,7 +384,8 @@ def search(request, search_keyword):
         'songs': m.Song.objects.filter(title__contains=search_keyword),
         'albums': m.Album.objects.filter(title__contains=search_keyword),
         'artists': m.Artist.objects.filter(name__contains=search_keyword),
-        'users': um.User.objects.filter(Q(firstname__contains=search_keyword) | Q(surname__contains=search_keyword))
+        'users': um.User.objects.filter(Q(firstname__contains=search_keyword) | Q(surname__contains=search_keyword)),
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
     }
     return render(request, 'app_spotlite/search.html', context)
 
@@ -379,5 +394,6 @@ def presearch(request, search_keyword):
         'artists': lastfm_utils.search_artist(search_keyword),
         'songs': lastfm_utils.search_song(search_keyword),
         'albums':  lastfm_utils.search_album(search_keyword),
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
     }
     return render(request, 'app_spotlite/search.html', context)

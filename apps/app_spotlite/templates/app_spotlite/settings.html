@@ -68,13 +68,6 @@
                                     <input type="submit" class="btn btn-success mt-3" value="Upload">
                                 </div>
                             </form>
-                            <div class="text-center">
-                                {% if request.session.premium == 0 %}
-                                <a href="{% url 'app_spotlite:change_membership' %}" class="btn btn-success mt-3">UPGRADE TO PREMIUM</a>
-                                {% else %}
-                                <a href="{% url 'app_spotlite:change_membership' %}" class="btn btn-secondary mt-3">CANCEL SUBSCRIPTION</a>
-                                {% endif %}
-                            </div>
                         </div>
                 
                     

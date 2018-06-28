@@ -60,8 +60,10 @@
                                           
                                             <div class="track__length">1:11 &nbsp; &nbsp; </div>
                                     
-                                            <a class="text-danger" href="{% url 'app_spotlite:delete_item_in_playlist' item_id=item.id %}">remove</a>
-                                    
+                                            {% if can_remove %}
+                                                <a class="text-danger" href="{% url 'app_spotlite:delete_item_in_playlist' item_id=item.id %}">remove</a>
+                                            {% endif %}
+                                            
                                             </div>
                                             {% endfor %}
                                         </div>
