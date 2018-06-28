@@ -23,7 +23,7 @@
                     <a class="dropdown-item add2playlist" href="#" data-href="{% url 'app_spotlite:add_to_playlist_step2' song_id=song.id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
                     {% endfor %}
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
+                    <a class="no-load dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
               </div>
               </div>
         </div>
@@ -44,3 +44,16 @@
             display: none;
       }
 </style>
+
+<script>
+        $('a.add2playlist').click(function(){
+          url = $(this).attr('data-href'); 
+          // $('.add2playlist_loading').show();
+          // $(this).closest('.track__title').find('.add2playlist_loading').show();
+          $.get(url, function( data ) {
+                alert('successfull add to this playlist')
+            // $(this).closest('.track__title').find('.add2playlist_loading').hide();
+            // alert(1);
+          });
+        });      
+</script>

@@ -1,10 +1,4 @@
-{% extends "base_spotlite/index.html" %}
-{% block body %}
-<section class="content text-white" style="margin-top: 60px; height: 100%">
 
-        {% include 'app_spotlite/content_left.html' %}
-
-        <div class="content__middle pl-5 pt-5">
 
                 {% if can_add %}
                 <div class="row">
@@ -84,8 +78,3 @@
                 {% else %}
                     <p><a class="btn btn-sm btn-primary" href="{% url 'app_spotlite:playlists_editor' %}">add more playlist</a></p>
                 {% endif %}
-        </div>
-
-        {% include 'app_spotlite/content_right.html' %}
-    </section>
-{% endblock %}

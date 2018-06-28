@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static 'base_spotlite/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'base_spotlite/css/spotify.css' %}">
     <title>Spotlite</title>
+    <script src="{% static 'base_spotlite/js/jquery-3.2.1.min.js' %}"></script>
 </head>
 
 <body>
@@ -25,7 +26,6 @@
         {% block body %}{% endblock %}
     </div>
     {% include 'base_spotlite/player.html' %}
-    <script src="{% static 'base_spotlite/js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static 'base_spotlite/js/jquery.history.js' %}"></script>
     <script src="{% static 'base_spotlite/js/popper.min.js' %}"></script>
     <script src="{% static 'base_spotlite/js/bootstrap.min.js' %}"></script>
