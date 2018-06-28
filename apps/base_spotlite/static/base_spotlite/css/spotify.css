@@ -277,7 +277,7 @@ body a:hover {
   border: 0px;
 }
 .current-track__actions {
-  width: 5%;
+  width: 20%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -292,10 +292,10 @@ body a:hover {
   cursor: pointer;
 }
 .current-track__actions .play {
-  font-size: 36px;
+  font-size: 45px;
 }
 .current-track__progress {
-  width: 70%;
+  width: 50%;
   padding: 0 30px;
   color: #aaaaaa;
   font-size: 11px;
@@ -335,7 +335,7 @@ body a:hover {
   display: block;
 }
 .current-track__options {
-  width: 25%;
+  width: 30%;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -401,10 +401,10 @@ body a:hover {
 }
 @media (max-width: 1400px) {
   .current-track__actions {
-    width: 10%;
+    width: 30%;
   }
   .current-track__progress {
-    width: 50%;
+    width: 30%;
   }
   .current-track__options {
     width: 40%;
@@ -412,21 +412,21 @@ body a:hover {
 }
 @media (max-width: 980px) {
   .current-track__actions {
-    width: 10%;
+    width: 30%;
   }
   .current-track__progress {
-    width: 40%;
+    width: 30%;
   }
   .current-track__options {
-    width: 50%;
+    width: 40%;
   }
 }
 @media (max-width: 768px) {
   .current-track__actions {
-    width: 25%;
+    width: 3%;
   }
   .current-track__progress {
-    width: 75%;
+    width: 70%;
   }
   .current-track__options {
     width: 100%;
@@ -522,7 +522,7 @@ body a:hover {
 }
 .artist__header .artist__info__actions button {
   margin-right: 10px;
-  height: 27px;
+  height: 36px;
   display: flex;
   flex-flow: row wrap;
   align-items: center;

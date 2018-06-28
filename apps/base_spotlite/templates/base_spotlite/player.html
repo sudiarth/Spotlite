@@ -4,55 +4,64 @@
         
               <div class="current-track__actions">
               
-                <a class="ion-ios-skipbackward amplitude-prev" amplitude-playlist="spotlite"></a>
-                
-                <a class="ion-ios-play play button amplitude-play-pause amplitude-paused" amplitude-playlist-main-play-pause="true" amplitude-playlist="spotlite"></a>
-                
-                <a class="ion-ios-skipforward amplitude-next" amplitude-playlist="spotlite"></a>
+                <a href="#" class="control amplitude-prev" amplitude-playlist="spotlite">
+                    <i class="ion-ios-skipbackward"></i>
+                </a>
+
+                <a href="#" class="control play button amplitude-play-pause amplitude-paused" amplitude-playlist-main-play-pause="true" amplitude-playlist="spotlite">
+                    <i class="ion-ios-play"></i>
+                </a>
+
+                <a href="#" class="control amplitude-next" amplitude-playlist="spotlite">
+                    <i class="ion-ios-skipforward"></i>
+                </a>
+
+                <a href="#" class="control devices amplitude-shuffle" amplitude-playlist="spotlite">
+                    <i class="ion-shuffle"></i>
+                </a>
+
+                <a href="#" class="control amplitude-repeat amplitude-repeat-song">
+                    <i class="ion-refresh"></i>
+                </a>
                 
               </div>
               
               <div class="current-track__progress">
               
-                <div class="current-track__progress__start">0:01</div>
+                <div class="current-track__progress__start">
+                    <span class="amplitude-current-time" amplitude-main-current-time="true"></span>
+                </div>
                 
                 <div class="current-track__progress__bar">
                   
-                      <progress id="song-played-progress" class="amplitude-song-played-progress" amplitude-main-song-played-progress="true"></progress>
+                    <progress id="song-played-progress" class="amplitude-song-played-progress" amplitude-main-song-played-progress="true"></progress>
                   
                 </div>
                 
-                <div class="current-track__progress__finish">3:07</div>
+                <div class="current-track__progress__finish">
+                    <span class="amplitude-duration-time" amplitude-main-duration-time="true"></span>
+                </div>
                 
               </div>
               
               <div class="current-track__options">
               
-                <a href="#"></a>
-                
                 <span class="controls">
+                  
+                    <a href="#" class="control volume">
+                        
+                        <input type="range" class="amplitude-volume-slider"/>
+                        
+                    </a>
                 
-                  <a href="#" class="control">
+                  <a href="#" class="control devices">
                     <i class="ion-navicon"></i>
-                  </a>
-                  
-                  <a href="#" class="control">
-                    <i class="ion-shuffle amplitude-shuffle" amplitude-playlist="spotlite"></i>
-                  </a>
-                  
-                  <a href="#" class="control">
-                    <i class="fa fa-refresh amplitude-repeat amplitude-repeat-song"></i>
+                    <span>Playlist</span>
                   </a>
                   
                   <a href="#" class="control devices">
                     <i class="ion-iphone"></i>
                     <span>Lyrics</span>
-                  </a>
-                  
-                  <a href="#" class="control volume">
-                    
-                    <input type="range" class="amplitude-volume-slider"/>
-                    
                   </a>
                   
                 </span>

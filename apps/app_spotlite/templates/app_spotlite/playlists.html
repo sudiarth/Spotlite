@@ -1,4 +1,4 @@
-{% extends 'base_spotlite/index.html' %} {% block body %}
+{% block body %}
 
 <p>&nbsp;</p><p>&nbsp;</p>
 <div class="container mt-5 text-white">
@@ -30,7 +30,7 @@
             {% elif song_id %}
                 <h1>Choose a Playlist:</h1>
             {% elif user %}
-                <h1>{{ user.firstname }}'s Playlists</h1>
+                <h1>{{ request.session.firstname }}'s Playlists</h1>
             {% else %}
                 <h1>Playlists</h1>
             {% endif %}
@@ -77,7 +77,7 @@
     <p>&nbsp;</p>
     {% if can_add %}
     {% elif user %}
-       <p><a class="btn btn-sm btn-primary" href="{% url 'app_spotlite:my_playlists' %}">back to my playlist</a></p>
+       <p><a class="btn btn-sm btn-primary" href="{% url 'app_spotlite:profile' %}">back to my playlist</a></p>
     {% else %}
         <p><a class="btn btn-sm btn-primary" href="{% url 'app_spotlite:playlists_editor' %}">add more playlist</a></p>
     {% endif %}

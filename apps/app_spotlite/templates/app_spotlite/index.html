@@ -4,161 +4,7 @@
   
     <div class="content__left">
     
-      <section class="navigation">
-  
-          <!-- Main -->
-          <div class="navigation__list">
-  
-            <div class="navigation__list__header" 
-                 role="button" 
-                 data-toggle="collapse" 
-                 href="#main" 
-                 aria-expanded="true" 
-                 aria-controls="main">
-              Main
-            </div>
-            
-            <div class="collapse in" id="main">
-            
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-browsers"></i>
-                <span>Browse</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-person-stalker"></i>
-                <span>Activity</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-radio-waves"></i>
-                <span>Radio</span>
-              </a>
-              
-            </div>
-  
-          </div>
-          <!-- / -->
-  
-          <!-- Your Music -->
-          <div class="navigation__list">
-  
-            <div class="navigation__list__header" 
-                 role="button" 
-                 data-toggle="collapse" 
-                 href="#yourMusic" 
-                 aria-expanded="true" 
-                 aria-controls="yourMusic">
-              Your Music
-            </div>
-            
-            <div class="collapse in" id="yourMusic">
-            
-              <a href="#" class="navigation__list__item">
-                <i class="ion-headphone"></i>
-                <span>Songs</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Albums</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-person"></i>
-                <span>Artists</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-document"></i>
-                <span>Local Files</span>
-              </a>
-              
-            </div>
-  
-          </div>
-          <!-- / -->
-  
-          <!-- Playlists -->
-          <div class="navigation__list">
-  
-            <div class="navigation__list__header" 
-                 role="button" 
-                 data-toggle="collapse" 
-                 href="#playlists" 
-                 aria-expanded="true" 
-                 aria-controls="playlists">
-              Playlists
-            </div>
-            
-            <div class="collapse in" id="playlists">
-            
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Doo Wop</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Pop Classics</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Love $ongs</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Hipster</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>New Music Friday</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Techno Poppers</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Summer Soothers</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Hard Rap</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Pop Rap</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>5 Stars</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Dope Dancin</span>
-              </a>
-  
-              <a href="#" class="navigation__list__item">
-                <i class="ion-ios-musical-notes"></i>
-                <span>Sleep</span>
-              </a>
-              
-            </div>
-  
-          </div>
-          <!-- / -->
-  
-        </section>
+      {% include 'app_spotlite/navigation.html' %}
         
       <section class="playlist">
   
@@ -220,15 +66,14 @@
               
               <div class="artist__info__actions">
               
-                <button class="button-dark">
+                <button class="button-dark amplitude-play" amplitude-song-index="2" amplitude-playlist="spotlite">
                   <i class="ion-ios-play"></i>
                   Play
                 </button>
                 
-                <a href="{% url 'app_spotlite:like_a_song' song_id=1 %}" class="button-light">Like</a>
-                
-                <button class="button-light more">
-                  <i class="ion-ios-more"></i>
+                <button class="button-light">
+                    <i class="ion-ios-heart"></i>
+                    Like
                 </button>
                 
               </div>
@@ -341,18 +186,23 @@
                       <div class="track__number">1</div>
   
                       <div class="track__added">
-  
-                        <i class="ion-checkmark-round added"></i>
-  
+
+                          <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+
+                                {% for editor in editors %}
+                                  <a class="dropdown-item" href="{% url 'app_spotlite:add_to_playlist_step2' song_id=1 playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
+                                {% endfor %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
+                              </div>
+                            </div>
                       </div>
   
                       <div class="track__title">Me, Myself & I</div>
-  
-                      <div class="track__explicit">
-  
-                        <span class="label">Explicit</span>
-  
-                      </div>
   
                       <div class="track__plays">147,544,165</div>
   
@@ -370,17 +220,21 @@
   
                       <div class="track__added">
   
-                        <i class="ion-plus not-added"></i>
+                          <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                       </div>
   
                       <div class="track__title">I Mean It</div>
-  
-                      <div class="track__explicit">
-  
-                        <span class="label">Explicit</span>
-  
-                      </div>
   
                       <div class="track__plays">74,568,782</div>
   
@@ -398,17 +252,21 @@
   
                       <div class="track__added">
   
-                        <i class="ion-checkmark-round added"></i>
+                          <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                       </div>
   
                       <div class="track__title">Calm Down</div>
-  
-                      <div class="track__explicit">
-  
-                        <span class="label">Explicit</span>
-  
-                      </div>
   
                       <div class="track__plays">13,737,506</div>
   
@@ -426,17 +284,21 @@
   
                       <div class="track__added">
   
-                        <i class="ion-plus not-added"></i>
+                          <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                       </div>
   
                       <div class="track__title">Some Kind Of Drug</div>
-  
-                      <div class="track__explicit">
-  
-                        <span class="label">Explicit</span>
-  
-                      </div>
   
                       <div class="track__plays">12,234,881</div>
   
@@ -454,17 +316,21 @@
   
                       <div class="track__added">
   
-                        <i class="ion-checkmark-round added"></i>
+                          <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                       </div>
   
                       <div class="track__title">Let's Get Lost</div>
-  
-                      <div class="track__explicit">
-  
-                        <span class="label">Explicit</span>
-  
-                      </div>
   
                       <div class="track__plays">40,882,954</div>
   
@@ -647,18 +513,22 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                              <div class="dropdown">
+                                  <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </a>
+                                
+                                  <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                    <a class="dropdown-item" href="#">Last playlist</a>
+                                    <a class="dropdown-item" href="#">First playlist</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Create playlist</a>
+                                  </div>
+                                </div>
   
                           </div>
   
                           <div class="track__title">Intro</div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">1:11</div>
                           
                           <div class="track__popularity">
@@ -675,18 +545,22 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                              <div class="dropdown">
+                                  <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </a>
+                                
+                                  <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                    <a class="dropdown-item" href="#">Last playlist</a>
+                                    <a class="dropdown-item" href="#">First playlist</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Create playlist</a>
+                                  </div>
+                                </div>
   
                           </div>
   
                           <div class="track__title">Random</div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">3:00</div>
                           
                           <div class="track__popularity">
@@ -703,7 +577,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                              <div class="dropdown">
+                                  <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </a>
+                                
+                                  <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                    <a class="dropdown-item" href="#">Last playlist</a>
+                                    <a class="dropdown-item" href="#">First playlist</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Create playlist</a>
+                                  </div>
+                                </div>
   
                           </div>
   
@@ -714,17 +598,21 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">4:11</div>
                           
                           <div class="track__popularity">
                           
-                            <i class="ion-arrow-graph-up-right"></i>
+                              <div class="dropdown">
+                                  <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </a>
+                                
+                                  <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                    <a class="dropdown-item" href="#">Last playlist</a>
+                                    <a class="dropdown-item" href="#">First playlist</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Create playlist</a>
+                                  </div>
+                                </div>
                             
                           </div>
   
@@ -736,7 +624,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                              <div class="dropdown">
+                                  <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </a>
+                                
+                                  <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                    <a class="dropdown-item" href="#">Last playlist</a>
+                                    <a class="dropdown-item" href="#">First playlist</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Create playlist</a>
+                                  </div>
+                                </div>
   
                           </div>
   
@@ -747,12 +645,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">3:20</div>
                           
                           <div class="track__popularity">
@@ -769,7 +661,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -781,12 +683,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">4:33</div>
                           
                           <div class="track__popularity">
@@ -803,7 +699,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -814,12 +720,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">3:34</div>
                           
                           <div class="track__popularity">
@@ -836,7 +736,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -847,12 +757,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">3:29</div>
                           
                           <div class="track__popularity">
@@ -869,7 +773,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -879,12 +793,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">2:07</div>
                           
                           <div class="track__popularity">
@@ -901,7 +809,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-plus not-added"></i>
+                              <div class="dropdown">
+                                  <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </a>
+                                
+                                  <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                    <a class="dropdown-item" href="#">Last playlist</a>
+                                    <a class="dropdown-item" href="#">First playlist</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Create playlist</a>
+                                  </div>
+                                </div>
   
                           </div>
   
@@ -912,12 +830,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">3:11</div>
                           
                           <div class="track__popularity">
@@ -934,7 +846,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -944,12 +866,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">3:28</div>
                           
                           <div class="track__popularity">
@@ -966,7 +882,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -977,12 +903,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">4:13</div>
                           
                           <div class="track__popularity">
@@ -999,7 +919,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -1009,12 +939,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">3:23</div>
                           
                           <div class="track__popularity">
@@ -1031,7 +955,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -1042,12 +976,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">3:42</div>
                           
                           <div class="track__popularity">
@@ -1064,7 +992,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -1075,12 +1013,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">2:59</div>
                           
                           <div class="track__popularity">
@@ -1097,7 +1029,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -1108,12 +1050,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">5:11</div>
                           
                           <div class="track__popularity">
@@ -1130,7 +1066,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -1141,12 +1087,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">4:11</div>
                           
                           <div class="track__popularity">
@@ -1163,7 +1103,17 @@
   
                           <div class="track__added">
   
-                            <i class="ion-checkmark-round added"></i>
+                            <div class="dropdown">
+                              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              </a>
+                            
+                              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                <a class="dropdown-item" href="#">Last playlist</a>
+                                <a class="dropdown-item" href="#">First playlist</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create playlist</a>
+                              </div>
+                            </div>
   
                           </div>
   
@@ -1175,12 +1125,6 @@
                             
                           </div>
   
-                          <div class="track__explicit">
-  
-                            <span class="label">Explicit</span>
-  
-                          </div>
-                          
                           <div class="track__length">5:30</div>
                           
                           <div class="track__popularity">

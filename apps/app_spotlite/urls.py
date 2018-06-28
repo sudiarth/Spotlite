@@ -14,7 +14,6 @@ urlpatterns = [
     path('update_settings', views.update_settings, name='update_settings'),
 
     path('playlists-editor', views.playlists_editor, name='playlists_editor'),
-    path('playlists', views.my_playlists, name='my_playlists'),
     path('playlist/<int:playlist_id>/like', views.like_playlist, name='like_playlist'),
     
     path('playlist/<int:playlist_id>/delete', views.delete_playlist, name='delete_playlist'),
