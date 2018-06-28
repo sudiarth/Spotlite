@@ -13,6 +13,9 @@
         {% for song in songs %}
         <div class="track">
         <div class="track__number">{{ forloop.counter }}</div>
+        <div class="track__popularity">
+                  <a class="amplitude-play" amplitude-song-index="{{ forloop.counter0 }}"><i class="ion-play"></i></a>
+      </div>
         <div class="track__added">
               <div class="dropdown">
               <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true"
@@ -28,7 +31,7 @@
               </div>
         </div>
         <div class="track__title" style="position: relative;"><a class="no-load" href="{% url 'app_spotlite:song' song_id=song.id %}">{{song.title}}</a> <span class="add2playlist_loading">wait..</span></div>
-        <div class="track__length">1:11</div>
+        
         <div class="track__popularity">
               <i class="ion-arrow-graph-up-right"></i>
         </div>
@@ -55,5 +58,25 @@
             // $(this).closest('.track__title').find('.add2playlist_loading').hide();
             // alert(1);
             });
-      });      
+      });
+      
+      var playCount = 0;
+      Amplitude.init({
+      "songs": [
+            {% for song in songs %}
+            {
+                  "name": "{{song.title}}",
+                  "artist": "{{song.album.artist.name}}",
+                  "album": "{{song.album.title}}",
+                  "url": "{{song.mp3url}}",
+                  "cover_art_url": "{{song.album.artist.photo}}"
+            },
+            {% endfor %}
+      ],
+      "playlists": {
+            "song": [
+            {% for song in songs %}{{ song.id }},{% endfor %}
+            ]
+      }
+      });
 </script>

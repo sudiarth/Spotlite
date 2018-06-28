@@ -71,7 +71,26 @@
                           tx.html('Like');
                         });                      
                     }
-                  });      
+                  });
+                  
+                  
+                  var playCount = 0;
+                        Amplitude.init({
+                        "songs": [
+                              {
+                                    "name": "{{song.title}}",
+                                    "artist": "{{song.album.artist.name}}",
+                                    "album": "{{song.album.title}}",
+                                    "url": "{{song.mp3url}}",
+                                    "cover_art_url": "{{song.album.artist.photo}}"
+                              },
+                        ],
+                        "playlists": {
+                              "spotlite": [
+                              {{song.id}}
+                              ]
+                        }
+                        });
               </script>              
               
               <div class="artist__listeners">

@@ -1,6 +1,7 @@
 var playCount = 0;
 Amplitude.init({
     "songs": [
+        
         {
             "name": "Faded",
             "artist": "Alan Wakler",
@@ -32,7 +33,7 @@ Amplitude.init({
     ],
     "playlists": {
         "spotlite": [
-            0, 1, 2, 3
+            0, 1, 2, 3,
         ]
     }
 });
