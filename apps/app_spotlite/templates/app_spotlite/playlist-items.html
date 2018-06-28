@@ -1,10 +1,12 @@
-{% extends 'base_spotlite/index.html' %} {% block body %}
+{% extends "base_spotlite/index.html" %}
+{% block body %}
+<section class="content text-white" style="margin-top: 60px; height: 100%">
 
-<p>&nbsp;</p><p>&nbsp;</p>
-<div class="container mt-5 text-white">
-    <div class="col-12">            
+    {% include 'app_spotlite/content_left.html' %}
+
+    <div class="content__middle pl-5 pt-5">
+
         <h1><u>{{ playlist.title }}</u></h1>
-        <b><a class="text-white" href="{% url 'app_spotlite:my_playlists' %}">&laquo; back to playlist</a></b>
             <p>&nbsp;</p>
 
             <table class="data-table table table-striped table-bordered col-12" width="100%">
@@ -44,5 +46,8 @@
                 <hr />
             {% endfor %}            
     </div>
-</div>
+
+    {% include 'app_spotlite/content_right.html' %}
+
+</section>
 {% endblock %}

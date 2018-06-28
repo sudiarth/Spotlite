@@ -1,34 +1,37 @@
-{% extends 'base_spotlite/index.html' %} {% block body %}
-
-<p>&nbsp;</p><p>&nbsp;</p>
-<div class="container mt-5 text-white">
-
-    <div class="row">
-        <div class="col-xs-12">   
-            <h1>Songs</h1>
-            <p>&nbsp;</p>
-
-            <table class="data-table table table-striped table-bordered col-12" width="100%">
-                <thead>
-                    <tr>
-                        <th style="width: 500px;">Title</th>
-                        <th width="300">Created</th>
-                        <th width="140">Action</th>
-                    </tr>
-                </thead>
-                <tbody>                    
-
-                    {% for song in songs %}
-                    <tr>
-                        <td><a href="{% url 'app_spotlite:song' song_id=song.id %}"><h5 class="card-title">{{ song.title }}</h5></a></td>
-                        <td>{{ song.created_at }}</td>
-                        <td><a href="{% url 'app_spotlite:song' song_id=song.id %}">detail</a></td>
-                    </tr>
-                    {% endfor %}
-
-                </tbody>
-            </table>
+    <div class="tracks">
+        <div class="tracks__heading">
+        <div class="tracks__heading__number">#</div>
+        <div class="tracks__heading__added"></div>
+        <div class="tracks__heading__title">Title</div>
+        <div class="tracks__heading__length">
+              <i class="ion-ios-stopwatch-outline"></i>
         </div>
+        <div class="tracks__heading__popularity">
+              <i class="ion-thumbsup"></i>
+        </div>
+        </div>
+        {% for song in songs %}
+        <div class="track">
+        <div class="track__number">{{ forloop.counter }}</div>
+        <div class="track__added">
+              <div class="dropdown">
+              <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                    {% for editor in editors %}
+                    <a class="dropdown-item" href="{% url 'app_spotlite:add_to_playlist_step2' song_id=song.id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
+                    {% endfor %}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
+              </div>
+              </div>
+        </div>
+        <div class="track__title">{{song.title}}</div>
+        <div class="track__length">1:11</div>
+        <div class="track__popularity">
+              <i class="ion-arrow-graph-up-right"></i>
+        </div>
+        </div>
+        {% endfor %}
     </div>
-</div>
-{% endblock %}
