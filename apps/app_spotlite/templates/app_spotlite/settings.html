@@ -8,7 +8,7 @@
     
       <div class="artist is-verified">
       
-        <div class="artist__header" style="background-image: url('{{user.profilebackground}}');">
+        <div class="artist__header" style="background-image: url('{{request.session.profilebackground}}');">
         
           <div class="artist__info mb-5">
           
@@ -50,22 +50,21 @@
                     <div class="row">
                         <!-- left column -->
                         <div class="col-md-3">
-                            <form method="POST" action="{% url 'app_spotlite:picture_upload' %}" enctype="multipart/form-data">
+                            <form method="POST" action="{% url 'app_spotlite:picture_upload' target='profile' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="text-center">
-                                    <img src="{{request.session.profilepic}}" class="profile-picture mb-2" height="150" width="150" alt="avatar">
                                     <h6 class="text-white">Upload a different profile picture...</h6>
                 
-                                    <input type="file" class="form-control file-upload" name="file_profilepic">
+                                    <input type="file" class="form-control file-upload" name="file">
                                     <input type="submit" class="btn btn-success mt-3" value="Upload">
                                 </div>
                             </form>
-                            <form class="mt-5" method="POST" action="{% url 'app_spotlite:picture_upload_bg' %}" enctype="multipart/form-data">
+                            <form class="mt-5" method="POST" action="{% url 'app_spotlite:picture_upload' target='background' %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="text-center">
                                     <h6 class="text-white">Upload a different profile background...</h6>
                 
-                                    <input type="file" class="form-control file-upload" name="file_picbg">
+                                    <input type="file" class="form-control file-upload" name="file">
                                     <input type="submit" class="btn btn-success mt-3" value="Upload">
                                 </div>
                             </form>
