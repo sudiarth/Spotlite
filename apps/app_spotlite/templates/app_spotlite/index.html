@@ -32,7 +32,7 @@
                                   <div class="media-card__image" style="background-image: url({{artist.photo}});">
                                         <i class="ion-ios-play"></i>
                                   </div>
-                                  <a class="media-card__footer" href="{% url 'app_spotlite:artist' artist_id=artist.id %}" style="color: white; text-align: center">{{ artist.name }}</a>
+                                  <a href="{% url 'app_spotlite:song_by_artist' artist_id=artist.id %}" class="media-card__footer" href="{% url 'app_spotlite:artist' artist_id=artist.id %}" style="color: white; text-align: center">{{ artist.name }}</a>
                                   </div>
                                   {% empty %}
                                   <p style="color: white">No artist found</p>
@@ -91,7 +91,7 @@
                                       <div class="media-card__image" style="background-image: url({{album.cover}});">
                                       <i class="ion-ios-play"></i>
                                       </div>
-                                      <a class="media-card__footer" style="color: white; text-align: center">{{ album.title }}</a>
+                                      <a href="{% url 'app_spotlite:song_by_album' album_id=album.id %}" class="media-card__footer" style="color: white; text-align: center">{{ album.title }}</a>
                                 </div>
                                       {% empty %}
                                       <p style="color: white">No album found</p>

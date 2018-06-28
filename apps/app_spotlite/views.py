@@ -23,8 +23,8 @@ def index(request):
             'editors' : m.Editor.objects.filter(user_id=request.session['user_id']),
             'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
         }
-        print(context['friends'])
         return render(request, 'app_spotlite/index.html', context)
+        
     else:
         imagenr = random.randint(1,8)
         image = '/static/base_spotlite/img/bg{}.jpg'.format(imagenr)
@@ -86,6 +86,9 @@ def song(request, song_id):
         like = True
 
     context = {
+        'albums': m.Album.objects.all()[:5],
+        'artists': m.Artist.objects.all()[:5],
+        'artists_grid': m.Artist.objects.all()[:12],          
         'song' : m.Song.objects.get(id=song_id),
         'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
         'songs': m.Song.objects.annotate(total=Count('played_by')).order_by('-total')[:5], #POPULAR SONGS
@@ -93,6 +96,35 @@ def song(request, song_id):
 
     }
     return render(request, 'app_spotlite/song.html', context)
+
+
+def song_by_album(request, album_id):
+    if 'user_id' in request.session:
+        context = {
+            'songs': m.Song.objects.filter(album_id=album_id)[:24],
+            'album': m.Album.objects.get(id=album_id),          
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+            'editors' : m.Editor.objects.filter(user_id=request.session['user_id']),
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+        }
+        return render(request, 'app_spotlite/songs_by_album.html', context)
+
+    return redirect('auth_spotlite:login')
+
+
+def song_by_artist(request, artist_id):
+    if 'user_id' in request.session:
+        context = {
+            'songs': m.Song.objects.filter(artist_id=artist_id)[:24],
+            'artist': m.Artist.objects.get(id=artist_id),          
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+            'editors' : m.Editor.objects.filter(user_id=request.session['user_id']),
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+        }
+        return render(request, 'app_spotlite/songs_by_artist.html', context)
+
+    return redirect('auth_spotlite:login')
+
 
 
 def like_a_song(request, song_id):

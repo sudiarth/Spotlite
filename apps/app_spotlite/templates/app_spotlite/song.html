@@ -130,43 +130,13 @@
                   <div class="overview">
                   
                     <div class="overview__artist">
-                  
-                      <!-- Latest Release-->
-                      <div class="section-title">Latest Release</div>
-      
-                      <div class="latest-release">
-      
-                        <div class="latest-release__art">
-      
-                          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/whenDarkOut.jpg" alt="When It's Dark Out" />
-      
-                        </div>
-      
-                        <div class="latest-release__song">
-      
-                          <div class="latest-release__song__title">Drifting (Track Commentary)</div>
-      
-                          <div class="latest-release__song__date">
-      
-                            <span class="day">4</span>
-      
-                            <span class="month">December</span>
-      
-                            <span class="year">2015</span>
-      
-                          </div>
-      
-                        </div>
-      
-                      </div>
-                      <!-- / -->
       
                       <!-- Popular-->
                       <div class="section-title">Popular</div>
       
                       {% include 'app_spotlite/songs.html' %}
       
-                      <button class="show-more button-light">Show 5 More</button>
+                      <!-- <button class="show-more button-light">Show 5 More</button> -->
                       <!-- / -->
                     
                     </div>
@@ -177,90 +147,19 @@
                       
                       <div class="related-artists">
                       
-                        <a href="#" class="related-artist">
+                        {% for artist in artists %}
+                        <a href="{% url 'app_spotlite:song_by_artist' artist_id=artist.id %}" class="related-artist">
                         
                           <span class="related-artist__img">
                           
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/hoodie.jpg" alt="Hoodie Allen" />
+                            <img src="{{ artist.photo }}" alt="{{ artist.name }}" />
                             
                           </span>
                           
-                          <span class="related-artist__name">Hoodie Allen</span>
+                          <span class="related-artist__name">{{ artist.name }}</span>
                           
                         </a>
-                        
-                        <a href="#" class="related-artist">
-                        
-                          <span class="related-artist__img">
-                          
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/mikestud.jpg" alt="Mike Stud" />
-                            
-                          </span>
-                          
-                          <span class="related-artist__name">Mike Stud</span>
-                          
-                        </a>
-                        
-                        <a href="#" class="related-artist">
-                        
-                          <span class="related-artist__img">
-                          
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/drake.jpeg" alt="Drake" />
-                            
-                          </span>
-                          
-                          <span class="related-artist__name">Drake</span>
-                          
-                        </a>
-                        
-                        <a href="#" class="related-artist">
-                        
-                          <span class="related-artist__img">
-                          
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/jcole.jpg" alt="J. Cole" />
-                            
-                          </span>
-                          
-                          <span class="related-artist__name">J. Cole</span>
-                          
-                        </a>
-                        
-                        <a href="#" class="related-artist">
-                        
-                          <span class="related-artist__img">
-                          
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/bigsean.jpg" alt="Big Sean" />
-                            
-                          </span>
-                          
-                          <span class="related-artist__name">Big Sean</span>
-                          
-                        </a>
-                        
-                        <a href="#" class="related-artist">
-                        
-                          <span class="related-artist__img">
-                          
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/wiz.jpeg" alt="Wiz Khalifa" />
-                            
-                          </span>
-                          
-                          <span class="related-artist__name">Wiz Khalifa</span>
-                          
-                        </a>
-                        
-                        <a href="#" class="related-artist">
-                        
-                          <span class="related-artist__img">
-                          
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/yonas.jpg" alt="Yonas" />
-                            
-                          </span>
-                          
-                          <span class="related-artist__name">Yonas</span>
-                          
-                        </a>
-                        
+                        {% endfor %}
                       </div>
       
                     </div>
@@ -978,106 +877,24 @@
       
                 <!-- Related Artists -->
                 <div role="tabpanel" class="tab-pane" id="related-artists">
-                
-                  <div class="media-cards">
                   
-                    <div class="media-card">
                     
-                      <div class="media-card__image" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/hoodie.jpg);">
-                      
-                        <i class="ion-ios-play"></i>
-                        
-                      </div>
-                      
-                      <a class="media-card__footer">Hoodie Allen</a>
-                      
+                    <div class="media-cards">
+                          {% for artist in artists_grid %}
+                          <div class="media-card">
+                          
+                            <div class="media-card__image" style="background-image: url({{ artist.photo }});">
+                            
+                              <i class="ion-ios-play"></i>
+                              
+                            </div>
+                            
+                            <a class="media-card__footer">{{ artist.name }}</a>
+                            
+                          </div> 
+                          {% endfor %}                   
                     </div>
                     
-                    <div class="media-card">
-                    
-                      <div class="media-card__image" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/mikestud_large.jpg);">
-                      
-                        <i class="ion-ios-play"></i>
-                        
-                      </div>
-                      
-                      <a class="media-card__footer">Mike Stud</a>
-                      
-                    </div>
-                    
-                    <div class="media-card">
-                    
-                      <div class="media-card__image" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/drake_large.jpg);">
-                      
-                        <i class="ion-ios-play"></i>
-                        
-                      </div>
-                      
-                      <a class="media-card__footer">Drake</a>
-                      
-                    </div>
-                    
-                    <div class="media-card">
-                    
-                      <div class="media-card__image" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/jcole_large.jpg);">
-                      
-                        <i class="ion-ios-play"></i>
-                        
-                      </div>
-                      
-                      <a class="media-card__footer">J. Cole</a>
-                      
-                    </div>
-                    
-                    <div class="media-card">
-                    
-                      <div class="media-card__image" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/bigSean_large.jpg);">
-                      
-                        <i class="ion-ios-play"></i>
-                        
-                      </div>
-                      
-                      <a class="media-card__footer">Big Sean</a>
-                      
-                    </div>
-                    
-                    <div class="media-card">
-                    
-                      <div class="media-card__image" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/wiz.jpeg);">
-                      
-                        <i class="ion-ios-play"></i>
-                        
-                      </div>
-                      
-                      <a class="media-card__footer">Wiz Khalifa</a>
-                      
-                    </div>
-                    
-                    <div class="media-card">
-                    
-                      <div class="media-card__image" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/yonas.jpg);">
-                      
-                        <i class="ion-ios-play"></i>
-                        
-                      </div>
-                      
-                      <a class="media-card__footer">Yonas</a>
-                      
-                    </div>
-                    
-                    <div class="media-card">
-                    
-                      <div class="media-card__image" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/childish.jpg);">
-                      
-                        <i class="ion-ios-play"></i>
-                        
-                      </div>
-                      
-                      <a class="media-card__footer">Childish Gambino</a>
-                      
-                    </div>
-                    
-                  </div>
                 
                 </div>
                 <!-- / -->
