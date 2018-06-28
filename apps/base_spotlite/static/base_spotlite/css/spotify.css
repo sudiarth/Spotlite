@@ -125,7 +125,7 @@ body a:hover {
     width: 20%;
   }
   .content__middle {
-    width: 80%;
+    width: 70%;
   }
   .content__right {
     display: none;
@@ -401,24 +401,24 @@ body a:hover {
 }
 @media (max-width: 1400px) {
   .current-track__actions {
-    width: 30%;
+    width: 10%;
   }
   .current-track__progress {
-    width: 40%;
+    width: 60%;
   }
   .current-track__options {
-    width: 20%;
+    width: 30%;
   }
 }
 @media (max-width: 980px) {
   .current-track__actions {
-    width: 30%;
+    width: 10%;
   }
   .current-track__progress {
-    width: 40%;
+    width: 50%;
   }
   .current-track__options {
-    width: 20%;
+    width: 30%;
   }
 }
 @media (max-width: 768px) {
