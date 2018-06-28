@@ -20,7 +20,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
                     {% for editor in editors %}
-                    <a class="dropdown-item add2playlist" href="#" data-href="{% url 'app_spotlite:add_to_playlist_step2' song_id=song.id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
+                    <a class="dropdown-item ajax_add2playlist" href="#" data-href="{% url 'app_spotlite:add_to_playlist_step2' song_id=song.id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
                     {% endfor %}
                     <div class="dropdown-divider"></div>
                     <a class="no-load dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
@@ -46,7 +46,7 @@
 </style>
 
 <script>
-        $('a.add2playlist').click(function(){
+        $('a.ajax_add2playlist').click(function(){
           url = $(this).attr('data-href'); 
           // $('.add2playlist_loading').show();
           // $(this).closest('.track__title').find('.add2playlist_loading').show();
