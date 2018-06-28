@@ -53,9 +53,10 @@ def play_history(request):
     return render(request, 'app_spotlite/play_history.html', context)
 
 
-def my_musics(request):
+def my_musics(request, active):
     if 'user_id' in request.session:
         context = {
+            'active': active,
             'albums': m.Album.objects.all()[:24],
             'artists': m.Artist.objects.all()[:24],      
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),

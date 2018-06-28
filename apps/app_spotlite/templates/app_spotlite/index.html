@@ -4,21 +4,18 @@
       {% include 'app_spotlite/content_left.html' %}
 
       <div class="content__middle">
-
-            <h2 class="pl-4 pt-4">My Musics</h2>
-
             <div class="artist is-verified">
             <div class="artist__header" style="height: auto;">
                   <div class="artist__navigation" style="height: 60px;">
                   <ul class="nav nav-tabs" role="tablist">
+                        <li role="artists">
+                        <a href="#artists" aria-controls="artists" role="tab" data-toggle="tab">Artists</a>
+                        </li>
                         <li role="presentation" class="activeBAK">
                         <a href="#songs" aria-controls="songs" role="tab" data-toggle="tab">Song</a>
                         </li>
                         <li role="albums">
                         <a href="#albums" aria-controls="albums" role="tab" data-toggle="tab">Albums</a>
-                        </li>
-                        <li role="artists">
-                        <a href="#artists" aria-controls="artists" role="tab" data-toggle="tab">Artists</a>
                         </li>
                   </ul>
                   </div>
@@ -26,8 +23,24 @@
             </div>
             <div class="artist__content">
                   <div class="tab-content">
+        
+                      <!-- Artist Search Result -->
+                      <div role="tabpanel" class="tab-pane active" id="artists">
+                            <div class="media-cards">
+                                  {% for artist in artists %}
+                                  <div class="media-card">
+                                  <div class="media-card__image" style="background-image: url({{artist.photo}});">
+                                        <i class="ion-ios-play"></i>
+                                  </div>
+                                  <a class="media-card__footer" href="{% url 'app_spotlite:artist' artist_id=artist.id %}" style="color: white; text-align: center">{{ artist.name }}</a>
+                                  </div>
+                                  {% empty %}
+                                  <p style="color: white">No artist found</p>
+                                  {% endfor %}
+                            </div>
+                      </div>
                     <!-- Song Search Result -->
-                    <div role="tabpanel" class="tab-pane active" id="songs">
+                    <div role="tabpanel" class="tab-pane" id="songs">
                             <div class="album__tracks">
 
                                     <div class="tracks">
@@ -52,7 +65,7 @@
                                                   </a>
                                                   <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
                                                         {% for editor in editors %}
-                                                        <a class="dropdown-item add2playlist" href="#" data-href="{% url 'app_spotlite:add_to_playlist_step2' song_id=song_id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
+                                                        <a class="dropdown-item add2playlist" href="#" data-href="{% url 'app_spotlite:add_to_playlist_step2' song_id=song.id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
                                                         {% endfor %}
                                                         <div class="dropdown-divider"></div>
                                                         <a class="no-load dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
@@ -62,8 +75,6 @@
                                             <div class="track__title" style="position: relative;"><a class="no-load" href="{% url 'app_spotlite:song' song_id=song.id %}">{{song.title}}</a></div>
                                           
                                             <div class="track__length">1:11 &nbsp; &nbsp; </div>
-                                    
-                                            <a class="text-danger" href="{% url 'app_spotlite:unlike_a_song' song_id=song_id %}">unlike</a>
                                     
                                             </div>
                                             {% endfor %}
@@ -85,22 +96,6 @@
                                       {% empty %}
                                       <p style="color: white">No album found</p>
                                 {% endfor %}
-                                </div>
-                          </div>
-        
-                          <!-- Artist Search Result -->
-                          <div role="tabpanel" class="tab-pane" id="artists">
-                                <div class="media-cards">
-                                      {% for artist in artists %}
-                                      <div class="media-card">
-                                      <div class="media-card__image" style="background-image: url({{artist.photo}});">
-                                            <i class="ion-ios-play"></i>
-                                      </div>
-                                      <a class="media-card__footer" href="{% url 'app_spotlite:artist' artist_id=artist.id %}" style="color: white; text-align: center">{{ artist.name }}</a>
-                                      </div>
-                                      {% empty %}
-                                      <p style="color: white">No artist found</p>
-                                      {% endfor %}
                                 </div>
                           </div>
                     
