@@ -24,11 +24,11 @@ body {
     width: 100%;
   }
 
-  .amplitude-repeat.amplitude-repeat-song.amplitude-repeat-off {
+  .amplitude-repeat-song.amplitude-repeat-off {
     color: #333;
   }
 
-  .amplitude-repeat.amplitude-repeat-song.amplitude-repeat-on {
+  .amplitude-repeat-song.amplitude-repeat-on {
     color:#999;
   }
 

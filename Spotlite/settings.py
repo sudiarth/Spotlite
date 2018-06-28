@@ -25,7 +25,10 @@ SECRET_KEY = '4hxlal+nu2c-dq16^uk7whl#0px$@$9pxkn3&$-@p!-@q4s@wl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '192.168.22.148'
+]
 
 
 # Application definition
@@ -123,7 +126,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'apps/app_spotlite/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
