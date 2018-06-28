@@ -59,8 +59,17 @@ def songs(request):
 
 
 def song(request, song_id):
+    like = False
+    like_check = m.Like.objects.filter(song_id=song_id)
+    if len(like_check) > 0:
+        like = True
+
     context = {
-        'song' : m.Song.objects.get(id=song_id)
+        'song' : m.Song.objects.get(id=song_id),
+        'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+        'songs': m.Song.objects.all()[:5],
+        'like': like
+
     }
     return render(request, 'app_spotlite/song.html', context)
 
@@ -154,8 +163,7 @@ def playlists_editor(request):
 
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'can_add': True,
-            'user': False
+            'can_add': True
         }
         return render(request, 'app_spotlite/playlists.html', context = context)
 
@@ -165,9 +173,11 @@ def playlists_editor(request):
 def items_in_playlist(request, playlist_id):
     if 'user_id' in request.session:
         context = {
+            # 'songs': m.Song.objects.filter(playlist_of__playlist_id=playlist_id),
             'items': m.PlaylistItem.objects.filter(playlist_id=playlist_id),
             'playlist': m.Playlist.objects.get(id=playlist_id),
-            'editors': m.Editor.objects.filter(user_id=request.session['user_id'])
+            'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+            'editor_users': m.Editor.objects.filter(playlist_id=playlist_id)
         }
         return render(request, 'app_spotlite/playlist-items.html', context = context)
 
@@ -345,7 +355,6 @@ def search(request, search_keyword):
         'artists': m.Artist.objects.filter(name__contains=search_keyword),
         'users': um.User.objects.filter(Q(firstname__contains=search_keyword) | Q(surname__contains=search_keyword))
     }
-    print(songs)
     return render(request, 'app_spotlite/search.html', context)
 
 def presearch(request, search_keyword):

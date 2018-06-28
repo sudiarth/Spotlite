@@ -1,53 +1,88 @@
-{% extends "base_spotlite/index.html" %}
-{% block body %}
-<section class="content text-white" style="margin-top: 60px; height: 100%">
+{% extends "base_spotlite/index.html" %} {% block body %}
+<section class="content" style="margin-top: 60px; height: 100%">
 
-    {% include 'app_spotlite/content_left.html' %}
+      {% include 'app_spotlite/content_left.html' %}
 
-    <div class="content__middle pl-5 pt-5">
+      <div class="content__middle">
 
-        <h1><u>{{ playlist.title }}</u></h1>
-            <p>&nbsp;</p>
+            <h2 class="pl-4 pt-4">Playlist: <span class="text-whiteX">{{ playlist.title }}</span></h2>
 
-            <table class="data-table table table-striped table-bordered col-12" width="100%">
-                <thead>
-                    <tr>
-                        <th style="width: 500px;">Song Title</th>
-                        <th width="300">Added at</th>
-                        <th width="140">Action</th>
-                    </tr>
-                </thead>
-                <tbody>                    
+            <div class="artist is-verified">
+            <div class="artist__header" style="height: auto;">
+                  <div class="artist__navigation" style="height: 60px;">
+                  <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="activeBAK">
+                        <a href="#songs" aria-controls="search_song" role="tab" data-toggle="tab">Song</a>
+                        </li>
+                        <li role="presentation">
+                        <a href="#users" aria-controls="search_album" role="tab" data-toggle="tab">Users in this Playlist</a>
+                        </li>
+                  </ul>
+                  </div>
 
-                    {% for item in items %}
-                    <tr>
-                        <td>{{ item.song.title }}</td>
-                        <td width="150">{{ item.created_at }}</td>
-                        <td><a href="{% url 'app_spotlite:delete_item_in_playlist' item_id=item.id %}">remove</a></td>
-                    </tr>
-                    {% endfor %}
-
-                </tbody>
-            </table>
-
-            <p>&nbsp;</p><p>&nbsp;</p>
-            
-            <h3><u>User in this Playlist</u></h3>
-            <div class="row" style="font-weight: bold;">
-                <div class="col col-8">Name</div>
-                <div class="col col-4">Joined at</div>
             </div>
-            <hr />            
-            {% for editor in editors %}
-                <div class="row">                    
-                    <div class="col col-8">{{ editor.user.firstname }} {{ editor.user.surname }}</div>
-                    <div class="col col-4">{{ editor.user.created_at }}</div>
-                </div>
-                <hr />
-            {% endfor %}            
-    </div>
+            <div class="artist__content">
+                  <div class="tab-content">
+                    <!-- Song Search Result -->
+                    <div role="tabpanel" class="tab-pane active" id="songs">
+                            <div class="album__tracks">
 
-    {% include 'app_spotlite/content_right.html' %}
+                                    <div class="tracks">
+                                            <div class="tracks__heading">
+                                            <div class="tracks__heading__number">#</div>
+                                            <div class="tracks__heading__added"></div>
+                                            <div class="tracks__heading__title">Title</div>
+                                            <div class="tracks__heading__length">
+                                                  <i class="ion-ios-stopwatch-outline"></i>
+                                            </div>
+                                            <div class="tracks__heading__popularity">
+                                                  <!-- <i class="ion-thumbsup"></i> -->
+                                            </div>
+                                            </div>
+                                            {% for item in items %}
+                                            <div class="track">
+                                            <div class="track__number">{{ forloop.counter }}</div>
+                                            <div class="track__added">
+                                                  <div class="dropdown">
+                                                  <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                  </a>
+                                                  <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
+                                                        {% for editor in editors %}
+                                                        <a class="dropdown-item ajax_add2playlist" href="#" data-href="{% url 'app_spotlite:add_to_playlist_step2' song_id=item.song_id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
+                                                        {% endfor %}
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="no-load dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
+                                                  </div>
+                                                  </div>
+                                            </div>
+                                            <div class="track__title" style="position: relative;"><a class="no-load" href="{% url 'app_spotlite:song' song_id=item.song.id %}">{{item.song.title}}</a></div>
+                                          
+                                            <div class="track__length">1:11 &nbsp; &nbsp; </div>
+                                    
+                                            <a class="text-danger" href="{% url 'app_spotlite:delete_item_in_playlist' item_id=item.id %}">remove</a>
+                                    
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+
+                            </div>
+                    </div>
+
+                    <!-- Album Search Result -->
+                    <div role="tabpanel" class="tab-pane" id="users">
+                            <div class="media-cards">
+                                {% for editor in editor_users %}
+                                    <div class="track__title" style="position: relative;"><a class="no-load" href="{% url 'app_spotlite:user_playlists' user_id=editor.user_id %}">{{ editor.user.firstname }} {{ editor.user.surname }}</a></div>
+                                {% endfor %}
+                            </div>                            
+                    </div>
+                  </div>
+            </div>
+            </div>
+      </div>
+
+      {% include 'app_spotlite/content_right.html' %}
 
 </section>
 {% endblock %}

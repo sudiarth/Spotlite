@@ -26,6 +26,9 @@ urlpatterns = [
     path('song/<int:song_id>/add-to-playlist', views.add_to_playlist_step1, name='add_to_playlist_step1'),
     path('song/<int:song_id>/add-to-playlist/<int:playlist_id>', views.add_to_playlist_step2, name='add_to_playlist_step2'),
     path('song/<int:song_id>', views.song, name='song'),
+
+    path('song/<int:song_id>/add2history', views.add_song_to_history, name='add_song_to_history'),
+
     path('songs', views.songs, name='songs'),
     path('song/<int:song_id>/like', views.like_a_song, name='like_a_song'),
     path('song/<int:song_id>/unlike', views.unlike_a_song, name='unlike_a_song'),
