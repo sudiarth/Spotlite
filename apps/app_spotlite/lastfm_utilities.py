@@ -54,15 +54,30 @@ def create_or_get_lastfm_song_by_mbid(mbid):
    except:
       try:
          data = get_request(LASTFM_GET_TRACK.format(mbid, API_KEY))
+
          song = am.Song()
          song.lastfm_jsonparser(data['track'])
          song.album = create_or_get_lastfm_album_by_mbid(data['track']['album']['mbid'])
          song.artist = create_or_get_lastfm_artist_by_mbid(data['track']['artist']['mbid'])
          song.save()
+
+         for tag in data['track']['toptags']['tag']:
+            tagging = am.Tagging()
+            tagging.tag = create_or_get_lastfm_tag(tag['name'].title())
+            tagging.song = song
+            tagging.save()
       except:
          song = None
    return song
 
+def create_or_get_lastfm_tag(tag_name):
+   try:
+      tag = am.Tag.objects.get(name=tag_name)
+   except:
+      tag = am.Tag()
+      tag.name = tag_name
+      tag.save()
+   return tag
 
 
 # SEARCH FUNCIONS
@@ -76,9 +91,7 @@ def search_artist(query):
             artist = create_or_get_lastfm_artist_by_mbid(artist_data['mbid'])
             if artist is not None:
                artists.append(artist)
-               print(artist.mbid)
       return(artists)
-# search_artist('blink')
 
 def search_album(query):
    albums = []
@@ -89,10 +102,8 @@ def search_album(query):
          if len(alb['mbid']) > 0:
             album = create_or_get_lastfm_album_by_mbid(alb['mbid'])
             if album is not None:
-               print(album.title)
                albums.append(album)
    return albums
-# search_album('pilot')
 
 def search_song(query):
    songs = []
@@ -104,7 +115,5 @@ def search_song(query):
                song = create_or_get_lastfm_song_by_mbid(sg['mbid'])
                if song is not None:
                   songs.append(song)
-                  print('{} - {}'.format(song.title, song.album.artist.name))
                   # print(youtube_utils.get_youtube_url(song.title)
    return songs
-search_song('super')

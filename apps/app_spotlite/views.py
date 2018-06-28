@@ -374,14 +374,9 @@ def search(request, search_keyword):
     return render(request, 'app_spotlite/search.html', context)
 
 def presearch(request, search_keyword):
-    lastfm_utils.search_artist('artist', 'artist', search_keyword)
-    lastfm_utils.search_album('album', 'album', search_keyword)
-    lastfm_utils.search_song('track', 'track', search_keyword)
-
     context = {
-        'songs': m.Song.objects.filter(title__contains=search_keyword),
-        'albums': m.Album.objects.filter(title__contains=search_keyword),
-        'artists': m.Artist.objects.filter(name__contains=search_keyword),
+        'artists': lastfm_utils.search_artist(search_keyword),
+        'songs': lastfm_utils.search_song(search_keyword),
+        'albums':  lastfm_utils.search_album(search_keyword),
     }
-    print(songs)
     return render(request, 'app_spotlite/search.html', context)
