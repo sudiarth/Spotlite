@@ -363,7 +363,7 @@ body a:hover {
   text-transform: uppercase;
 }
 .current-track__options .controls .volume {
-  width: 25%;
+  width: 20%;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -404,10 +404,10 @@ body a:hover {
     width: 30%;
   }
   .current-track__progress {
-    width: 30%;
+    width: 40%;
   }
   .current-track__options {
-    width: 40%;
+    width: 20%;
   }
 }
 @media (max-width: 980px) {
@@ -415,21 +415,21 @@ body a:hover {
     width: 30%;
   }
   .current-track__progress {
-    width: 30%;
+    width: 40%;
   }
   .current-track__options {
-    width: 40%;
+    width: 20%;
   }
 }
 @media (max-width: 768px) {
   .current-track__actions {
-    width: 3%;
+    width: 30%;
   }
   .current-track__progress {
     width: 70%;
   }
   .current-track__options {
-    width: 100%;
+    width: 50%;
   }
 }
 @media (max-width: 480px) {
@@ -443,8 +443,8 @@ body a:hover {
     padding: 5px 0;
   }
   .current-track__options {
-    width: 100%;
-    padding: 5px 0;
+    width: 50%;
+    padding: 5px;
   }
 }
 
