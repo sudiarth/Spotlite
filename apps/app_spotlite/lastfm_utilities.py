@@ -4,10 +4,9 @@ import json
 from pprint import pprint
 
 from apps.app_spotlite import models as am
+from apps.app_spotlite import youtube_utilities as youtube_utils
 
 LASTFM_SEARCH_URL = "http://ws.audioscrobbler.com/2.0/?method={}.search&{}={}&api_key=756b9ac5c48cdf9d486133ec9e105440&format=json"
-#                   "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=756b9ac5c48cdf9d486133ec9e105440&format=json"
-#                   http://ws.audioscrobbler.com/2.0/?method=album.search&album=believe&api_key=756b9ac5c48cdf9d486133ec9e105440&format=json
 
 LASTFM_GET_TRACK = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&mbid={}&api_key=756b9ac5c48cdf9d486133ec9e105440&format=json"
 LASTFM_GET_ALBUM = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&mbid={}&api_key=756b9ac5c48cdf9d486133ec9e105440&format=json"
@@ -83,7 +82,7 @@ def search_album(method_name, entity_name, query):
             album = create_or_get_lastfm_album(album_data['album'])
             albums.append(album)
       return albums
-search_album('album', 'album', '')
+# search_album('album', 'album', '')
 
 def search_song(method_name, entity_name, query):
    songs = []
@@ -92,8 +91,9 @@ def search_song(method_name, entity_name, query):
       for sg in data['results']['trackmatches']['track']:
          if len(sg['mbid']) > 0:
             song_data = get_request(LASTFM_GET_TRACK.format(sg['mbid']))
-            # pprint(song_data['track'])
             song = create_or_get_lastfm_song(song_data['track'])
-            # songs.append(song)
+            songs.append(song)
+            print(youtube_utils.get_youtube_url(song.title)
+            
       return songs
 # search_song('track', 'track', 'yuhu')
