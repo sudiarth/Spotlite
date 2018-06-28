@@ -17,3 +17,4 @@ six==1.11.0
 tesserocr==2.2.2
 urllib3==1.23
 wrapt==1.10.11
+youtube-dl==2018.6.25
