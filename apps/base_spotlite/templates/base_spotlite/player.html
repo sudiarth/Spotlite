@@ -1,3 +1,4 @@
+{% load static %}
 <footer class="fixed-bottom">
         
         <div id="player" class="current-track pl-5 pr-5">
@@ -8,7 +9,7 @@
                     <i class="ion-ios-skipbackward"></i>
                 </a>
 
-                <a href="#" class="control play button amplitude-play-pause amplitude-paused" amplitude-playlist-main-play-pause="true" amplitude-playlist="spotlite">
+                <a href="#" class="control play amplitude-play-pause" amplitude-playlist-main-play-pause="true" amplitude-playlist="spotlite">
                     <i class="ion-ios-play"></i>
                 </a>
 
@@ -63,5 +64,11 @@
                 
               </div>
               
+            </div>
+            <div id="preload">
+                <img src="{% static 'base_spotlite/svg/previous.svg' %}"/>
+                <img src="{% static 'base_spotlite/svg/play.svg' %}"/>
+                <img src="{% static 'base_spotlite/svg/pause.svg' %}"/>
+                <img src="{% static 'base_spotlite/svg/next.svg' %}"/>
             </div>
       </footer>
