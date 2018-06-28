@@ -22,10 +22,17 @@ Amplitude.init({
             "url": "/media/audio/Bebe_Rexha_Bad_Bitch.mp3",
             "cover_art_url": "/cover/art/url.jpg"
         },
+        {
+            "name": "Anaconda",
+            "artist": "Nicky Minaj",
+            "album": "Anaconda",
+            "url": "/media/audio/Rita Ora - Girls ft. Cardi B, Bebe Rexha & Charli XCX (Official Video)-ExJmET8boVw.mp3",
+            "cover_art_url": "/cover/art/url.jpg"
+        },
     ],
     "playlists": {
         "spotlite": [
-            0, 1, 2
+            0, 1, 2, 3
         ]
     }
 });

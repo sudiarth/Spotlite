@@ -1,127 +1,60 @@
 <div class="content__right">
-    <div class="social">
-        <div class="friends">
+    <section class="playlist">
+  
+        <span class="no-load">
+  
+          Friend Activities
+  
+        </span>
+  
+      </section>
         {% for history in histories %}
-        <a href="{% url 'app_spotlite:song' song_id=history.song_id %}" class="friend">
-            <i class="ion-android-person"></i>
-            <p>{{ history.user.firstname }}</p>
-            <small>playing
-                <b>{{ history.song.title }}</b>
-            </small>
-        </a>
-        {% endfor %}
-        <h4 class="text-white">{{request.session.firstname}}'s Friends</h4>
-        {% for friend in friends %}
-        <div class="text-white">
-            <a href="{% url 'app_spotlite:profile' user_id=friend.following.id%}"><p>{{ friend.following.firstname }} {{ friend.following.surname }}</p></a>
-        </div>
-        {% endfor %}
-        </div>
-        <!-- <button class="button-light">Find Friends</button> -->
-    </div>
-    <section class="playing">
+        <section class="playing">
 
-            <div class="playing__art">
-      
-              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/cputh.jpg" alt="Album Art">
-      
-            </div>
-      
-            <div class="playing__song">
-      
-                    {{request.session.firstname}}'s Friends
-      
-            </div>
-      
-          </section>
+          <div class="playing__art">
+    
+            <img src="{{ history.user.profilepic }}" alt="Album Art">
+    
+          </div>
+    
+          <div class="playing__song">
+    
+            <a href="{% url 'app_spotlite:song' song_id=history.song_id %}" class="playing__song__name" style="font-size:11px">{{ history.user.firstname }} playing {{ history.song.title }}</a>
+    
+          </div>
+    
+        </section>
+        {% endfor %}
+
+          <section class="playlist">
+  
+              <span class="no-load">
+        
+                {{request.session.firstname}}'s Friends
+        
+              </span>
+        
+            </section>
     <div class="overview__related">
 
             
             <div class="related-artists">
+
+                {% for friend in friends %}
             
-              <a href="#" class="related-artist">
+              <a href="{% url 'app_spotlite:profile' user_id=friend.following.id%}" class="related-artist">
               
                 <span class="related-artist__img">
                 
-                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/hoodie.jpg" alt="Hoodie Allen">
+                  <img src="{{ friend.following.profilepic }}" alt="Hoodie Allen">
                   
                 </span>
                 
-                <span class="related-artist__name">Hoodie Allen</span>
+                <span class="related-artist__name">{{ friend.following.firstname }} {{ friend.following.surname }}</span>
                 
               </a>
-              
-              <a href="#" class="related-artist">
-              
-                <span class="related-artist__img">
-                
-                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/mikestud.jpg" alt="Mike Stud">
-                  
-                </span>
-                
-                <span class="related-artist__name">Mike Stud</span>
-                
-              </a>
-              
-              <a href="#" class="related-artist">
-              
-                <span class="related-artist__img">
-                
-                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/drake.jpeg" alt="Drake">
-                  
-                </span>
-                
-                <span class="related-artist__name">Drake</span>
-                
-              </a>
-              
-              <a href="#" class="related-artist">
-              
-                <span class="related-artist__img">
-                
-                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/jcole.jpg" alt="J. Cole">
-                  
-                </span>
-                
-                <span class="related-artist__name">J. Cole</span>
-                
-              </a>
-              
-              <a href="#" class="related-artist">
-              
-                <span class="related-artist__img">
-                
-                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/bigsean.jpg" alt="Big Sean">
-                  
-                </span>
-                
-                <span class="related-artist__name">Big Sean</span>
-                
-              </a>
-              
-              <a href="#" class="related-artist">
-              
-                <span class="related-artist__img">
-                
-                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/wiz.jpeg" alt="Wiz Khalifa">
-                  
-                </span>
-                
-                <span class="related-artist__name">Wiz Khalifa</span>
-                
-              </a>
-              
-              <a href="#" class="related-artist">
-              
-                <span class="related-artist__img">
-                
-                  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/yonas.jpg" alt="Yonas">
-                  
-                </span>
-                
-                <span class="related-artist__name">Yonas</span>
-                
-              </a>
+
+              {% endfor %}
               
             </div>
 
