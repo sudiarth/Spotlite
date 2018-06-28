@@ -39,7 +39,7 @@ def add_as_friend(request, following_id):
             follow.save()
         
         # return redirect(request.META['HTTP_REFERER'])
-        return redirect('app_spotlite:profile')
+        return redirect('app_spotlite:profile', following_id)
 
     return redirect('auth_spotlite:login')
 
@@ -254,33 +254,26 @@ def settings(request):
 
     return render(request, 'app_spotlite/settings.html')
 
-def picture_upload(request):
-    if request.method == 'POST' and len(request.FILES['file_profilepic']) > 0:
-        myfile = request.FILES['file_profilepic']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        uploaded_file_url = fs.url(filename)
+def picture_upload(request, target):
+    try:
+        if request.method == 'POST' and request.FILES['file']:
+            myfile = request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
 
-        user = um.User.objects.get(id=request.session['user_id'])
-        
-        user.profilepic = uploaded_file_url
-        user.save()
+            user = um.User.objects.get(id=request.session['user_id'])
+            
+            if target == "profile":
+                user.profilepic = uploaded_file_url
+            else:
+                user.profilebackground = uploaded_file_url
+            user.save()
 
-        request.session['profilepic'] = user.profilepic
-        return redirect('app_spotlite:settings')
-    return render(request, 'app_spotlite/settings.html')
-
-def picture_upload_bg(request):
-    if request.method == 'POST' and len(request.FILES['file_bgpic']) > 0:
-        myfile = request.FILES['file_bgpic']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        uploaded_file_url = fs.url(filename)
-
-        user = um.User.objects.get(id=request.session['user_id'])
-        user.profilebackground = uploaded_file_url
-        user.save()
-
+            request.session['profilepic'] = user.profilepic
+            request.session['profilebackground'] = user.profilebackground
+    except:
+        messages.error(request, 'Field can\'t be empty.')
         return redirect('app_spotlite:settings')
     return render(request, 'app_spotlite/settings.html')
 

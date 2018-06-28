@@ -14,7 +14,7 @@
           
             <div class="profile__img">
             
-              <img src="{{request.session.profilepic}}" class="profile-picture" alt="User Picture" />
+              <img src="{{user.profilepic}}" class="profile-picture" alt="User Picture" />
               
             </div>
             
@@ -36,9 +36,15 @@
                   {% if user.id == request.session.user_id %}
                   <p>&nbsp;</p>
                   {% else%}
-                  <button class="button-dark">
-                  Follow
-                  </button>
+                    {% if user.follower_of in users %}
+                    <button class="button-dark">
+                    <a href="">Unfollow</a>
+                    </button>
+                    {% else %}
+                    <button class="button-dark">
+                    <a href="{% url 'app_spotlite:add_as_friend' following_id=user.id %}">Follow</a>
+                    </button>
+                    {% endif %}
                   {% endif %}
                 
               </div>
