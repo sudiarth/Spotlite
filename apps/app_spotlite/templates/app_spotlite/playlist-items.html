@@ -49,7 +49,7 @@
                                                   </a>
                                                   <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
                                                         {% for editor in editors %}
-                                                        <a class="dropdown-item ajax_add2playlist" href="#" data-href="{% url 'app_spotlite:add_to_playlist_step2' song_id=item.song_id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
+                                                        <a class="dropdown-item add2playlist" href="#" data-href="{% url 'app_spotlite:add_to_playlist_step2' song_id=item.song_id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
                                                         {% endfor %}
                                                         <div class="dropdown-divider"></div>
                                                         <a class="no-load dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
@@ -71,11 +71,11 @@
 
                     <!-- Album Search Result -->
                     <div role="tabpanel" class="tab-pane" id="users">
-                            <div class="media-cards">
-                                {% for editor in editor_users %}
-                                    <div class="track__title" style="position: relative;"><a class="no-load" href="{% url 'app_spotlite:user_playlists' user_id=editor.user_id %}">{{ editor.user.firstname }} {{ editor.user.surname }}</a></div>
-                                {% endfor %}
-                            </div>                            
+                        <div class="media-cards">
+                              {% for editor in editor_users %}
+                              <div class="track__title" style="position: relative;"><a class="no-load" href="{% url 'app_spotlite:user_playlists' user_id=editor.user_id %}">{{ editor.user.firstname }} {{ editor.user.surname }}</a></div>
+                              {% endfor %}
+                        </div>                            
                     </div>
                   </div>
             </div>
@@ -85,4 +85,12 @@
       {% include 'app_spotlite/content_right.html' %}
 
 </section>
+<script>
+      $('.add2playlist').click(function(){
+            url = $(this).attr('data-href');
+            $.get(url, function( data ) {
+                  alert('successfull add to this playlist');
+            });
+      });      
+</script>
 {% endblock %}

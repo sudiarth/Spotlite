@@ -51,6 +51,17 @@ def play_history(request):
     return render(request, 'app_spotlite/play_history.html', context)
 
 
+def my_musics(request):
+    context = {
+        'albums': m.Album.objects.all()[:24],
+        'artists': m.Artist.objects.all()[:24],      
+        'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+        'likes' : m.Like.objects.filter(user_id=request.session['user_id']).order_by('-created_at')
+    }
+    return render(request, 'app_spotlite/my_musics.html', context)
+
+
+
 def songs(request):
     context = {
         'songs' : m.Song.objects.all().order_by('-updated_at')
@@ -93,7 +104,7 @@ def unlike_a_song(request, song_id):
         like = m.Like.objects.get(user_id=request.session['user_id'], song_id=song_id)
         like.delete()
 
-        return redirect('app_spotlite:index')
+        return redirect('app_spotlite:my_musics')
 
     return redirect('app_spotlite:profile')
 
