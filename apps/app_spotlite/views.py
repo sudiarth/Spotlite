@@ -15,7 +15,9 @@ EMAIL_REGEX = re.compile(r'^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9
 def index(request):
     if 'user_id' in request.session:
         context = {
-            'songs': m.Song.objects.all()[:5],
+            'songs': m.Song.objects.all()[:24],
+            'albums': m.Album.objects.all()[:24],
+            'artists': m.Artist.objects.all()[:24],            
             'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
             'editors': m.Editor.objects.filter(user_id=request.session['user_id'])
         }        
@@ -51,14 +53,18 @@ def play_history(request):
     return render(request, 'app_spotlite/play_history.html', context)
 
 
-def my_musics(request):
-    context = {
-        'albums': m.Album.objects.all()[:24],
-        'artists': m.Artist.objects.all()[:24],      
-        'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-        'likes' : m.Like.objects.filter(user_id=request.session['user_id']).order_by('-created_at')
-    }
-    return render(request, 'app_spotlite/my_musics.html', context)
+def my_musics(request, active):
+    if 'user_id' in request.session:
+        context = {
+            'active': active,
+            'albums': m.Album.objects.all()[:24],
+            'artists': m.Artist.objects.all()[:24],      
+            'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+            'likes' : m.Like.objects.filter(user_id=request.session['user_id']).order_by('-created_at')
+        }
+        return render(request, 'app_spotlite/my_musics.html', context)
+    
+    return redirect('auth_spotlite:login')
 
 
 
