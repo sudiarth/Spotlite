@@ -1,3 +1,14 @@
+  $('a.add2playlist').click(function(){
+    url = $(this).attr('data-href');  
+    alert(url)
+    // $('.add2playlist_loading').show();
+    // $(this).closest('.track__title').find('.add2playlist_loading').show();
+    $.get(url, function( data ) {
+      // $(this).closest('.track__title').find('.add2playlist_loading').hide();
+      // alert(1);
+    });
+  });
+
 
 // Tooltips
 
