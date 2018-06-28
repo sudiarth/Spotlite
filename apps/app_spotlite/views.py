@@ -264,22 +264,33 @@ def settings(request):
 
     return render(request, 'app_spotlite/settings.html')
 
-def picture_upload(request, image_purpose):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
+def picture_upload(request):
+    if request.method == 'POST' and len(request.FILES['file_profilepic']) > 0:
+        myfile = request.FILES['file_profilepic']
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
 
         user = um.User.objects.get(id=request.session['user_id'])
         
-        if image_purpose == "profilepic":
-            user.profilepic = uploaded_file_url
-        if image_purpose == "profilebackground":
-            user.profilebackground = uploaded_file_url
+        user.profilepic = uploaded_file_url
         user.save()
 
         request.session['profilepic'] = user.profilepic
+        return redirect('app_spotlite:settings')
+    return render(request, 'app_spotlite/settings.html')
+
+def picture_upload_bg(request):
+    if request.method == 'POST' and len(request.FILES['file_bgpic']) > 0:
+        myfile = request.FILES['file_bgpic']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+
+        user = um.User.objects.get(id=request.session['user_id'])
+        user.profilebackground = uploaded_file_url
+        user.save()
+
         return redirect('app_spotlite:settings')
     return render(request, 'app_spotlite/settings.html')
 

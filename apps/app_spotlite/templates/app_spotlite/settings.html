@@ -1,87 +1,145 @@
-{% extends 'base_spotlite/index.html' %} {% block body %}
-<div class="container text-white pt-3">
-    <h1>Edit Profile</h1>
-    <hr>
-    <div class="row">
-        <!-- left column -->
-        <div class="col-md-3">
-            <form method="POST" action="{% url 'app_spotlite:picture_upload' image_purpose='profilepic' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="text-center">
-                    <img src="{{request.session.profilepic}}" class="profile-picture mb-2" height="150" width="150" alt="avatar">
-                    <h6 class="text-white">Upload a different profile picture...</h6>
-
-                    <input type="file" class="form-control file-upload" name="myfile">
-                    <input type="submit" class="btn btn-success mt-3" value="Upload">
-                </div>
-            </form>
-            <form class="mt-5" method="POST" action="{% url 'app_spotlite:picture_upload' image_purpose='profilebackground' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="text-center">
-                    <h6 class="text-white">Upload a different profile background...</h6>
-
-                    <input type="file" class="form-control file-upload" name="myfile">
-                    <input type="submit" class="btn btn-success mt-3" value="Upload">
-                </div>
-            </form>
-            <div class="text-center">
-                {% if request.session.premium == 0 %}
-                <a href="{% url 'app_spotlite:change_membership' %}" class="btn btn-success mt-3">UPGRADE TO PREMIUM</a>
-                {% else %}
-                <a href="{% url 'app_spotlite:change_membership' %}" class="btn btn-secondary mt-3">CANCEL SUBSCRIPTION</a>
-                {% endif %}
-            </div>
-        </div>
-
+{% extends "base_spotlite/index.html" %}
+{% block body %}
+  <section class="content" style="margin-top: 60px;">
+  
+    {% include 'app_spotlite/content_left.html' %}
     
-        <!-- edit form column -->
-        <div class="col-md-9 personal-info">           
-
-            <form class="form-horizontal" role="form" method="POST" action="{% url 'app_spotlite:update_settings' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <h3>Personal info</h3>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">First name:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" name="html_firstname" value="{{request.session.firstname}}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Surname:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" name="html_surname" value="{{request.session.surname}}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Email:</label>
-                    <div class="col-lg-8">
-                        <input class="form-control" type="text" name="html_email" value="{{request.session.email}}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Password:</label>
-                    <div class="col-md-8">
-                        <input class="form-control" type="password" name="html_password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Confirm password:</label>
-                    <div class="col-md-8">
-                        <input class="form-control" type="password" name="html_confirm">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label"></label>
-                    <div class="col-md-8">
-                        <input type="submit" class="btn btn-success" value="Save Changes">
-                        <span></span>
-                        <input type="reset" class="btn btn-default" value="Cancel">
-                    </div>
-                </div>
-            </form>
+    <div class="content__middle">
+    
+      <div class="artist is-verified">
+      
+        <div class="artist__header" style="background-image: url('{{user.profilebackground}}');">
+        
+          <div class="artist__info mb-5">
+          
+            <div class="profile__img">
+            
+              <img src="{{request.session.profilepic}}" class="profile-picture" alt="User Picture" />
+              
+            </div>
+            
+            <div class="artist__info__meta">
+            
+              <div class="artist__info__type text-white">
+                {% if request.session.premium == 0 %}
+                <b>USER</b>
+                {% else %}
+                <b>PREMIUM USER</b>
+                {% endif %}
+              </div>
+              
+              <div class="artist__info__name">{{request.session.firstname}} {{request.session.surname}}</div>
+              
+              <div class="artist__info__actions">
+                
+                
+              </div>
+              
+            </div>
+            
+          </div>
+          
         </div>
+        
+        <div class="artist__content">
+        
+            <div class="tab-content text-white">
+
+                    <h1>Edit Profile</h1>
+                    <hr>
+                    <div class="row">
+                        <!-- left column -->
+                        <div class="col-md-3">
+                            <form method="POST" action="{% url 'app_spotlite:picture_upload' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="text-center">
+                                    <img src="{{request.session.profilepic}}" class="profile-picture mb-2" height="150" width="150" alt="avatar">
+                                    <h6 class="text-white">Upload a different profile picture...</h6>
+                
+                                    <input type="file" class="form-control file-upload" name="file_profilepic">
+                                    <input type="submit" class="btn btn-success mt-3" value="Upload">
+                                </div>
+                            </form>
+                            <form class="mt-5" method="POST" action="{% url 'app_spotlite:picture_upload_bg' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="text-center">
+                                    <h6 class="text-white">Upload a different profile background...</h6>
+                
+                                    <input type="file" class="form-control file-upload" name="file_picbg">
+                                    <input type="submit" class="btn btn-success mt-3" value="Upload">
+                                </div>
+                            </form>
+                            <div class="text-center">
+                                {% if request.session.premium == 0 %}
+                                <a href="{% url 'app_spotlite:change_membership' %}" class="btn btn-success mt-3">UPGRADE TO PREMIUM</a>
+                                {% else %}
+                                <a href="{% url 'app_spotlite:change_membership' %}" class="btn btn-secondary mt-3">CANCEL SUBSCRIPTION</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                
+                    
+                        <!-- edit form column -->
+                        <div class="col-md-9 personal-info">           
+                
+                            <form class="form-horizontal" role="form" method="POST" action="{% url 'app_spotlite:update_settings' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <h3>Personal info</h3>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">First name:</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" type="text" name="html_firstname" value="{{request.session.firstname}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Surname:</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" type="text" name="html_surname" value="{{request.session.surname}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Email:</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" type="text" name="html_email" value="{{request.session.email}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Password:</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="password" name="html_password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Confirm password:</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="password" name="html_confirm">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"></label>
+                                    <div class="col-md-8">
+                                        <input type="submit" class="btn btn-success" value="Save Changes">
+                                        <span></span>
+                                        <input type="reset" class="btn btn-default" value="Cancel">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                </div>
+            
+          </div>
+          
+        </div>
+        
+      </div>
+      
     </div>
-</div>
-<hr> {% endblock %}
+    
+    {% include 'app_spotlite/content_right.html' %}
+    
+  </section>
+  
+  {% endblock %}
