@@ -77,7 +77,7 @@ def songs(request):
 
 def song(request, song_id):
     like = False
-    like_check = m.Like.objects.filter(song_id=song_id)
+    like_check = m.Like.objects.filter(song_id=song_id, user_id=request.session['user_id'])
     if len(like_check) > 0:
         like = True
 
@@ -180,7 +180,9 @@ def playlists_editor(request):
 
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'can_add': True
+            'user_editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+            'can_add': True,
+            'user': False
         }
         return render(request, 'app_spotlite/playlists.html', context = context)
 
@@ -189,12 +191,19 @@ def playlists_editor(request):
 
 def items_in_playlist(request, playlist_id):
     if 'user_id' in request.session:
+
+        can_remove = False
+        check_can_remove = m.Editor.objects.filter(playlist_id=playlist_id, user_id=request.session['user_id'])
+        if len(check_can_remove) > 0:
+            can_remove = True
+
         context = {
             # 'songs': m.Song.objects.filter(playlist_of__playlist_id=playlist_id),
             'items': m.PlaylistItem.objects.filter(playlist_id=playlist_id),
             'playlist': m.Playlist.objects.get(id=playlist_id),
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'editor_users': m.Editor.objects.filter(playlist_id=playlist_id)
+            'editor_users': m.Editor.objects.filter(playlist_id=playlist_id),
+            'can_remove': can_remove
         }
         return render(request, 'app_spotlite/playlist-items.html', context = context)
 
@@ -208,7 +217,8 @@ def delete_item_in_playlist(request, item_id):
 
 def user_playlists(request, user_id):
     context = {
-        'editors': m.Editor.objects.filter(user_id=user_id),
+        'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+        'user_editors': m.Editor.objects.filter(user_id=user_id),
         'user': um.User.objects.get(id=user_id),
     }    
     return render(request, 'app_spotlite/playlists.html', context = context)
