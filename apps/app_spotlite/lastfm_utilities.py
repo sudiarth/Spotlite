@@ -117,4 +117,3 @@ def search_song(query):
                   songs.append(song)
                   youtube_utils.get_youtube_url(song.title+' - '+song.artist.name)
    return songs
-search_song('love')
