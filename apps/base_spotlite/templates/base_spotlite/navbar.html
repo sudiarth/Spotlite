@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar" href="{% url 'app_spotlite:index' %}">SPOTLITE</a>
+        <a class="no-load navbar" href="{% url 'app_spotlite:index' %}">SPOTLITE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link my-2 my-sm-0" href="#">About</a>
+                    <a class="no-load nav-link my-2 my-sm-0" href="#">About</a>
                 </li>
                 {% if request.session.user_id %}
                 <li class="nav-item dropdown">
@@ -18,8 +18,8 @@
                         <i class="fa fa-user-circle"></i> {{request.session.firstname}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'app_spotlite:profile' user_id=request.session.user_id %}">Profile</a>
-                        <a class="dropdown-item" href="{% url 'app_spotlite:settings' %}">Settings</a>
+                        <a class="no-load dropdown-item" href="{% url 'app_spotlite:profile' user_id=request.session.user_id %}">Profile</a>
+                        <a class="no-load dropdown-item" href="{% url 'app_spotlite:settings' %}">Settings</a>
                         <div class="dropdown-divider"></div>
                         <a class="signout dropdown-item" href="{% url 'auth_spotlite:logout'%}">Sign out</a>
                     </div>

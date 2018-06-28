@@ -20,14 +20,14 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
                     {% for editor in editors %}
-                    <a class="dropdown-item" href="{% url 'app_spotlite:add_to_playlist_step2' song_id=song.id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
+                    <a class="dropdown-item add2playlist" href="#" data-href="{% url 'app_spotlite:add_to_playlist_step2' song_id=song.id playlist_id=editor.playlist_id %}">{{ editor.playlist.title }}</a>
                     {% endfor %}
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
+                    <a class="no-load dropdown-item" href="{% url 'app_spotlite:playlists_editor' %}">Create playlist</a>
               </div>
               </div>
         </div>
-        <div class="track__title">{{song.title}}</div>
+        <div class="track__title" style="position: relative;"><a class="no-load" href="{% url 'app_spotlite:song' song_id=song.id %}">{{song.title}}</a> <span class="add2playlist_loading">wait..</span></div>
         <div class="track__length">1:11</div>
         <div class="track__popularity">
               <i class="ion-arrow-graph-up-right"></i>
@@ -35,3 +35,25 @@
         </div>
         {% endfor %}
     </div>
+
+<style>
+      .add2playlist_loading{
+            position: absolute;
+            color: green;
+            margin-left: 20px;
+            display: none;
+      }
+</style>
+
+<script>
+      $('a.add2playlist').click(function(){
+            url = $(this).attr('data-href'); 
+            // $('.add2playlist_loading').show();
+            // $(this).closest('.track__title').find('.add2playlist_loading').show();
+            $.get(url, function( data ) {
+                  alert('successfull add to this playlist')
+            // $(this).closest('.track__title').find('.add2playlist_loading').hide();
+            // alert(1);
+            });
+      });      
+</script>

@@ -41,8 +41,10 @@ $(document).ready ( function(){
             });
         });
 
+
+
         // Capture all the links to push their url to the history stack and trigger the StateChange Event
-        $('a').click(function(evt) {
+        $('a.no-load').click(function(evt) {
             evt.preventDefault();
             History.pushState('', $(this).text(), $(this).attr('href'));
         });
@@ -52,7 +54,6 @@ $(document).ready ( function(){
             History.pushState('', '', $(this).attr('href'));
             window.location.replace('/auth/logout');
         });
-
     });
 
     $('.dropdown-toggle').dropdown();

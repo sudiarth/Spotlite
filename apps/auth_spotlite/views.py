@@ -58,7 +58,7 @@ def authenticate(request, action):
                         user.firstname = firstname
                         user.surname = surname
                         user.password = hashed_password
-                        # user.premium = 0
+                        user.premium = 0
                         user.profilepic = "/profile_blank.jpg"
                         user.save()
                         start_session(request, user)
@@ -92,4 +92,5 @@ def start_session(request, user):
     request.session['firstname'] = user.firstname
     request.session['surname'] = user.surname
     request.session['profilepic'] = user.profilepic
+    request.session['premium'] = user.premium
 

@@ -1,16 +1,16 @@
-{% extends "base_spotlite/index.html" %}
-{% block body %}
+
+{% extends "base_spotlite/index.html" %} {% block body %}
 <section class="content" style="margin-top: 60px; height: 100%">
 
-        {% include 'app_spotlite/content_left.html' %}
+      {% include 'app_spotlite/content_left.html' %}
 
-        <div class="content__middle pl-5 pt-5">
+      <div class="content__middle pl-5 pt-5 text-white">
 
                 {% if can_add %}
                 <div class="row">
                     <h2 class="mb-4">Add Playlist:</h2>
             
-                    <div class="row form-control border-success ml-1">
+                    <div class="form-control border-success" style="max-width: 90%;">
                         <form action="{% url 'app_spotlite:playlists_editor' %}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
@@ -29,9 +29,6 @@
                 <div class="row">
                     <div class="col-xs-12">   
                         {% if can_add %}
-                            
-                        {% elif song_id %}
-                            <h1>Choose a Playlist:</h1>
                         {% elif user %}
                             <h1>{{user.firstname}}'s Playlists</h1>
                         {% else %}
@@ -76,16 +73,11 @@
                         </table>
                     </div>
                 </div>
-            
-                <p>&nbsp;</p>
-                {% if can_add %}
-                {% elif user %}
-                   <p><a class="btn btn-sm btn-primary" href="{% url 'app_spotlite:profile' %}">back to my playlist</a></p>
-                {% else %}
-                    <p><a class="btn btn-sm btn-primary" href="{% url 'app_spotlite:playlists_editor' %}">add more playlist</a></p>
-                {% endif %}
-        </div>
+        
 
-        {% include 'app_spotlite/content_right.html' %}
-    </section>
+                      </div>
+
+      {% include 'app_spotlite/content_right.html' %}
+
+</section>
 {% endblock %}

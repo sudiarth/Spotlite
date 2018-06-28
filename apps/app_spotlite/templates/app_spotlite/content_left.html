@@ -79,7 +79,7 @@
           <div class="in" id="playlists">
           
               {% for editor in editors %}
-              <a href="{% url 'app_spotlite:items_in_playlist' playlist_id=editor.playlist_id %}" class="navigation__list__item">
+              <a href="{% url 'app_spotlite:items_in_playlist' playlist_id=editor.playlist_id %}" class="no-load navigation__list__item">
                 <i class="ion-ios-musical-notes"></i>
                 <span>{{ editor.playlist.title }}</span>
               </a>
@@ -93,7 +93,7 @@
 
       <section class="playlist">
   
-        <a href="{% url 'app_spotlite:playlists_editor' %}">
+        <a class="no-load" href="{% url 'app_spotlite:playlists_editor' %}">
   
           <i class="ion-ios-plus-outline"></i>
   

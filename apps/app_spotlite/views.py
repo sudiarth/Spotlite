@@ -39,7 +39,7 @@ def add_as_friend(request, following_id):
             follow.save()
         
         # return redirect(request.META['HTTP_REFERER'])
-        return redirect('app_spotlite:profile')
+        return redirect('app_spotlite:profile', following_id)
 
     return redirect('auth_spotlite:login')
 
@@ -59,8 +59,17 @@ def songs(request):
 
 
 def song(request, song_id):
+    like = False
+    like_check = m.Like.objects.filter(song_id=song_id)
+    if len(like_check) > 0:
+        like = True
+
     context = {
-        'song' : m.Song.objects.get(id=song_id)
+        'song' : m.Song.objects.get(id=song_id),
+        'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+        'songs': m.Song.objects.all()[:5],
+        'like': like
+
     }
     return render(request, 'app_spotlite/song.html', context)
 
@@ -154,8 +163,7 @@ def playlists_editor(request):
 
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'can_add': True,
-            'user': False
+            'can_add': True
         }
         return render(request, 'app_spotlite/playlists.html', context = context)
 
@@ -165,9 +173,11 @@ def playlists_editor(request):
 def items_in_playlist(request, playlist_id):
     if 'user_id' in request.session:
         context = {
+            # 'songs': m.Song.objects.filter(playlist_of__playlist_id=playlist_id),
             'items': m.PlaylistItem.objects.filter(playlist_id=playlist_id),
             'playlist': m.Playlist.objects.get(id=playlist_id),
-            'editors': m.Editor.objects.filter(user_id=request.session['user_id'])
+            'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+            'editor_users': m.Editor.objects.filter(playlist_id=playlist_id)
         }
         return render(request, 'app_spotlite/playlist-items.html', context = context)
 
@@ -254,22 +264,26 @@ def settings(request):
 
     return render(request, 'app_spotlite/settings.html')
 
-def picture_upload(request, image_purpose):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        uploaded_file_url = fs.url(filename)
+def picture_upload(request, target):
+    try:
+        if request.method == 'POST' and request.FILES['file']:
+            myfile = request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
 
-        user = um.User.objects.get(id=request.session['user_id'])
-        
-        if image_purpose == "profilepic":
-            user.profilepic = uploaded_file_url
-        if image_purpose == "profilebackground":
-            user.profilebackground = uploaded_file_url
-        user.save()
+            user = um.User.objects.get(id=request.session['user_id'])
+            
+            if target == "profile":
+                user.profilepic = uploaded_file_url
+            else:
+                user.profilebackground = uploaded_file_url
+            user.save()
 
-        request.session['profilepic'] = user.profilepic
+            request.session['profilepic'] = user.profilepic
+            request.session['profilebackground'] = user.profilebackground
+    except:
+        messages.error(request, 'Field can\'t be empty.')
         return redirect('app_spotlite:settings')
     return render(request, 'app_spotlite/settings.html')
 
@@ -341,7 +355,6 @@ def search(request, search_keyword):
         'artists': m.Artist.objects.filter(name__contains=search_keyword),
         'users': um.User.objects.filter(Q(firstname__contains=search_keyword) | Q(surname__contains=search_keyword))
     }
-    print(songs)
     return render(request, 'app_spotlite/search.html', context)
 
 def presearch(request, search_keyword):
