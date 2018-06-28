@@ -32,13 +32,14 @@ def create_or_get_lastfm_album(album_data):
       album = am.Artist.objects.get(mbid=album_data['mbid'])
    except:
       try:
-         artist_response = get_request(LASTFM_GET_ARTIST.format(album_data['tracks']['track'][0]['artist']['mbid']))
-         artist = create_or_get_lastfm_artist(artist_response['artist'])
-         
-         album = am.Album()
-         album.lastfm_jsonparser(album_data)
-         album.artist = artist
-         album.save()
+         if 'mbid' in album_data['tracks']['track'][0]['artist']:
+            artist_response = get_request(LASTFM_GET_ARTIST.format(album_data['tracks']['track'][0]['artist']['mbid']))
+            artist = create_or_get_lastfm_artist(artist_response['artist'])
+            
+            album = am.Album()
+            album.lastfm_jsonparser(album_data)
+            album.artist = artist
+            album.save()
       except:
          album = None
    return album
@@ -47,14 +48,15 @@ def create_or_get_lastfm_song(song_data):
    try:
       song = am.Song.objects.get(mbid=song_data['mbid'])
    except:
-      if len(song_data['album']['mbid']) > 0:
-         album_response = get_request(LASTFM_GET_ALBUM.format(song_data['album']['mbid']))
-         album = create_or_get_lastfm_album(album_response['album'])
-         if album is not None:
-            song = am.Song()
-            song.lastfm_jsonparser(song_data)
-            song.album = album
-            song.save()
+      if 'mbid' in song_data['album']:
+         if len(song_data['album']['mbid']) > 0:
+            album_response = get_request(LASTFM_GET_ALBUM.format(song_data['album']['mbid']))
+            album = create_or_get_lastfm_album(album_response['album'])
+            if album is not None:
+               song = am.Song()
+               song.lastfm_jsonparser(song_data)
+               song.album = album
+               song.save()
 
 # FUNCIONS
 def search_artist(method_name, entity_name, query):

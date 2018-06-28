@@ -18,7 +18,7 @@
                         <i class="fa fa-user-circle"></i> {{request.session.firstname}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'app_spotlite:profile' %}">Profile</a>
+                        <a class="dropdown-item" href="{% url 'app_spotlite:profile' user_id=request.session.user_id %}">Profile</a>
                         <a class="dropdown-item" href="{% url 'app_spotlite:settings' %}">Settings</a>
                         <div class="dropdown-divider"></div>
                         <a class="signout dropdown-item" href="{% url 'auth_spotlite:logout'%}">Sign out</a>
@@ -31,9 +31,9 @@
                 </li>
                 {% endif %}
             </ul>
-            <form class="form-inline my-2 my-lg-0" action="#" method="POST">
+            <form class="form-inline my-2 my-lg-0" action="{% url 'app_spotlite:post_search' %}" method="POST">
                 {% csrf_token %}
-                <input class="form-control form-control-sm form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+                <input class="form-control form-control-sm form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" name="search_keyword">
             </form>
         </div>
     </div>

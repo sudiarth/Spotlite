@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from . import models as m
-# from django.db.models import Q
+from django.db.models import Q
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from apps.auth_spotlite import models as um
 import random, bcrypt, re
+
+from apps.app_spotlite import lastfm_utilities as lastfm_utils
 
 EMAIL_REGEX = re.compile(r'^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$')
 
@@ -228,19 +230,30 @@ def edit_playlist(request, playlist_id):
 
     return render(request, 'app_spotlite/playlist-edit.html', context = context)
 
-def profile(request):
+def profile(request, user_id):
     if 'user_id' in request.session:
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'user': m.User.objects.filter(id=request.session['user_id']),
+            'user': m.User.objects.get(id=user_id),
         }
         return render(request, 'app_spotlite/profile.html', context)
     return redirect('auth_spotlite:index')
 
+
+def artist(request, artist_id):
+    imagenr = random.randint(1,6)
+    image = '/static/base_spotlite/img/artist{}.jpg'.format(imagenr)
+    context = {
+        'artist' : m.Artist.objects.get(id=artist_id),
+        'img_url' : image
+    }
+    return render(request, 'app_spotlite/profile-artist.html', context)
+
 def settings(request):
+
     return render(request, 'app_spotlite/settings.html')
 
-def picture_upload(request):
+def picture_upload(request, image_purpose):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
@@ -248,7 +261,11 @@ def picture_upload(request):
         uploaded_file_url = fs.url(filename)
 
         user = um.User.objects.get(id=request.session['user_id'])
-        user.profilepic = uploaded_file_url
+        
+        if image_purpose == "profilepic":
+            user.profilepic = uploaded_file_url
+        if image_purpose == "profilebackground":
+            user.profilebackground = uploaded_file_url
         user.save()
 
         request.session['profilepic'] = user.profilepic
@@ -267,15 +284,19 @@ def update_settings(request):
             
             if len(email) == 0 or len(firstname) == 0 or len(surname) == 0:
                 errors.append("Fields cannot be blank.")
+                messages.error(request, "Fields cannot be blank.")
             if not EMAIL_REGEX.match(email):
                 errors.append("Invalid e-mail.")    
+                messages.error(request, "Invalid e-mail.")
             
             if request.POST['html_password'] == request.POST['html_confirm'] and len(request.POST['html_password']) > 0:
                 password = request.POST['html_password']
                 if password != request.POST['html_confirm']:
                     errors.append("Passwords do not match.")
+                    messages.error(request, "Passwords do not match.")
                 if len(password) < 6:
                     errors.append("Password must be longer than 6 characters.")
+                    messages.error(request, "Password must be longer than 6 characters.")
                 hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
                 user.password = hashed_password
             else:
@@ -296,4 +317,38 @@ def update_settings(request):
             raise
             print(errors)
     return redirect('app_spotlite:settings')
-    
+
+def change_membership(request):
+    user = m.User.objects.get(id=request.session['user_id'])
+    if user.premium == 0:
+        user.premium = 1
+    else:
+        user.premium = 0
+    request.session['premium'] = user.premium
+    user.save()
+    return redirect('app_spotlite:settings')
+
+def post_search(request):
+    search_keyword = request.POST['search_keyword']
+    return redirect('app_spotlite:search', search_keyword=search_keyword)
+
+def search(request, search_keyword):
+    context = {
+        'songs': m.Song.objects.filter(title__contains=search_keyword),
+        'albums': m.Album.objects.filter(title__contains=search_keyword),
+        'artists': m.Artist.objects.filter(name__contains=search_keyword),
+        'users': um.User.objects.filter(Q(firstname__contains=search_keyword) | Q(surname__contains=search_keyword))
+    }
+    return render(request, 'app_spotlite/search.html', context)
+
+def presearch(request, search_keyword):
+    lastfm_utils.search_artist('artist', 'artist', search_keyword)
+    lastfm_utils.search_album('album', 'album', search_keyword)
+    lastfm_utils.search_song('track', 'track', search_keyword)
+
+    context = {
+        'songs': m.Song.objects.filter(title__contains=search_keyword),
+        'albums': m.Album.objects.filter(title__contains=search_keyword),
+        'artists': m.Artist.objects.filter(name__contains=search_keyword),
+    }
+    return render(request, 'app_spotlite/search.html', context)

@@ -9,7 +9,7 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('settings', views.settings, name='settings'),
 
-    path('picture_upload', views.picture_upload, name='picture_upload'),
+    path('picture_upload/<str:image_purpose>', views.picture_upload, name='picture_upload'),
 
     path('update_settings', views.update_settings, name='update_settings'),
 
@@ -31,9 +31,16 @@ urlpatterns = [
     path('song/<int:song_id>/unlike', views.unlike_a_song, name='unlike_a_song'),
     path('play-history', views.play_history, name='play_history'),
 
+    path('presearch/<str:search_keyword>/', views.presearch, name='presearch'),
+    path('search/<str:search_keyword>/', views.search, name='search'),
+    path('post_search/', views.post_search, name='post_search'),
+
+    path('artist/<int:artist_id>', views.artist, name='artist'),
+    path('<int:user_id>/profile', views.profile, name='profile'),   
 
     path('user/<int:following_id>/follow', views.add_as_friend, name='add_as_friend'),
-    
+
+    path('change_membership', views.change_membership, name='change_membership'),
 
     path('', views.index, name='index'),    
 ]

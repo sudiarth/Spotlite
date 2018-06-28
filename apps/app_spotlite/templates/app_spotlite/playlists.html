@@ -30,7 +30,7 @@
             {% elif song_id %}
                 <h1>Choose a Playlist:</h1>
             {% elif user %}
-                <h1>{{ request.session.firstname }}'s Playlists</h1>
+                <h1>{{user.firstname}}'s Playlists</h1>
             {% else %}
                 <h1>Playlists</h1>
             {% endif %}

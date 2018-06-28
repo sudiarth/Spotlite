@@ -5,21 +5,37 @@
     <div class="row">
         <!-- left column -->
         <div class="col-md-3">
-            <form method="POST" action="{% url 'app_spotlite:picture_upload' %}" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'app_spotlite:picture_upload' image_purpose='profilepic' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="text-center">
                     <img src="{{request.session.profilepic}}" class="profile-picture mb-2" height="150" width="150" alt="avatar">
-                    <h6 class="text-white">Upload a different photo...</h6>
+                    <h6 class="text-white">Upload a different profile picture...</h6>
 
                     <input type="file" class="form-control file-upload" name="myfile">
-                    <input type="submit" class="btn btn-success mt-3" value="Save Changes">
+                    <input type="submit" class="btn btn-success mt-3" value="Upload">
                 </div>
             </form>
+            <form class="mt-5" method="POST" action="{% url 'app_spotlite:picture_upload' image_purpose='profilebackground' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="text-center">
+                    <h6 class="text-white">Upload a different profile background...</h6>
+
+                    <input type="file" class="form-control file-upload" name="myfile">
+                    <input type="submit" class="btn btn-success mt-3" value="Upload">
+                </div>
+            </form>
+            <div class="text-center">
+                {% if request.session.premium == 0 %}
+                <a href="{% url 'app_spotlite:change_membership' %}" class="btn btn-success mt-3">UPGRADE TO PREMIUM</a>
+                {% else %}
+                <a href="{% url 'app_spotlite:change_membership' %}" class="btn btn-secondary mt-3">CANCEL SUBSCRIPTION</a>
+                {% endif %}
+            </div>
         </div>
 
+    
         <!-- edit form column -->
-        <div class="col-md-9 personal-info">
-           
+        <div class="col-md-9 personal-info">           
 
             <form class="form-horizontal" role="form" method="POST" action="{% url 'app_spotlite:update_settings' %}">
                 {% csrf_token %}
