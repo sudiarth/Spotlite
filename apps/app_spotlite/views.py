@@ -341,6 +341,7 @@ def search(request, search_keyword):
         'artists': m.Artist.objects.filter(name__contains=search_keyword),
         'users': um.User.objects.filter(Q(firstname__contains=search_keyword) | Q(surname__contains=search_keyword))
     }
+    print(songs)
     return render(request, 'app_spotlite/search.html', context)
 
 def presearch(request, search_keyword):
@@ -353,4 +354,5 @@ def presearch(request, search_keyword):
         'albums': m.Album.objects.filter(title__contains=search_keyword),
         'artists': m.Artist.objects.filter(name__contains=search_keyword),
     }
+    print(songs)
     return render(request, 'app_spotlite/search.html', context)

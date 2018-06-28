@@ -37,7 +37,7 @@ class Album(models.Model):
    cover = models.CharField(max_length=64)
    mbid = models.CharField(max_length=64)
 
-   artist = models.ForeignKey(Artist, related_name='artists', on_delete=models.CASCADE)
+   artist = models.ForeignKey(Artist, related_name='albums', on_delete=models.CASCADE)
 
    def lastfm_jsonparser(self, data):
       self.title = data['name']
