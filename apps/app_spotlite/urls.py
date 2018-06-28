@@ -9,7 +9,8 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('settings', views.settings, name='settings'),
 
-    path('picture_upload/<str:image_purpose>', views.picture_upload, name='picture_upload'),
+    path('picture_upload', views.picture_upload, name='picture_upload'),
+    path('picture_upload_bg', views.picture_upload_bg, name='picture_upload_bg'),
 
     path('update_settings', views.update_settings, name='update_settings'),
 
