@@ -19,7 +19,8 @@ urlpatterns = [
     path('playlist/<int:playlist_id>/delete', views.delete_playlist, name='delete_playlist'),
     path('playlist/<int:playlist_id>/edit', views.edit_playlist, name='edit_playlist'),
     path('<int:user_id>/playlists', views.user_playlists, name='user_playlists'),
-    path('<active>', views.my_musics, name='my_musics'),
+    path('play-history', views.my_history, name='my_history'),
+    path('my-<active>', views.my_musics, name='my_musics'),
 
     path('playlist/<int:playlist_id>/items', views.items_in_playlist, name='items_in_playlist'),
     path('playlist/items/<int:item_id>/delete', views.delete_item_in_playlist, name='delete_item_in_playlist'),
@@ -33,7 +34,6 @@ urlpatterns = [
     path('songs', views.songs, name='songs'),
     path('song/<int:song_id>/like', views.like_a_song, name='like_a_song'),
     path('song/<int:song_id>/unlike', views.unlike_a_song, name='unlike_a_song'),
-    path('play-history', views.play_history, name='play_history'),
 
     path('presearch/<str:search_keyword>/', views.presearch, name='presearch'),
     path('search/<str:search_keyword>/', views.search, name='search'),

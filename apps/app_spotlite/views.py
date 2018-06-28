@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from . import models as m
 from django.db.models import Q
+from django.db.models import Count, Sum
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -46,12 +47,15 @@ def add_as_friend(request, following_id):
     return redirect('auth_spotlite:login')
 
 
-def play_history(request):
-    context = {
-        'histories' : m.History.objects.filter(user_id=request.session['user_id']).order_by('-created_at')
-    }
-    return render(request, 'app_spotlite/play_history.html', context)
+def my_history(request):
+    if 'user_id' in request.session:
+        context = {
+            'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+            'histories' : m.History.objects.filter(user_id=request.session['user_id']).order_by('-created_at')
+        }
+        return render(request, 'app_spotlite/play_history.html', context)
 
+    return redirect('auth_spotlite:login')
 
 def my_musics(request, active):
     if 'user_id' in request.session:
@@ -84,7 +88,7 @@ def song(request, song_id):
     context = {
         'song' : m.Song.objects.get(id=song_id),
         'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-        'songs': m.Song.objects.all()[:5],
+        'songs': m.Song.objects.annotate(total=Count('played_by')).order_by('-total')[:5], #POPULAR SONGS
         'like': like
 
     }
@@ -119,7 +123,7 @@ def add_song_to_history(request, song_id):
 
         history = m.History()
         history.user_id = request.session['user_id']
-        history.song_id = song_id    
+        history.song_id = song_id
         
         check = m.History.objects.filter(user_id=request.session['user_id']).order_by('-created_at')[:1]
 
