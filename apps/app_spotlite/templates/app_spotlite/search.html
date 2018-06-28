@@ -1,182 +1,92 @@
 {% extends "base_spotlite/index.html" %} {% block body %}
 <section class="content" style="margin-top: 60px; height: 100%">
 
-   <!-- should moved outside, put it on the base -->
-   <div class="content__left">
+      {% include 'app_spotlite/content_left.html' %}
 
-      {% include 'app_spotlite/navigation.html' %}
+      <div class="content__middle">
+            <div class="artist is-verified">
+            <div class="artist__header" style="height: auto;">
+                  <div class="artist__navigation" style="height: 60px;">
+                  <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                        <a href="#search_song" aria-controls="search_song" role="tab" data-toggle="tab">Song</a>
+                        </li>
+                        <li role="presentation">
+                        <a href="#search_album" aria-controls="search_album" role="tab" data-toggle="tab">Album</a>
+                        </li>
+                        <li role="presentation">
+                        <a href="#search_artist" aria-controls="search_artist" role="tab" data-toggle="tab">Artist</a>
+                        </li>
+                        <li role="presentation">
+                        <a href="#search_user" aria-controls="search_user" role="tab" data-toggle="tab">People</a>
+                        </li>
+                  </ul>
+                  </div>
 
-      <section class="playlist">
-
-         <a href="#">
-
-            <i class="ion-ios-plus-outline"></i>
-
-            New Playlist
-
-         </a>
-
-      </section>
-
-      <section class="playing">
-
-         <div class="playing__art">
-
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/cputh.jpg" alt="Album Art" />
-
-         </div>
-
-         <div class="playing__song">
-
-            <a class="playing__song__name">Some Type of Love</a>
-
-            <a class="playing__song__artist">Charlie Puth</a>
-
-         </div>
-
-         <div class="playing__add">
-
-            <i class="ion-checkmark"></i>
-
-         </div>
-
-      </section>
-
-   </div>
-
-   <div class="content__middle">
-      <div class="artist is-verified">
-         <div class="artist__header" style="height: auto;">
-            <div class="artist__navigation" style="height: 60px;">
-               <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active">
-                     <a href="#search_song" aria-controls="search_song" role="tab" data-toggle="tab">Song</a>
-                  </li>
-                  <li role="presentation">
-                     <a href="#search_album" aria-controls="search_album" role="tab" data-toggle="tab">Album</a>
-                  </li>
-                  <li role="presentation">
-                     <a href="#search_artist" aria-controls="search_artist" role="tab" data-toggle="tab">Artist</a>
-                  </li>
-                  <li role="presentation">
-                     <a href="#search_user" aria-controls="search_user" role="tab" data-toggle="tab">People</a>
-                  </li>
-               </ul>
             </div>
-
-         </div>
-         <div class="artist__content">
-            <div class="tab-content">
-               <!-- Song Search Result -->
-               <div role="tabpanel" class="tab-pane active" id="search_song">
-                  <div class="album__tracks">
-                     <div class="tracks">
-                        <div class="tracks__heading">
-                           <div class="tracks__heading__number">#</div>
-                           <div class="tracks__heading__added"></div>
-                           <div class="tracks__heading__title">Title</div>
-                           <div class="tracks__heading__length">
-                              <i class="ion-ios-stopwatch-outline"></i>
-                           </div>
-                           <div class="tracks__heading__popularity">
-                              <i class="ion-thumbsup"></i>
-                           </div>
+            <div class="artist__content">
+                  <div class="tab-content">
+                  <!-- Song Search Result -->
+                  <div role="tabpanel" class="tab-pane active" id="search_song">
+                        <div class="album__tracks">
+                              {% include 'app_spotlite/songs.html' %}
                         </div>
-                        {% for song in songs %}
-                        <div class="track">
-                           <div class="track__number">{{ forloop.counter }}</div>
-                           <div class="track__added">
-                              <div class="dropdown">
-                                 <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                 </a>
-                                 <div class="dropdown-menu" aria-labelledby="dropdown_not_added">
-                                    <a class="dropdown-item" href="#">Last playlist</a>
-                                    <a class="dropdown-item" href="#">First playlist</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Create playlist</a>
-                                 </div>
+                  </div>
+
+                  <!-- Album Search Result -->
+                  <div role="tabpanel" class="tab-pane" id="search_album">
+                        <div class="media-cards">
+                        {% for album in albums %}
+                        <div class="media-card">
+                              <div class="media-card__image" style="background-image: url({{album.cover}});">
+                              <i class="ion-ios-play"></i>
                               </div>
-                           </div>
-                           <div class="track__title">{{song.title}}</div>
-                           <div class="track__length">1:11</div>
-                           <div class="track__popularity">
-                              <i class="ion-arrow-graph-up-right"></i>
-                           </div>
+                              <a class="media-card__footer" style="color: white; text-align: center">{{ album.title }}</a>
                         </div>
+                              {% empty %}
+                              <p style="color: white">No album found</p>
                         {% endfor %}
-                     </div>
-                  </div>
-               </div>
-
-               <!-- Album Search Result -->
-               <div role="tabpanel" class="tab-pane" id="search_album">
-                  <div class="media-cards">
-                     {% for album in albums %}
-                     <div class="media-card">
-                        <div class="media-card__image" style="background-image: url({{album.cover}});">
-                           <i class="ion-ios-play"></i>
                         </div>
-                        <a class="media-card__footer" style="color: white; text-align: center">{{ album.title }}</a>
-                     </div>
-                        {% empty %}
-                           <p style="color: white">No album found</p>
-                     {% endfor %}
                   </div>
-               </div>
 
-               <!-- Artist Search Result -->
-               <div role="tabpanel" class="tab-pane" id="search_artist">
-                  <div class="media-cards">
-                        {% for artist in artists %}
-                        <div class="media-card">
-                           <div class="media-card__image" style="background-image: url({{artist.photo}});">
-                              <i class="ion-ios-play"></i>
-                           </div>
-                           <a class="media-card__footer" href="{% url 'app_spotlite:artist' artist_id=artist.id %}" style="color: white; text-align: center">{{ artist.name }}</a>
+                  <!-- Artist Search Result -->
+                  <div role="tabpanel" class="tab-pane" id="search_artist">
+                        <div class="media-cards">
+                              {% for artist in artists %}
+                              <div class="media-card">
+                              <div class="media-card__image" style="background-image: url({{artist.photo}});">
+                                    <i class="ion-ios-play"></i>
+                              </div>
+                              <a class="media-card__footer" href="{% url 'app_spotlite:artist' artist_id=artist.id %}" style="color: white; text-align: center">{{ artist.name }}</a>
+                              </div>
+                              {% empty %}
+                              <p style="color: white">No artist found</p>
+                              {% endfor %}
                         </div>
-                        {% empty %}
-                           <p style="color: white">No artist found</p>
-                        {% endfor %}
                   </div>
-               </div>
 
-               <!-- People Search Result -->
-               <div role="tabpanel" class="tab-pane" id="search_user">
-                  <div class="media-cards">
-                        {% for user in users %}
-                        <div class="media-card">
-                           <div class="media-card__image" style="background-image: url({{user.profilepic}});">
-                              <i class="ion-ios-play"></i>
-                           </div>
-<a class="media-card__footer" style="color: white; text-align: center" href="{% url 'app_spotlite:profile' user_id=user.id %}">{{ user.firstname }}</a>
+                  <!-- People Search Result -->
+                  <div role="tabpanel" class="tab-pane" id="search_user">
+                        <div class="media-cards">
+                              {% for user in users %}
+                              <div class="media-card">
+                              <div class="media-card__image" style="background-image: url({{user.profilepic}});">
+                                    <i class="ion-ios-play"></i>
+                              </div>
+            <a class="media-card__footer" style="color: white; text-align: center" href="{% url 'app_spotlite:profile' user_id=user.id %}">{{ user.firstname }}</a>
+                              </div>
+                              {% empty %}
+                              <p style="color: white">Nothing</p>
+                              {% endfor %}
                         </div>
-                        {% empty %}
-                           <p style="color: white">Nothing</p>
-                        {% endfor %}
                   </div>
-               </div>
 
+                  </div>
             </div>
-         </div>
+            </div>
       </div>
-   </div>
 
-   <div class="content__right">
-      <div class="social">
-         <div class="friends">
-            {% for history in histories %}
-            <a href="{% url 'app_spotlite:song' song_id=history.song_id %}" class="friend">
-               <i class="ion-android-person"></i>
-               <p>{{ history.user.firstname }}</p>
-               <small>playing
-                  <b>{{ history.song.title }}</b>
-               </small>
-            </a>
-            {% endfor %}
-         </div>
-         <button class="button-light">Find Friends</button>
-      </div>
-   </div>
+      {% include 'app_spotlite/content_right.html' %}
+
 </section>
 {% endblock %}
