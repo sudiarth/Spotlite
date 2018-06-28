@@ -10,6 +10,12 @@
             </small>
         </a>
         {% endfor %}
+        <h4 class="text-white">{{request.session.firstname}}'s Friends</h4>
+        {% for friend in friends %}
+        <div class="text-white">
+            <a href="{% url 'app_spotlite:profile' user_id=friend.following.id%}"><p>{{ friend.following.firstname }} {{ friend.following.surname }}</p></a>
+        </div>
+        {% endfor %}
         </div>
         <button class="button-light">Find Friends</button>
     </div>
