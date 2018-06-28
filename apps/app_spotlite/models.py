@@ -56,8 +56,7 @@ class Song(models.Model):
    lyric = models.TextField()
    cover = models.CharField(max_length=32)
    mbid = models.CharField(max_length=64)
-
-   mbid = models.CharField(max_length=64)
+   mp3url = models.CharField(max_length=128)
 
    def lastfm_jsonparser(self, data):
       self.title = data['name']
