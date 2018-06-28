@@ -15,6 +15,7 @@ EMAIL_REGEX = re.compile(r'^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9
 def index(request):
     if 'user_id' in request.session:
         context = {
+            'songs': m.Song.objects.all()[:5],
             'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
             'editors': m.Editor.objects.filter(user_id=request.session['user_id'])
         }        
@@ -128,7 +129,7 @@ def add_to_playlist_step2(request, song_id, playlist_id):
             playlist_item.user_id = request.session['user_id']
             playlist_item.save()
         
-        return redirect('app_spotlite:index')
+        return redirect('app_spotlite:items_in_playlist', playlist_id=playlist_id)
 
     return redirect('auth_spotlite:login')
 
@@ -166,7 +167,7 @@ def items_in_playlist(request, playlist_id):
         context = {
             'items': m.PlaylistItem.objects.filter(playlist_id=playlist_id),
             'playlist': m.Playlist.objects.get(id=playlist_id),
-            'editors': m.Editor.objects.filter(playlist_id=playlist_id)
+            'editors': m.Editor.objects.filter(user_id=request.session['user_id'])
         }
         return render(request, 'app_spotlite/playlist-items.html', context = context)
 
@@ -334,6 +335,7 @@ def post_search(request):
 
 def search(request, search_keyword):
     context = {
+        'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
         'songs': m.Song.objects.filter(title__contains=search_keyword),
         'albums': m.Album.objects.filter(title__contains=search_keyword),
         'artists': m.Artist.objects.filter(name__contains=search_keyword),

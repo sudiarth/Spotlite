@@ -1,4 +1,5 @@
-<section class="navigation">
+<div class="content__left">
+    <section class="navigation">
   
         <!-- Main -->
         <div class="navigation__list">
@@ -77,69 +78,28 @@
           
           <div class="in" id="playlists">
           
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Doo Wop</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Pop Classics</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Love $ongs</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Hipster</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>New Music Friday</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Techno Poppers</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Summer Soothers</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Hard Rap</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Pop Rap</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>5 Stars</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Dope Dancin</span>
-            </a>
-
-            <a href="#" class="navigation__list__item">
-              <i class="ion-ios-musical-notes"></i>
-              <span>Sleep</span>
-            </a>
-            
+              {% for editor in editors %}
+              <a href="{% url 'app_spotlite:items_in_playlist' playlist_id=editor.playlist_id %}" class="navigation__list__item">
+                <i class="ion-ios-musical-notes"></i>
+                <span>{{ editor.playlist.title }}</span>
+              </a>
+              {% endfor %}          
           </div>
 
         </div>
         <!-- / -->
 
       </section>
+
+      <section class="playlist">
+  
+        <a href="{% url 'app_spotlite:playlists_editor' %}">
+  
+          <i class="ion-ios-plus-outline"></i>
+  
+          New Playlist
+  
+        </a>
+  
+      </section>
+</div>
