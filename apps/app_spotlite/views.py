@@ -77,7 +77,7 @@ def songs(request):
 
 def song(request, song_id):
     like = False
-    like_check = m.Like.objects.filter(song_id=song_id)
+    like_check = m.Like.objects.filter(song_id=song_id, user_id=request.session['user_id'])
     if len(like_check) > 0:
         like = True
 
@@ -180,7 +180,9 @@ def playlists_editor(request):
 
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'can_add': True
+            'user_editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+            'can_add': True,
+            'user': False
         }
         return render(request, 'app_spotlite/playlists.html', context = context)
 
@@ -215,7 +217,8 @@ def delete_item_in_playlist(request, item_id):
 
 def user_playlists(request, user_id):
     context = {
-        'editors': m.Editor.objects.filter(user_id=user_id),
+        'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
+        'user_editors': m.Editor.objects.filter(user_id=user_id),
         'user': um.User.objects.get(id=user_id),
     }    
     return render(request, 'app_spotlite/playlists.html', context = context)
