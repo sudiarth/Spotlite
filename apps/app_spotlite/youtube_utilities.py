@@ -21,19 +21,6 @@ def get_request(url):
    response = requests.get(url)
    return json.loads(response.text)
 
-# def get_youtube_urls(keywords):
-#    videos = []
-#    # pprint(response)
-#    for keyword in keywords:
-#       response = get_request(YOUTUBE_SEARCH_URL.format(keyword, YOUTUBE_API_KEY))
-#       video_id = response['items'][0]['id']['videoId']
-#       videos = [YOUTUBE_WATCH_URL.format(video_id)]
-#    print(videos)
-
-#    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-#       ydl.download(videos)
-
-
 def get_youtube_url(keyword):
    videos = []
    response = get_request(YOUTUBE_SEARCH_URL.format(keyword, YOUTUBE_API_KEY))
