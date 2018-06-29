@@ -32,7 +32,7 @@ def authenticate(request, action):
             try: 
                 user = m.User.objects.get(email=request.session['html_email'])
                 errors.append("There is already an account with the e-mail address.")
-                print(errors)
+                messages.error(request, "")
                 return redirect('auth_spotlite:register')
 
             except:
