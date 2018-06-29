@@ -40,7 +40,6 @@ def add_as_friend(request, following_id):
         follow.follower_id = request.session['user_id']
         follow.following_id = following_id
         follow.save()
-        
         # return redirect(request.META['HTTP_REFERER'])
         return redirect('app_spotlite:profile', following_id)
 
@@ -331,7 +330,8 @@ def profile(request, user_id):
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
             'user': m.User.objects.get(id=user_id),
             'is_friend': is_friend,
-            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
 
         return render(request, 'app_spotlite/profile.html', context)
@@ -344,14 +344,16 @@ def artist(request, artist_id):
     context = {
         'artist' : m.Artist.objects.get(id=artist_id),
         'img_url' : image,
-        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     }
     return render(request, 'app_spotlite/profile-artist.html', context)
 
 def settings(request):
-    context = {
-        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']),    
-        }
+    context = {  
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')  
+    }
     return render(request, 'app_spotlite/settings.html', context)
 
 def picture_upload(request, target):
@@ -445,7 +447,8 @@ def search(request, search_keyword):
         'albums': m.Album.objects.filter(title__contains=search_keyword),
         'artists': m.Artist.objects.filter(name__contains=search_keyword),
         'users': um.User.objects.filter(Q(firstname__contains=search_keyword) | Q(surname__contains=search_keyword)),
-        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     }
     return render(request, 'app_spotlite/search.html', context)
 
@@ -454,6 +457,7 @@ def presearch(request, search_keyword):
         'artists': lastfm_utils.search_artist(search_keyword),
         'songs': lastfm_utils.search_song(search_keyword),
         'albums':  lastfm_utils.search_album(search_keyword),
-        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     }
     return render(request, 'app_spotlite/search.html', context)
