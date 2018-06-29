@@ -26,7 +26,7 @@
                   
                   <div class="artist__info__actions">
                   
-                    <button class="button-dark amplitude-play playNow" data-songId="0" amplitude-song-index="0" amplitude-playlist="spotlite">
+                    <button class="button-dark amplitude-play playNow" data-songId="{{ song.id }}" amplitude-song-index="0" amplitude-playlist="spotlite">
                       <i class="ion-ios-play"></i>
                       Play
                     </button>
@@ -50,13 +50,6 @@
               </div>
 
               <script>
-                  $('.playNow').click(function(){
-                      song_id = $(this).attr("data-songId");
-                      url = "{% url 'app_spotlite:add_song_to_history' song_id=song.id %}";
-                      $.get(url, function( data ) {
-                          
-                        });
-                  });
                   $('.ajax_like').click(function(){
                     tx = $(this).find('span')
                     
@@ -929,7 +922,7 @@
           </div>
           
         </div>
-    
+
     {% include 'app_spotlite/content_right.html' %}
     
   </section>

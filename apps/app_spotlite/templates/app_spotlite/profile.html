@@ -36,17 +36,17 @@
                   {% if user.id == request.session.user_id %}
                   <p>&nbsp;</p>
                   {% else %}
-                    
-                    {% if user.follower_id == request.session.user_id and user.following_id == user.id %}
-                    <button class="button-dark">
-                    <a href="">Unfollow</a>
+                  <button class="button-dark">
+                      <a href="{% url 'app_spotlite:add_as_friend' following_id=user.id %}">Follow</a>
                     </button>
-                    {% else %}
-                    <button class="button-dark">
-                    <a href="{% url 'app_spotlite:add_as_friend' following_id=user.id %}">Follow</a>
-                    </button>
-                    {% endif %}
-                  {% endif %}
+                    {% for follow in following %}
+                      {% if follow.following.id in followers %}
+                      <button class="button-dark">
+                        <a href="{% url 'app_spotlite:delete_as_friend' following_id=user.id %}">Unfollow</a>
+                      </button>
+                      {% endif %}
+                    {% endfor %}
+                 {% endif %}
                 
               </div>
               
