@@ -45,7 +45,7 @@
 
                   {% if likes %}
 
-                  {% for like in likes %}
+                        {% for like in likes %}
 
                               {
                                     "name": "{{like.song.title}}",
@@ -55,10 +55,9 @@
                                     "cover_art_url": "{{like.song.album.artist.photo}}"
                               },
                               
-                  {% endfor %}
-                  {% endif %}
+                        {% endfor %}
 
-                  {% if songs %}
+                  {% elif songs %}
 
                                     {
                                           "name": "{{song.title}}",
@@ -82,8 +81,7 @@
                                     
                               {% endif %}
                         {% endfor %}
-                  {% endif %}
-                  {% if histories %}
+                  {% elif histories %}
 
                         {% for history in histories %}
 
@@ -103,11 +101,9 @@
                   "spotlite": [
                   {% if likes %}
                         {% for like in likes %}{{ forloop.counter0 }},{% endfor %}
-                  {% endif %}
-                  {% if songs %}
+                  {% elif songs %}
                         {% for song in songs %}{{ forloop.counter0 }},{% endfor %}
-                  {% endif %}
-                  {% if histories %}
+                  {% elif histories %}
                         {% for history in histories %}{{ forloop.counter0 }},{% endfor %}
                   {% endif %}
                   ]
