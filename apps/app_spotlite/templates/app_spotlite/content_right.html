@@ -26,23 +26,23 @@
         </section>
         {% endfor %}
 
-          <section class="playlist">
-  
-              <span class="no-load">
-        
-                {{request.session.firstname}}'s Friends
-        
-              </span>
-        
-            </section>
     <div class="overview__related">
 
+        <section class="playlist">
+  
+            <span class="no-load">
+      
+              My Friends
+      
+            </span>
+      
+          </section>
             
             <div class="related-artists">
 
                 {% for friend in friends %}
             
-              <a href="{% url 'app_spotlite:profile' user_id=friend.following.id%}" class="related-artist">
+              <a href="{% url 'app_spotlite:profile' user_id=friend.following.id %}" class="related-artist">
               
                 <span class="related-artist__img">
                 

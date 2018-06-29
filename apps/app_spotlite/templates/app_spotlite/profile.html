@@ -70,7 +70,18 @@
         
             <div class="tab-content">
                 
+                {% for history in personal_histories %}
+                <section class="playing">
+                   
+                  <div class="playing__song">
             
+                    <a href="{% url 'app_spotlite:song' song_id=history.song_id %}" class="playing__song__name" style="font-size:11px">{{ history.user.firstname }} playing {{ history.song.title }}</a>
+            
+                  </div>
+            
+                </section>
+                {% endfor %}
+
           </div>
           
         </div>
