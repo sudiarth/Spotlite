@@ -21,3 +21,6 @@
 hr {border-color: black; margin-top: 25px;}
 
 
+.btn-play-hidden {
+    display: none
+}

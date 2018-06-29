@@ -41,7 +41,17 @@ $(document).ready ( function(){
             });
         });
 
+        $('a.play').click(function(evt) {
+            evt.preventDefault();
+            $('a.play').addClass('btn-play-hidden');
+            $('a.pause').removeClass('btn-play-hidden');
+        });
 
+        $('a.pause').click(function(evt) {
+            evt.preventDefault();
+            $('a.play').removeClass('btn-play-hidden');
+            $('a.pause').addClass('btn-play-hidden');
+        });
 
         // Capture all the links to push their url to the history stack and trigger the StateChange Event
         $('a.no-load').click(function(evt) {
