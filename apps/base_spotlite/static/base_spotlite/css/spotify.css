@@ -454,11 +454,11 @@ body a:hover {
   }
 }
 .artist {
-  height: 617px;
+  height: calc(100vh - 120px);
   overflow-y: scroll;
 }
 .artist__header {
-  height: 320px;
+  height: 220px;
   border-bottom: 1px solid #282828;
   position: relative;
   background-size: cover;

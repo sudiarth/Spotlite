@@ -103,7 +103,7 @@ def song(request, song_id):
         'artists_grid': m.Artist.objects.all()[:12],
         'song' : m.Song.objects.get(id=song_id),
         'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-        'songs': m.Song.objects.annotate(total=Count('played_by')).order_by('-total')[:5], #POPULAR SONGS
+        'songs': m.Song.objects.annotate(total=Count('played_by')).order_by('-total')[:10], #POPULAR SONGS
         'like': like,
         'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
         'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
