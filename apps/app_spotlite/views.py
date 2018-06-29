@@ -46,6 +46,13 @@ def add_as_friend(request, following_id):
 
     return redirect('auth_spotlite:login')
 
+def delete_as_friend(request, following_id):
+    if 'user_id' in request.session:
+        follow = m.Follow.objects.get(following_id=following_id)
+        follow.delete()
+        # return redirect(request.META['HTTP_REFERER'])
+        return redirect('app_spotlite:profile', user_id=following_id)
+    return redirect('auth_spotlite:login')
 
 def my_history(request):
     if 'user_id' in request.session:
@@ -88,7 +95,8 @@ def song(request, song_id):
     context = {
         'albums': m.Album.objects.all()[:5],
         'artists': m.Artist.objects.all()[:5],
-        'artists_grid': m.Artist.objects.all()[:12],          
+        'related_artist': m.Song.objects.filter(tags__song_id=song_id).distinct('artist_id'),
+        'artists_grid': m.Artist.objects.all()[:12],
         'song' : m.Song.objects.get(id=song_id),
         'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
         'songs': m.Song.objects.annotate(total=Count('played_by')).order_by('-total')[:5], #POPULAR SONGS
@@ -306,11 +314,19 @@ def edit_playlist(request, playlist_id):
 
 def profile(request, user_id):
     if 'user_id' in request.session:
+        following_people = []
+        follower = m.Follow.objects.filter(follower_id=user_id)
+        for follow in follower:
+            following_people.append(follow.following_id)
+       
         context = {
+            'following' : following_people,
+            'followers' : follower,
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
             'user': m.User.objects.get(id=user_id),
             'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
         }
+
         return render(request, 'app_spotlite/profile.html', context)
     return redirect('auth_spotlite:index')
 
@@ -350,6 +366,7 @@ def picture_upload(request, target):
             request.session['profilepic'] = user.profilepic
             request.session['profilebackground'] = user.profilebackground
     except:
+        raise
         messages.error(request, 'Field can\'t be empty.')
         return redirect('app_spotlite:settings')
     return render(request, 'app_spotlite/settings.html')

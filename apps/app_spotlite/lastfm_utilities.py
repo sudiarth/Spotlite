@@ -112,6 +112,7 @@ def search_song(query):
       for sg in data['results']['trackmatches']['track']:
          if 'mbid' in sg: 
             if len(sg['mbid']) > 0:
+               print(sg['mbid'])
                song = create_or_get_lastfm_song_by_mbid(sg['mbid'])
                if song is not None:
                   songs.append(song)

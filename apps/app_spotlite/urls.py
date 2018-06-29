@@ -46,6 +46,7 @@ urlpatterns = [
     path('<int:user_id>/profile', views.profile, name='profile'),   
 
     path('user/<int:following_id>/follow', views.add_as_friend, name='add_as_friend'),
+    path('user/<int:following_id>/unfollow', views.delete_as_friend, name='delete_as_friend'),
 
     path('change_membership', views.change_membership, name='change_membership'),
 
