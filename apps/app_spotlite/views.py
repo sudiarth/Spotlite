@@ -95,7 +95,8 @@ def song(request, song_id):
     context = {
         'albums': m.Album.objects.all()[:5],
         'artists': m.Artist.objects.all()[:5],
-        'artists_grid': m.Artist.objects.all()[:12],          
+        'related_artist': m.Song.objects.filter(tags__song_id=song_id).distinct('artist_id'),
+        'artists_grid': m.Artist.objects.all()[:12],
         'song' : m.Song.objects.get(id=song_id),
         'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
         'songs': m.Song.objects.annotate(total=Count('played_by')).order_by('-total')[:5], #POPULAR SONGS
