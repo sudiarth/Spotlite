@@ -1,7 +1,7 @@
 {% block body %}
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-3 reg-table">
+        <div class="col-lg-3 col-sm-6 reg-table">
             <form method='POST' action='{% url "auth_spotlite:authenticate" action="login" %}'>
                 {% csrf_token %}
                 <div class="row justify-content-center">

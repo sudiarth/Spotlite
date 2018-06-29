@@ -2,7 +2,7 @@
 <div class="w3-display-container w3-animate-opacity w3-text-white" style="background-image: url('{{img_url}}');
 min-height: 100%;background-position: center;background-size: cover;">
     <div class="row justify-content-center">
-        <div class="col-3 reg-table">
+        <div class="col-lg-3 col-sm-6 reg-table">
             
             <form method='POST' action='{% url "auth_spotlite:authenticate" action="register" %}'>
                 {% csrf_token %}

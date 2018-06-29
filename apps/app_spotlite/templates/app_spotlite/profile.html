@@ -36,6 +36,7 @@
                   {% if user.id == request.session.user_id %}
                   <p>&nbsp;</p>
                   {% else %}
+                    
                     {% if user.follower_id == request.session.user_id and user.following_id == user.id %}
                     <button class="button-dark">
                     <a href="">Unfollow</a>
