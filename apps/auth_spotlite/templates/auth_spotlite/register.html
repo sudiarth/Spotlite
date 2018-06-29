@@ -32,9 +32,9 @@ min-height: 100%;background-position: center;background-size: cover;">
                     <p>Already have an account? <a href="{% url 'auth_spotlite:index' %}">Sign in.</a></p>
                 </div>
             </form>
+            {% include 'auth_spotlite/errors.html' %}
         </div>
     </div>
-    {% include 'auth_spotlite/errors.html' %}
 </div>
 </div>
     {% endblock %}

@@ -81,8 +81,8 @@ def authenticate(request, action):
                 if bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
                     start_session(request, user)
                 else:
-                    errors.append("Passwords do not match.")
-                    messages.error(request,"Passwords do not match.")
+                    errors.append("Password is not correct.")
+                    messages.error(request,"Password is not correct.")
                     return redirect('app_spotlite:index')
             except:
                 errors.append("User does not exist.")
