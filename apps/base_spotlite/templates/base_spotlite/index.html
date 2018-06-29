@@ -42,14 +42,27 @@
             var playCount = 0;
             Amplitude.init({
             "songs": [
-                  {% for song in songs %}
                   {
                         "name": "{{song.title}}",
                         "artist": "{{song.album.artist.name}}",
                         "album": "{{song.album.title}}",
                         "url": "{{song.mp3url}}",
                         "cover_art_url": "{{song.album.artist.photo}}"
-                  },
+                  },   
+
+                  {% for song_ in songs %}
+
+                        {% if song_.id != song.id %}
+                              
+                              {
+                                    "name": "{{song_.title}}",
+                                    "artist": "{{song_.album.artist.name}}",
+                                    "album": "{{song_.album.title}}",
+                                    "url": "{{song_.mp3url}}",
+                                    "cover_art_url": "{{song_.album.artist.photo}}"
+                              },
+                              
+                        {% endif %}
                   {% endfor %}
             ],
             "playlists": {
