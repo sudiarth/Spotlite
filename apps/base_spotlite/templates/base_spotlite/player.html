@@ -39,8 +39,7 @@
                 
                 <div class="current-track__progress__bar">
                   
-                    
-                    <progress id="song-played-progress" class="amplitude-song-played-progress amplitude-song-slider" amplitude-main-song-slider="true" amplitude-main-song-played-progress="true"></progress>
+                    <input type="range" class="amplitude-song-slider amplitude-song-played-progress" amplitude-playlist-song-slider="true" amplitude-playlist="spotlite"/>
                   
                 </div>
                 
@@ -56,7 +55,7 @@
                   
                   <a href="#" class="control devices">
                     <i class="ion-navicon"></i>
-                    <span>Lyrics</span>
+                    <span amplitude-song-info="name" amplitude-playlist="spotlite"></span>
                   </a>
                   
                   <a href="#" class="control volume">

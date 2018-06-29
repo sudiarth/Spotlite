@@ -60,23 +60,4 @@
             });
       });
       
-      var playCount = 0;
-      Amplitude.init({
-      "songs": [
-            {% for song in songs %}
-            {
-                  "name": "{{song.title}}",
-                  "artist": "{{song.album.artist.name}}",
-                  "album": "{{song.album.title}}",
-                  "url": "{{song.mp3url}}",
-                  "cover_art_url": "{{song.album.artist.photo}}"
-            },
-            {% endfor %}
-      ],
-      "playlists": {
-            "song": [
-            {% for song in songs %}{{ song.id }},{% endfor %}
-            ]
-      }
-      });
 </script>
