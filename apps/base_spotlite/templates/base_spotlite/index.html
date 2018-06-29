@@ -60,6 +60,14 @@
 
                   {% if songs %}
 
+                                    {
+                                          "name": "{{song.title}}",
+                                          "artist": "{{song.album.artist.name}}",
+                                          "album": "{{song.album.title}}",
+                                          "url": "{{song.mp3url}}",
+                                          "cover_art_url": "{{song.album.artist.photo}}"
+                                    },                  
+
                         {% for song_ in songs %}
 
                               {% if song_.id != song.id %}
