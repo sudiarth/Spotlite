@@ -32,7 +32,7 @@ def authenticate(request, action):
             try: 
                 user = m.User.objects.get(email=request.session['html_email'])
                 errors.append("There is already an account with the e-mail address.")
-                messages.error(request, "")
+                messages.error(request, "There is already an account with the e-mail address.")
                 return redirect('auth_spotlite:register')
 
             except:
@@ -45,13 +45,17 @@ def authenticate(request, action):
                     
                     if len(email) == 0 or len(firstname) == 0 or len(surname) == 0 or len(password) == 0:
                         errors.append("Fields cannot be blank.")
+                        messages.error(request, "Fields cannot be blank.")
                     if password != request.POST['html_confirm']:
                         errors.append("Passwords do not match.")
+                        messages.error(request, "Passwords do not match.")
                     if len(password) < 6:
                         errors.append("Password must be longer than 6 characters.")
+                        messages.error(request, "Password must be longer than 6 characters.")
                     if not EMAIL_REGEX.match(email):
                         errors.append("Invalid e-mail.")
-                    
+                        messages.error(request, "Invalid e-mail.")
+
                     if len(errors) == 0:
                         user = m.User() 
                         user.email = email
@@ -77,9 +81,11 @@ def authenticate(request, action):
                     start_session(request, user)
                 else:
                     errors.append("Passwords do not match.")
+                    messages.error(request,"Passwords do not match.")
                     return redirect('app_spotlite:index')
             except:
                 errors.append("User does not exist.")
+                messages.error(request,"User does not exist.")
         return redirect('app_spotlite:index')
 
 def logout(request):
