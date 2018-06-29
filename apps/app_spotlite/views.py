@@ -48,7 +48,7 @@ def add_as_friend(request, following_id):
 
 def delete_as_friend(request, following_id):
     if 'user_id' in request.session:
-        follow = m.Follow.objects.get(following_id=following_id)
+        follow = m.Follow.objects.filter(following_id=following_id)
         follow.delete()
         # return redirect(request.META['HTTP_REFERER'])
         return redirect('app_spotlite:profile', user_id=following_id)
@@ -314,6 +314,12 @@ def edit_playlist(request, playlist_id):
 
 def profile(request, user_id):
     if 'user_id' in request.session:
+
+        is_friend = False
+        check_friend = m.Follow.objects.filter(following_id=user_id, follower_id=request.session['user_id'])
+        if len(check_friend) > 0:
+            is_friend = True
+
         following_people = []
         follower = m.Follow.objects.filter(follower_id=user_id)
         for follow in follower:
@@ -324,6 +330,7 @@ def profile(request, user_id):
             'followers' : follower,
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
             'user': m.User.objects.get(id=user_id),
+            'is_friend': is_friend,
             'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
         }
 

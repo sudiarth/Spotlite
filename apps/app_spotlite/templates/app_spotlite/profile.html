@@ -32,7 +32,17 @@
               
               <div class="artist__info__actions">
                 
-                
+
+                  {% if user.id != request.session.user_id %}
+                      {% if is_friend %}
+                        <button class="button-dark"><a class="text-white" href="{% url 'app_spotlite:delete_as_friend' following_id=user.id %}">Unfollow</a></button>
+                      {% else %}
+                        <button class="button-dark"><a class="text-white" href="{% url 'app_spotlite:add_as_friend' following_id=user.id %}">Follow</a></button>
+                      {% endif %}
+                  {% endif %}
+
+
+<!-- 
                   {% if user.id == request.session.user_id %}
                   <p>&nbsp;</p>
                   {% else %}
@@ -46,7 +56,7 @@
                       </button>
                       {% endif %}
                     {% endfor %}
-                 {% endif %}
+                 {% endif %} -->
                 
               </div>
               
