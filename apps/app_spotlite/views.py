@@ -58,7 +58,7 @@ def my_history(request):
     if 'user_id' in request.session:
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'histories' : m.History.objects.filter(user_id=request.session['user_id']).order_by('-created_at')
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')
         }
         return render(request, 'app_spotlite/play_history.html', context)
 
