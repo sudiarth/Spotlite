@@ -892,16 +892,16 @@
                   
                     
                     <div class="media-cards">
-                          {% for artist in artists_grid %}
+                          {% for song in related_artist %}
                           <div class="media-card">
                           
-                            <div class="media-card__image" style="background-image: url({{ artist.photo }});">
+                            <div class="media-card__image" style="background-image: url({{ song.artist.photo }});">
                             
                               <i class="ion-ios-play"></i>
                               
                             </div>
                             
-                            <a class="media-card__footer">{{ artist.name }}</a>
+                            <a class="media-card__footer">{{ song.artist.name }}</a>
                             
                           </div> 
                           {% endfor %}                   
