@@ -347,7 +347,8 @@ def profile(request, user_id):
             'user': m.User.objects.get(id=user_id),
             'is_friend': is_friend,
             'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
-            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at'),
+            'personal_histories' : m.History.objects.filter(user_id=request.session['user_id']).order_by('-created_at')[:8]
         }
 
         return render(request, 'app_spotlite/profile.html', context)
