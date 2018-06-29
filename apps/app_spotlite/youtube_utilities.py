@@ -9,7 +9,7 @@ YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v={}"
 
 # YOUTUBE DOWNLOADER
 ydl_opts = {
-      'outtmpl': "/Volumes/WORKS/DEV/PythonProjects/CodeRemote/6-week/Spotlite/media/audio/%(title)s-%(id)s.%(ext)s",
+      'outtmpl': "C:\\Users\\acer\\CodeRemote\\6-week\\Spotlite\\media\\audio\\%(title)s-%(id)s.%(ext)s",
       'format': 'bestaudio/best',
       'postprocessors': [{
             'key': 'FFmpegExtractAudio',
