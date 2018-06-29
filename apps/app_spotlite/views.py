@@ -40,7 +40,6 @@ def add_as_friend(request, following_id):
         follow.follower_id = request.session['user_id']
         follow.following_id = following_id
         follow.save()
-        
         # return redirect(request.META['HTTP_REFERER'])
         return redirect('app_spotlite:profile', following_id)
 
@@ -58,7 +57,8 @@ def my_history(request):
     if 'user_id' in request.session:
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
         return render(request, 'app_spotlite/play_history.html', context)
 
@@ -71,7 +71,9 @@ def my_musics(request, active):
             'albums': m.Album.objects.all()[:24],
             'artists': m.Artist.objects.all()[:24],      
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'likes' : m.Like.objects.filter(user_id=request.session['user_id']).order_by('-created_at')
+            'likes' : m.Like.objects.filter(user_id=request.session['user_id']).order_by('-created_at'),
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
         return render(request, 'app_spotlite/my_musics.html', context)
     
@@ -81,7 +83,9 @@ def my_musics(request, active):
 
 def songs(request):
     context = {
-        'songs' : m.Song.objects.all().order_by('-updated_at')
+        'songs' : m.Song.objects.all().order_by('-updated_at'),
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     }
     return render(request, 'app_spotlite/songs.html', context)
 
@@ -100,8 +104,9 @@ def song(request, song_id):
         'song' : m.Song.objects.get(id=song_id),
         'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
         'songs': m.Song.objects.annotate(total=Count('played_by')).order_by('-total')[:10], #POPULAR SONGS
-        'like': like
-
+        'like': like,
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     }
     return render(request, 'app_spotlite/song.html', context)
 
@@ -113,7 +118,7 @@ def song_by_album(request, album_id):
             'album': m.Album.objects.get(id=album_id),          
             'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
             'editors' : m.Editor.objects.filter(user_id=request.session['user_id']),
-            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
         return render(request, 'app_spotlite/songs_by_album.html', context)
 
@@ -127,7 +132,7 @@ def song_by_artist(request, artist_id):
             'artist': m.Artist.objects.get(id=artist_id),          
             'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
             'editors' : m.Editor.objects.filter(user_id=request.session['user_id']),
-            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
         return render(request, 'app_spotlite/songs_by_artist.html', context)
 
@@ -183,7 +188,9 @@ def add_to_playlist_step1(request, song_id):
     if 'user_id' in request.session:
         context = {
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
-            'song_id': song_id
+            'song_id': song_id,
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
         return render(request, 'app_spotlite/playlists.html', context)
 
@@ -226,7 +233,9 @@ def playlists_editor(request):
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
             'user_editors': m.Editor.objects.filter(user_id=request.session['user_id']),
             'can_add': True,
-            'user': False
+            'user': False,
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
         return render(request, 'app_spotlite/playlists.html', context = context)
 
@@ -247,7 +256,9 @@ def items_in_playlist(request, playlist_id):
             'playlist': m.Playlist.objects.get(id=playlist_id),
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
             'editor_users': m.Editor.objects.filter(playlist_id=playlist_id),
-            'can_remove': can_remove
+            'can_remove': can_remove,
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
         return render(request, 'app_spotlite/playlist-items.html', context = context)
 
@@ -264,6 +275,8 @@ def user_playlists(request, user_id):
         'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
         'user_editors': m.Editor.objects.filter(user_id=user_id),
         'user': um.User.objects.get(id=user_id),
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     }    
     return render(request, 'app_spotlite/playlists.html', context = context)
 
@@ -307,7 +320,9 @@ def edit_playlist(request, playlist_id):
 
     context = {
         'playlist': playlist,
-        'destination': referer
+        'destination': referer,
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     } 
 
     return render(request, 'app_spotlite/playlist-edit.html', context = context)
@@ -331,7 +346,8 @@ def profile(request, user_id):
             'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
             'user': m.User.objects.get(id=user_id),
             'is_friend': is_friend,
-            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+            'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
 
         return render(request, 'app_spotlite/profile.html', context)
@@ -344,14 +360,16 @@ def artist(request, artist_id):
     context = {
         'artist' : m.Artist.objects.get(id=artist_id),
         'img_url' : image,
-        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     }
     return render(request, 'app_spotlite/profile-artist.html', context)
 
 def settings(request):
-    context = {
-        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']),    
-        }
+    context = {  
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')  
+    }
     return render(request, 'app_spotlite/settings.html', context)
 
 def picture_upload(request, target):
@@ -445,7 +463,8 @@ def search(request, search_keyword):
         'albums': m.Album.objects.filter(title__contains=search_keyword),
         'artists': m.Artist.objects.filter(name__contains=search_keyword),
         'users': um.User.objects.filter(Q(firstname__contains=search_keyword) | Q(surname__contains=search_keyword)),
-        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     }
     return render(request, 'app_spotlite/search.html', context)
 
@@ -454,6 +473,7 @@ def presearch(request, search_keyword):
         'artists': lastfm_utils.search_artist(search_keyword),
         'songs': lastfm_utils.search_song(search_keyword),
         'albums':  lastfm_utils.search_album(search_keyword),
-        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+        'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
+        'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
     }
     return render(request, 'app_spotlite/search.html', context)
