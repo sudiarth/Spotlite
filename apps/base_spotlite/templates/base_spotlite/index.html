@@ -43,6 +43,21 @@
             Amplitude.init({
             "songs": [
 
+                  {% if likes %}
+
+                  {% for like in likes %}
+
+                              {
+                                    "name": "{{like.song.title}}",
+                                    "artist": "{{like.song.album.artist.name}}",
+                                    "album": "{{like.song.album.title}}",
+                                    "url": "{{like.song.mp3url}}",
+                                    "cover_art_url": "{{like.song.album.artist.photo}}"
+                              },
+                              
+                  {% endfor %}
+                  {% endif %}
+
                   {% if songs %}
 
                         {% for song_ in songs %}
@@ -78,6 +93,9 @@
             ],
             "playlists": {
                   "spotlite": [
+                  {% if likes %}
+                        {% for like in likes %}{{ forloop.counter0 }},{% endfor %}
+                  {% endif %}
                   {% if songs %}
                         {% for song in songs %}{{ forloop.counter0 }},{% endfor %}
                   {% endif %}
