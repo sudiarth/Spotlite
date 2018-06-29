@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{% static 'base_spotlite/css/spotify.css' %}">
     <title>Spotlite</title>
     <script src="{% static 'base_spotlite/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'base_spotlite/js/amplitude.js' %}"></script>
 </head>
 
 <body>
@@ -29,13 +30,35 @@
     <script src="{% static 'base_spotlite/js/jquery.history.js' %}"></script>
     <script src="{% static 'base_spotlite/js/popper.min.js' %}"></script>
     <script src="{% static 'base_spotlite/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'base_spotlite/js/amplitude.js' %}"></script>
     <script src="{% static 'base_spotlite/js/spotify.js' %}"></script>
-    <script src="{% static 'base_spotlite/js/playlist.js' %}"></script>
     <script src="{% static 'base_spotlite/js/scripts.js' %}"></script>
-
+    
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+
+
+    <script>
+            var playCount = 0;
+            Amplitude.init({
+            "songs": [
+                  {% for song in songs %}
+                  {
+                        "name": "{{song.title}}",
+                        "artist": "{{song.album.artist.name}}",
+                        "album": "{{song.album.title}}",
+                        "url": "{{song.mp3url}}",
+                        "cover_art_url": "{{song.album.artist.photo}}"
+                  },
+                  {% endfor %}
+            ],
+            "playlists": {
+                  "spotlite": [
+                  {% for song in songs %}{{ forloop.counter0 }},{% endfor %}
+                  ]
+            }
+            });
+          </script>
 
 </body>
 

@@ -26,7 +26,7 @@
                   
                   <div class="artist__info__actions">
                   
-                    <button class="button-dark amplitude-play playNow" data-songId="{{ song.id }}" amplitude-song-index="2" amplitude-playlist="spotlite">
+                    <button class="button-dark amplitude-play playNow" data-songId="0" amplitude-song-index="0" amplitude-playlist="spotlite">
                       <i class="ion-ios-play"></i>
                       Play
                     </button>
@@ -71,7 +71,26 @@
                           tx.html('Like');
                         });                      
                     }
-                  });      
+                  });
+                  
+                  
+                  var playCount = 0;
+                        Amplitude.init({
+                        "songs": [
+                              {
+                                    "name": "{{song.title}}",
+                                    "artist": "{{song.album.artist.name}}",
+                                    "album": "{{song.album.title}}",
+                                    "url": "{{song.mp3url}}",
+                                    "cover_art_url": "{{song.album.artist.photo}}"
+                              },
+                        ],
+                        "playlists": {
+                              "spotlite": [
+                              0
+                              ]
+                        }
+                        });
               </script>              
               
               <div class="artist__listeners">

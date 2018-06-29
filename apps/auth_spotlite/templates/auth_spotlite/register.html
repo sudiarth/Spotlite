@@ -1,8 +1,9 @@
 {% extends 'auth_spotlite/base.html' %} {% block body %}
 <div class="w3-display-container w3-animate-opacity w3-text-white" style="background-image: url('{{img_url}}');
 min-height: 100%;background-position: center;background-size: cover;">
-    <div class="row justify-content-center">
-        <div class="col-lg-3 col-sm-6 reg-table">
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3 col-sm-12 reg-table">
             
             <form method='POST' action='{% url "auth_spotlite:authenticate" action="register" %}'>
                 {% csrf_token %}
@@ -33,5 +34,6 @@ min-height: 100%;background-position: center;background-size: cover;">
             </form>
         </div>
     </div>
+</div>
 </div>
     {% endblock %}

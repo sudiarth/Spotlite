@@ -16,12 +16,12 @@ EMAIL_REGEX = re.compile(r'^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9
 def index(request):
     if 'user_id' in request.session:
         context = {
-            'songs': m.Song.objects.all()[:24],
-            'albums': m.Album.objects.all()[:24],
-            'artists': m.Artist.objects.all()[:24],            
+            'songs': m.Song.objects.all().order_by('-created_at')[:24],
+            'albums': m.Album.objects.all().order_by('-created_at')[:24],
+            'artists': m.Artist.objects.all().order_by('-created_at')[:24],            
             'histories' : m.History.objects.exclude(user_id=request.session['user_id']).order_by('-created_at')[:8],
-            'editors' : m.Editor.objects.filter(user_id=request.session['user_id']),
-            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id'])
+            'editors' : m.Editor.objects.filter(user_id=request.session['user_id']).order_by('-created_at'),
+            'friends' : m.Follow.objects.filter(follower_id=request.session['user_id']).order_by('-created_at')
         }
         return render(request, 'app_spotlite/index.html', context)
         
