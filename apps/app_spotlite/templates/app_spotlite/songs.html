@@ -14,7 +14,7 @@
         <div class="track">
         <div class="track__number">{{ forloop.counter }}</div>
         <div class="track__popularity">
-                  <a class="amplitude-play" amplitude-song-index="{{ forloop.counter0 }}" amplitude-playlist="spotlite"><i class="ion-play"></i></a>
+                  <a class="amplitude-play" amplitude-song-index="{{ forloop.counter0 }}" amplitude-playlist="spotlite"><i class="ion-play playNow" data-songId="{{ song.id }}"></i></a>
       </div>
         <div class="track__added">
               <div class="dropdown">
@@ -60,4 +60,12 @@
             });
       });
       
+</script>
+<script>
+      $('.playNow').click(function(){
+            song_id = $(this).attr("data-songId");
+            url = "/song/"+ song_id +"/add2history";
+            $.get(url, function( data ) {                  
+            });
+      });  
 </script>
