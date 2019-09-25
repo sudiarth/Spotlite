@@ -47,7 +47,9 @@
                                             {% for item in likes %}
                                             <div class="track">
                                             <div class="track__number">{{ forloop.counter }}</div>
-                                            <a class="amplitude-play" amplitude-song-index="{{ forloop.counter0 }}" amplitude-playlist="spotlite"><i class="ion-play playNow" data-songId="{{ item.song.id }}"></i></a>
+                                            <div class="track__popularity">
+                                                <a class="amplitude-play" amplitude-song-index="{{ forloop.counter0 }}" amplitude-playlist="spotlite"><i class="ion-play playNow" data-songId="{{ item.song.id }}"></i></a>
+                                          </div>
                                             <div class="track__added">
                                                   <div class="dropdown">
                                                   <a class="btn btn-link ion-plus not-added" href="#" role="button" id="dropdown_not_added" data-toggle="dropdown" aria-haspopup="true"

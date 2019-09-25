@@ -43,73 +43,53 @@
             Amplitude.init({
             "songs": [
 
-                  {% if likes %}
+                  {% if song %}
 
-                        {% for like in likes %}
+                  {     
+                              "name": "{{song.title}}",
+                              "artist": "{{song.album.artist.name}}",
+                              "album": "{{song.album.title}}",
+                              "url": "{{song.mp3url}}",
+                              "cover_art_url": "{{song.album.artist.photo}}"
+                        },           
 
-                              {
-                                    "id": "{{like.song.id}}",
-                                    "name": "{{like.song.title}}",
-                                    "artist": "{{like.song.album.artist.name}}",
-                                    "album": "{{like.song.album.title}}",
-                                    "url": "{{like.song.mp3url}}",
-                                    "cover_art_url": "{{like.song.album.artist.photo}}"
-                              },
-                              
-                        {% endfor %}
+            {% for song_ in songs %}
 
-                  {% elif songs %}
-
-                                    {     
-                                          "id": "{{song.id}}",
-                                          "name": "{{song.title}}",
-                                          "artist": "{{song.album.artist.name}}",
-                                          "album": "{{song.album.title}}",
-                                          "url": "{{song.mp3url}}",
-                                          "cover_art_url": "{{song.album.artist.photo}}"
-                                    },                  
-
-                        {% for song_ in songs %}
-
-                              {% if song_.id != song.id %}
-                                    
-                                    {
-                                          "id": "{{song_.id}}",
-                                          "name": "{{song_.title}}",
-                                          "artist": "{{song_.album.artist.name}}",
-                                          "album": "{{song_.album.title}}",
-                                          "url": "{{song_.mp3url}}",
-                                          "cover_art_url": "{{song_.album.artist.photo}}"
-                                    },
-                                    
-                              {% endif %}
-                        {% endfor %}
-                  {% elif histories %}
-
-                        {% for history in histories %}
-
-                                    {
-                                          "id": "{{history.song.id}}",
-                                          "name": "{{history.song.title}}",
-                                          "artist": "{{history.song.album.artist.name}}",
-                                          "album": "{{history.song.album.title}}",
-                                          "url": "{{history.song.mp3url}}",
-                                          "cover_art_url": "{{history.song.album.artist.photo}}"
-                                    },
-                                    
-                        {% endfor %}
-
+                  {% if song_.id != song.id %}
+                        
+                        {
+                              "name": "{{song_.title}}",
+                              "artist": "{{song_.album.artist.name}}",
+                              "album": "{{song_.album.title}}",
+                              "url": "{{song_.mp3url}}",
+                              "cover_art_url": "{{song_.album.artist.photo}}"
+                        },
+                        
                   {% endif %}
+            {% endfor %}
+
+            {% else %}
+                  
+            {% for song_ in songs %}
+
+                  {% if song_.id != song.id %}
+                        
+                        {
+                              "name": "{{song_.title}}",
+                              "artist": "{{song_.album.artist.name}}",
+                              "album": "{{song_.album.title}}",
+                              "url": "{{song_.mp3url}}",
+                              "cover_art_url": "{{song_.album.artist.photo}}"
+                        },
+                        
+                  {% endif %}
+            {% endfor %}
+             
+             {% endif %}      
             ],
             "playlists": {
                   "spotlite": [
-                  {% if likes %}
-                        {% for like in likes %}{{ forloop.counter0 }},{% endfor %}
-                  {% elif songs %}
                         {% for song in songs %}{{ forloop.counter0 }},{% endfor %}
-                  {% elif histories %}
-                        {% for history in histories %}{{ forloop.counter0 }},{% endfor %}
-                  {% endif %}
                   ]
             }
             });

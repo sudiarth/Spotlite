@@ -116,5 +116,5 @@ def search_song(query):
                song = create_or_get_lastfm_song_by_mbid(sg['mbid'])
                if song is not None:
                   songs.append(song)
-                  youtube_utils.get_youtube_url(song.title+' - '+song.artist.name, song.id)
+                  youtube_utils.get_youtube_url(song.artist.name + ' ' + song.title, song.id)
    return songs

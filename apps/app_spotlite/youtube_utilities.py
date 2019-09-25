@@ -1,5 +1,6 @@
 import json, requests, sys, youtube_dl, os
 from . import models as m
+from . import views as v
 from pprint import pprint
 
 # YOUTUBE API
@@ -9,7 +10,7 @@ YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v={}"
 
 # YOUTUBE DOWNLOADER
 ydl_opts = {
-      'outtmpl': "C:\\Users\\acer\\CodeRemote\\6-week\\Spotlite\\media\\audio\\%(title)s-%(id)s.%(ext)s",
+      'outtmpl': "/Volumes/WORKS/DEV/PythonProjects/CodeRemote/6-week/Spotlite/media/audio/%(title)s-%(id)s.%(ext)s",
       'format': 'bestaudio/best',
       'postprocessors': [{
             'key': 'FFmpegExtractAudio',
@@ -40,6 +41,8 @@ def get_youtube_url(keyword, song_id):
 
       with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download(videos)
+
+      return v.search(request, keyword)
 
    except:
       pass

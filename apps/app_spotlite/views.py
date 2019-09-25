@@ -455,10 +455,12 @@ def change_membership(request):
 
 def post_search(request):
     search_keyword = request.POST['search_keyword']
+    # return redirect('app_spotlite:search', search_keyword=search_keyword)
     return redirect('app_spotlite:search', search_keyword=search_keyword)
 
 def search(request, search_keyword):
     context = {
+        'search': True,
         'editors': m.Editor.objects.filter(user_id=request.session['user_id']),
         'songs': m.Song.objects.filter(title__contains=search_keyword),
         'albums': m.Album.objects.filter(title__contains=search_keyword),
