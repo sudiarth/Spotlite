@@ -15,6 +15,6 @@ pytz==2018.3
 requests==2.19.0
 six==1.11.0
 tesserocr==2.2.2
-urllib3==1.23
+urllib3==1.26.5
 wrapt==1.10.11
 youtube-dl==2018.6.25
